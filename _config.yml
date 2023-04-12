@@ -1,8 +1,9 @@
-title: Just the Docs Template
-description: A starter template for a Jeykll site using the Just the Docs theme!
+title: GUAC
+description: The site for everyone's favorite software supply chain knowledge graph
 theme: just-the-docs
 
-url: https://just-the-docs.github.io
+url: https://guac.sh
+logo: "/assets/images/guac.png"
 
 aux_links:
-  Template Repository: https://github.com/just-the-docs/just-the-docs-template
+  GUAC Repo: https://github.com/guacsec/guac
