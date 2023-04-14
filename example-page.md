@@ -19,12 +19,37 @@ nav_order: 2
 ## Section title 1
 Hello, this is some text. 
 
-[This is a link to another page](example-parent-page.md)
-
 ### Subsection title 1
 More text here.  
 
+## Here are some samples you can use
+
+### External link
+[Just-the-Docs docs](https://just-the-docs.github.io/just-the-docs/)
+
+### Internal link
+[This is a link to another page on this site](example-parent-page.md)
+
+### Image
 ![Alt text goes here](assets/images/guac-small.png) 
 
-## Section title 2
-And more text
+### Callouts
+
+{: .highlight }
+Highlight
+
+{: .important }
+Important
+
+{: .new }
+New
+
+{: .note }
+Note
+
+{: .warning }
+Warning
+
+### More UI Components
+
+[UI Components](https://just-the-docs.github.io/just-the-docs/docs/ui-components)
