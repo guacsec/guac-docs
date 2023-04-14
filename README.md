@@ -1,2 +1,3 @@
 # GUAC Documentation
-![GUAC](assets/images/guac-small.png)
+
+These docs are currently under construction. 
