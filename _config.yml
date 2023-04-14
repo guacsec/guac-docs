@@ -34,3 +34,8 @@ callouts:
   warning:
     title: Warning
     color: red
+
+nav_external_links:
+  - title: GUAC Announcement
+    url: https://security.googleblog.com/2022/10/announcing-guac-great-pairing-with-slsa.html
+    hide_icon: false # set to true to hide the external link icon - defaults to false

@@ -6,7 +6,7 @@ parent: Example parent page
 nav_order: 2
 ---
 
-# example child page 2
+# Example child page 2
 {: .no_toc }
 
 <details open markdown="block">
