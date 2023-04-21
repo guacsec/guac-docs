@@ -2,4 +2,4 @@
 
 These docs are currently under construction.
 
-Come back May 10th for the official Beta launch!
+GUAC documentation is available [here](https:guac.sh). 
