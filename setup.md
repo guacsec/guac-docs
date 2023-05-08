@@ -5,6 +5,7 @@ permalink: /setup/
 nav_order: 2
 ---
 
+
 # Set up GUAC with Docker Compose
 
 {: .note }
@@ -15,6 +16,16 @@ GUAC consists of multiple components. You may have seen a subset of these being 
 
 If you’re curious about the various GUAC components and what they do, see [How GUAC components work together](link to new article under GUAC details).
 
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
 
 ## Prerequisites
 
@@ -25,20 +36,17 @@ If you’re curious about the various GUAC components and what they do, see [How
 - [Make](https://www.gnu.org/software/make/)
 
 ## Step 1: Clone GUAC
-
- 1. Clone GUAC to a local directory:
-
+1. Clone GUAC to a local directory:
   ```bash
   git clone https://github.com/guacsec/guac.git
   ```
 
- 2. Optional: If you want test data to use, clone GUAC’s test data:
-
+2. Optional: If you want test data to use, clone GUAC’s test data:
   ```bash
   git clone https://github.com/guacsec/guac-data.git
   ```
 
- 3. Go to your GUAC directory (the rest of the steps need to be done from this directory):
+3. Go to your GUAC directory (the rest of the steps need to be done from this directory):
   ```bash
   cd guac
   ```
@@ -77,13 +85,9 @@ From your GUAC directory, run:
 |---
 | Port Number | GUAC Component | Note
 |-|:-|:-:|-:
-| 8080 | GraphQL server | To see the GraphQL playground, visit  
-| | | [http://localhost:8080](http://localhost:8080)  
+| 8080 | GraphQL server | To see the GraphQL playground, <br />visit [http://localhost:8080](http://localhost:8080)  
 |---
-| 4222 | Nats | This is where any collectors that you run will need to connect 
-|  | | to push any docs they find  
-|  | | The GUAC collector command defaults to `nats://127.0.0.1:4222`
-|  | | for the Nats address, so this will work automatically    
+| 4222 | Nats | This is where any collectors that you run will need to <br />connect to push any docs they find. <br />The GUAC collector command defaults to `nats://127.0.0.1:4222` <br />for the Nats address, so this will work automatically    
 |===
 
 ## Step 4: Start Ingesting Data

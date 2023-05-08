@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Set up GUAC Visualizer
-permalink: /guacvisualizer
+permalink: /guac-visualizer
 nav_order: 3
 ---
 
@@ -16,6 +16,17 @@ that there may be some unexpected behavior or usage problems. For a more robust
 use of GUAC, we recommend using the
 [GraphQL interface directly](https://github.com/guacsec/guac/blob/main/demo/GraphQL.md).
 
+{: .no_toc }
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
 ## Requirements
 
 ### Tools
@@ -26,7 +37,7 @@ use of GUAC, we recommend using the
 
 ### Services
 
-You must have [GUAC installed and running](https://guac.sh/setup/).
+You must have [GUAC installed and running](setup.md).
 
 ## Step 1: Clone the GUAC visualizer repo
 

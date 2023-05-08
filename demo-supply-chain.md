@@ -1,8 +1,8 @@
 ---
 layout: page
-title: Demo: Reacting to a supply chain incident
+title: Reacting to a supply chain incident
 permalink: /demo-supply-chain/
-parent: GUAC Demos
+parent: GUAC demos
 nav_order: 1
 ---
 
