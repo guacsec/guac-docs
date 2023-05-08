@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Set up GUAC with Docker Compose
-permalink: /example-page/
+permalink: /setup/
 nav_order: 2
 ---
 
@@ -74,16 +74,17 @@ From your GUAC directory, run:
 
 ### GUAC Ports
 
-| Port Number| GUAC Component   | Note                                                            |
-| ---------- | -----------------|---------------------------------------------------------------- |
-| 8080       | GraphQL server   | To see the GraphQL playground, visit                            |
-:            :                  : [http://localhost:8080](http://localhost:8080)                  :
-:            :                  : GraphQL queries are served at the `/query` endpoint             :
-| 4222       | Nats             | This is where any collectors that you run will need to connect  |
-:            :                  : to push any docs they find                                      :
-:            :                  : The GUAC collector command defaults to `nats://127.0.0.1:4222`  :
-:            :                  : for the Nats address, so this will work automatically           :
-
+|---
+| Port Number | GUAC Component | Note
+|-|:-|:-:|-:
+| 8080 | GraphQL server | To see the GraphQL playground, visit  
+| | | [http://localhost:8080](http://localhost:8080)  
+|---
+| 4222 | Nats | This is where any collectors that you run will need to connect 
+|  | | to push any docs they find  
+|  | | The GUAC collector command defaults to `nats://127.0.0.1:4222`
+|  | | for the Nats address, so this will work automatically    
+|===
 
 ## Step 4: Start Ingesting Data
 
@@ -176,6 +177,3 @@ and evaluation. Keep in mind that the in-memory backend is not persistent.
 Explore the types of collectors available in the `collector` binary and see what
 will work for your build, ingestion, and SBOM workflow. These collectors can be
 run as another service that watches a location for new documents to ingest.
-
-
-[UI Components](https://just-the-docs.github.io/just-the-docs/docs/ui-components)
