@@ -12,9 +12,9 @@ nav_order: 2
 If you’d prefer, you can set up [GUAC with Kubernetes](https://github.com/kusaridev/helm-charts/tree/main/charts/guac) instead.
 
 
-GUAC consists of multiple components. You may have seen a subset of these being used into various [GUAC demos](demo page link). To get the most value out of GUAC, you’ll need to set up all components. This tutorial will walk you through how to deploy GUAC, using Docker Compose, so that you get the full set of components.
+GUAC consists of multiple components. You may have seen a subset of these being used into various [GUAC demos](https://guac.sh/guac-demos/). To get the most value out of GUAC, you’ll need to set up all components. This tutorial will walk you through how to deploy GUAC, using Docker Compose, so that you get the full set of components.
 
-If you’re curious about the various GUAC components and what they do, see [How GUAC components work together](link to new article under GUAC details).
+If you’re curious about the various GUAC components and what they do, see [How GUAC components work together](https://guac.sh/guac-components/).
 
 {: .no_toc }
 
@@ -61,12 +61,12 @@ From your GUAC directory, run:
 
 ## Step 3: Start the GUAC server
 
-  1. In another terminal, from your GUAC directory, run:
-
+1. In another terminal, from your GUAC directory, run:
   ```bash
   docker-compose up
   ```
-  2. Verify that GUAC is running:
+
+2. Verify that GUAC is running:
   ```bash
   docker compose ls --filter "name=guac"
   ```
@@ -143,24 +143,26 @@ You should see the types of all the packages ingested
       },
 ...
 ```
-Congratulations, you are now running a full GUAC deployment!
+
 ## What is running?
-Taking a look at the `docker-compose.yaml` we can see what is actually running:
-- **Nats**: Nats is used for communication between the GUAC components. It is
+Congratulations, you are now running a full GUAC deployment! Taking a look at the `docker-compose.yaml` we can see what is actually running:
+
+- **Nats**: Used for communication between the GUAC components. It is
   available on port `4222`.
-- **Collector-Subscriber**: This component helps communicate to the collectors
+- **Collector-Subscriber**: Helps communicate to the collectors
   when additional information is needed.
-- **GraphQL Server**: Serving GUAC GraphQL queries and storing the data. As the
+- **GraphQL Server**: Serves GUAC GraphQL queries and stores the data. As the
   in-memory backend is used, no separate backend is needed behind the server.
-- **Ingestor**: The ingestor listens for things to ingest through Nats, then
+- **Ingestor**: Listens for things to ingest through Nats, then
   pushes to the GraphQL Server. The ingestor also runs the assembler and parser
   internally.
-- **Image Collector**: This collector can pull OCI image metadata (SBOMs and
+- **Image Collector**: Can pull OCI image metadata (SBOMs and
   attestations) from registries for further inspection.
-- **Deps.dev Collector**: This collector gathers further information from
+- **Deps.dev Collector**: Gathers further information from
   [Deps.dev](https://deps.dev/) for supported packages.
-- **OSV Certifier**: This certifier gathers OSV vulnerability information from
+- **OSV Certifier**: Gathers OSV vulnerability information from
   [osv.dev](https://osv.dev/) about packages.
+
 ## Next steps
 The compose configuration is suitable to leave running in an environment that is
 accessible to your environment for further GUAC ingestion, discovery, analysis,
