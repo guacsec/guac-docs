@@ -7,8 +7,7 @@ nav_order: 3
 
 # Set up GUAC Visualizer
 
-The GUAC Visualizer is an experimental utility that can be used to interact with
-the GUAC services. It acts as a way to visualize the software supply chain graph,
+The GUAC Visualizer is an experimental utility that can be used to interact with GUAC services. It acts as a way to visualize the software supply chain graph,
 as well as a means to explore the supply chain and prototype policies.
 
 Since the GUAC Visaulizer is still in an early experimental stage, it is likely
@@ -41,14 +40,12 @@ You must have [GUAC installed and running](setup.md).
 
 ## Step 1: Clone the GUAC visualizer repo
 
-1. We highly suggest cloning it in the same path as you cloned the main GUAC repo.
-
+1. We highly suggest cloning the GUAC visualizer repo in the same path as you cloned the main GUAC repo.
   ```bash
   git clone git@github.com:guacsec/guac-visualizer.git
   ```
 
 2. Change directories into the repo.
-
   ```bash
   cd guac-visualizer
   ```
@@ -58,7 +55,6 @@ All commands run throughout this guide should be in this working directory.
 ## Step 2: Run the guac-visualizer from source
 
 1. Install the guac-visualizer dependencies:
-
  ```bash
  yarn install
  ```
@@ -85,7 +81,6 @@ All commands run throughout this guide should be in this working directory.
   ```
 
 2. Run the server (which will run by default on `http://localhost:3000`)
-
   ```bash
   npm run dev
   ```
@@ -116,7 +111,7 @@ http://localhost:3000. The page will look like the following:
 ![ui](https://user-images.githubusercontent.com/3060102/233406051-486f4f88-2779-4abf-9d5f-adb98bf51c3a.png)
 
 For more information on how to use the GUAC visualizer, take a look at some of
-our [GUAC demos](https://github.com/guacsec/guac/blob/main/demos/).
+our [GUAC demos](https://github.com/guacsec/guac/blob/main/demos/](https://guac.sh/guac-demos/).
 
 ### Change the GraphQL endpoint
 
