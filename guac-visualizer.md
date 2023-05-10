@@ -1,8 +1,9 @@
 ---
 layout: page
-title: Set up GUAC Visualizer
-permalink: /guac-visualizer
-nav_order: 3
+title: Getting started with GUAC Visualizer
+permalink: /guac-visualizer/
+parent: GUAC use cases
+nav_order: 5
 ---
 
 # Set up GUAC Visualizer

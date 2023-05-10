@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Expanding your view of the software supply chain
-permalink: /demo-expanding-your-view/
-parent: GUAC demos
+permalink: /expanding-your-view/
+parent: GUAC use cases
 nav_order: 2
 ---
 
