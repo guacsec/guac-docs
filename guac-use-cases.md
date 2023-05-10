@@ -1,9 +1,9 @@
 ---
 layout: page
-title: GUAC demos
-permalink: /guac-demos/
+title: GUAC use cases
+permalink: /guac-use-cases/
 has_children: true
-nav_order: 4
+nav_order: 3
 ---
 # Example parent page
 

@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Reacting to a supply chain incident
-permalink: /demo-supply-chain/
-parent: GUAC demos
+permalink: /supply-chain/
+parent: GUAC use cases
 nav_order: 1
 ---
 

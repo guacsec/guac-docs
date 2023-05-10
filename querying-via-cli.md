@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Querying vulnerabilities via CLI
-permalink: /demo-querying-via-cli/
-parent: GUAC demos
+permalink: /querying-via-cli/
+parent: GUAC use cases
 nav_order: 3
 ---
