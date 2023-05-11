@@ -9,7 +9,7 @@ nav_order: 2
 # Set up GUAC with Docker Compose
 
 {: .note }
-If you’d prefer, you can set up [GUAC with Kubernetes](https://github.com/kusaridev/helm-charts/tree/main/charts/guac) instead. These instructions are hosted in a third-party repo and not maintained by the GUAC team.
+If you’d prefer, you can set up [GUAC with Kubernetes](https://github.com/kusaridev/helm-charts/tree/main/charts/guac) instead. These instructions are hosted in a third-party repo and may not be synchronized with the GUAC repo.
 
 
 GUAC consists of multiple components. You may have seen a subset of these used in various [GUAC demos](https://guac.sh/guac-demos/). To get the most value out of GUAC, you’ll need to set up all components. This tutorial will walk you through how to deploy GUAC, using Docker Compose, so that you get the full set of components.
