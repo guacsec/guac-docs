@@ -102,7 +102,7 @@ the problem and helps when developing prototype utilities and queries with GUAC 
 ## Step 7: Explore bad packages
 
 1. To explore all the "certifyBad" items (packages, sources, or
-artifacts), run the "query Bad" CLI:
+  artifacts), run the "query Bad" CLI:
   ```bash
   ./bin/guacone query bad
   ```
@@ -121,14 +121,15 @@ artifacts), run the "query Bad" CLI:
   ↓   pkg:golang/github.com/prometheus/client_golang@v1.11.1 (undisclosed vuln)
   ```
 
-2. Select a package, source, or artifact from the list to generate a visualizer URL containing all the dependent packages and artifacts (packages that use the certifyBad items).
+2. Select a package, source, or artifact from the list to generate a visualizer URL containing all the dependent packages and artifacts
+   (packages that use the certifyBad items).
 
-Further iterations of the same CLI tool (or another) could be used
-to give a step-by-step guide to remediation!
+  Further iterations of the same CLI tool (or another) could be used
+  to give a step-by-step guide to remediation!
 
-For this scenario, select the 
-`pkg:maven/org.apache.logging.log4j/log4j-core (never use this version of log4j)`
-that we created earlier:
+  For this scenario, select the 
+  `pkg:maven/org.apache.logging.log4j/log4j-core (never use this version of log4j)`
+  that we created earlier:
 
     ```bash
     Use the arrow keys to navigate: ↓ ↑ → ←
@@ -140,12 +141,12 @@ that we created earlier:
        pkg:golang/github.com/prometheus/client_golang@v1.11.1 (undisclosed vuln)
     ```
 
-  Doing so will produce a output similar to this:
+   Doing so will produce a output similar to this:
 
-  ```bash
-  ✔ pkg:maven/org.apache.logging.log4j/log4j-core (never use this version of log4j)
-  Visualizer url: http://localhost:3000/?path=142367,15573,15572,15515,2509,15574,15337,15336,15335,2
-  ```
+    ```bash
+    ✔ pkg:maven/org.apache.logging.log4j/log4j-core (never use this version of log4j)
+    Visualizer url: http://localhost:3000/?path=142367,15573,15572,15515,2509,15574,15337,15336,15335,2
+    ```
 
 3. Navigate to the URL to visualize the output. 
 This will show an expanded graph of dependencies. 
