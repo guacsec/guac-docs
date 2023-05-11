@@ -149,15 +149,16 @@ the problem and helps when developing prototype utilities and queries with GUAC 
     ```
 
 3. Navigate to the URL to visualize the output. 
-This will show an expanded graph of dependencies. 
+  This will show an expanded graph of dependencies. 
 
-**If you don't see dependencies expanded here, or less than what is shown below**, re-run the CLI in a few minutes. Additional open-source insights might still be being ingested from GUAC's external sources (such as Deps.dev).
+  **If you don't see dependencies expanded here, or less than what is shown below**, re-run the CLI in a few minutes. Additional open-source   
+  insights might still be being ingested from GUAC's external sources (such as Deps.dev).
 
-![An image of the visualizer output graph](assets/images/supplychain_dependencies_graph.png)
+  ![An image of the visualizer output graph](assets/images/supplychain_dependencies_graph.png)
 
-We can tell from this small example (arranging the graph a little) that
-the bad package is being used by a test image under the guacsec org! We need to
-remediate that right away!
+  We can tell from this small example (arranging the graph a little) that
+  the bad package is being used by a test image under the guacsec org! We need to
+  remediate that right away!
 
 ## Running through a more complex example
 
