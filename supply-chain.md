@@ -102,63 +102,63 @@ the problem and helps when developing prototype utilities and queries with GUAC 
 ## Step 7: Explore bad packages
 
 1. To explore all the "certifyBad" items (packages, sources, or
-  artifacts), run the "query Bad" CLI:
-  ```bash
-  ./bin/guacone query bad
-  ```
+   artifacts), run the "query Bad" CLI:
+    ```bash
+    ./bin/guacone query bad
+    ```
 
-  This query will automatically search the database and find the list of
-  "certifyBad" that are present. For example, an output will look like the
-  following:
-
-  ```bash
-  Use the arrow keys to navigate: ↓ ↑ → ←
-  ? Select CertifyBad to Query:
-    ▸ pkg:golang/github.com/kr/pretty (pretty bad undisclosed vuln)
-      git+https://github.com/googleapis/google-cloud-go (github repo compromised)
-      pkg:golang/github.com/pmezard/go-difflib (github repo compromised)
-      pkg:maven/org.apache.logging.log4j/log4j-core@2.8.1 (never use this version of log4j)
-  ↓   pkg:golang/github.com/prometheus/client_golang@v1.11.1 (undisclosed vuln)
-  ```
-
-2. Select a package, source, or artifact from the list to generate a visualizer URL containing all the dependent packages and artifacts
-   (packages that use the certifyBad items).
-
-  Further iterations of the same CLI tool (or another) could be used
-  to give a step-by-step guide to remediation!
-
-  For this scenario, select the 
-  `pkg:maven/org.apache.logging.log4j/log4j-core (never use this version of log4j)`
-  that we created earlier:
+   This query will automatically search the database and find the list of
+   "certifyBad" that are present. For example, an output will look like the
+   following:
 
     ```bash
     Use the arrow keys to navigate: ↓ ↑ → ←
     ? Select CertifyBad to Query:
-    ↑   pkg:golang/github.com/kr/pretty (pretty bad undisclosed vuln)
+      ▸ pkg:golang/github.com/kr/pretty (pretty bad undisclosed vuln)
         git+https://github.com/googleapis/google-cloud-go (github repo compromised)
         pkg:golang/github.com/pmezard/go-difflib (github repo compromised)
-      ▸ pkg:maven/org.apache.logging.log4j/log4j-core@2.8.1 (never use this version of log4j)
-       pkg:golang/github.com/prometheus/client_golang@v1.11.1 (undisclosed vuln)
+        pkg:maven/org.apache.logging.log4j/log4j-core@2.8.1 (never use this version of log4j)
+    ↓   pkg:golang/github.com/prometheus/client_golang@v1.11.1 (undisclosed vuln)
     ```
 
-   Doing so will produce a output similar to this:
+2. Select a package, source, or artifact from the list to generate a visualizer URL containing all the dependent packages and artifacts
+   (packages that use the certifyBad items).
 
-    ```bash
-    ✔ pkg:maven/org.apache.logging.log4j/log4j-core (never use this version of log4j)
-    Visualizer url: http://localhost:3000/?path=142367,15573,15572,15515,2509,15574,15337,15336,15335,2
-    ```
+   Further iterations of the same CLI tool (or another) could be used
+   to give a step-by-step guide to remediation!
+
+   For this scenario, select the 
+   `pkg:maven/org.apache.logging.log4j/log4j-core (never use this version of log4j)`
+   that we created earlier:
+
+      ```bash
+      Use the arrow keys to navigate: ↓ ↑ → ←
+      ? Select CertifyBad to Query:
+      ↑   pkg:golang/github.com/kr/pretty (pretty bad undisclosed vuln)
+          git+https://github.com/googleapis/google-cloud-go (github repo compromised)
+          pkg:golang/github.com/pmezard/go-difflib (github repo compromised)
+        ▸ pkg:maven/org.apache.logging.log4j/log4j-core@2.8.1 (never use this version of log4j)
+         pkg:golang/github.com/prometheus/client_golang@v1.11.1 (undisclosed vuln)
+      ```
+
+     Doing so will produce a output similar to this:
+
+      ```bash
+      ✔ pkg:maven/org.apache.logging.log4j/log4j-core (never use this version of log4j)
+      Visualizer url: http://localhost:3000/?path=142367,15573,15572,15515,2509,15574,15337,15336,15335,2
+      ```
 
 3. Navigate to the URL to visualize the output. 
-  This will show an expanded graph of dependencies. 
+   This will show an expanded graph of dependencies. 
 
-  **If you don't see dependencies expanded here, or less than what is shown below**, re-run the CLI in a few minutes. Additional open-source   
-  insights might still be being ingested from GUAC's external sources (such as Deps.dev).
+   **If you don't see dependencies expanded here, or less than what is shown below**, re-run the CLI in a few minutes. Additional open-source   
+   insights might still be being ingested from GUAC's external sources (such as Deps.dev).
 
-  ![An image of the visualizer output graph](assets/images/supplychain_dependencies_graph.png)
+   ![An image of the visualizer output graph](assets/images/supplychain_dependencies_graph.png)
 
-  We can tell from this small example (arranging the graph a little) that
-  the bad package is being used by a test image under the guacsec org! We need to
-  remediate that right away!
+   We can tell from this small example (arranging the graph a little) that
+   the bad package is being used by a test image under the guacsec org! We need to
+   remediate that right away!
 
 ## Running through a more complex example
 
