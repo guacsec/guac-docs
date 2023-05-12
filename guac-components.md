@@ -10,7 +10,11 @@ nav_order: 1
 {: .no_toc }
 
 <details open markdown="block">
-@@ -18,11 +18,92 @@ nav_order: 1
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
 {:toc}
 </details>
 
