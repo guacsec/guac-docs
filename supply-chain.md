@@ -3,7 +3,7 @@ layout: page
 title: Reacting to a supply chain incident
 permalink: /supply-chain/
 parent: GUAC use cases
-nav_order: 1
+nav_order: 4
 ---
 
 # Reacting to a supply chain incident
