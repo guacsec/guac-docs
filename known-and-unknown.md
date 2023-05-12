@@ -1,6 +1,6 @@
 ---
 layout: page
-title: What is known and unknown?
+title: What is Known and Unknown about your Software Supply Chain?
 permalink: /known-and-unknown/
 parent: GUAC use cases
 nav_order: 1
@@ -8,54 +8,47 @@ nav_order: 1
 
 # What is Known and Unknown about your Software Supply Chain
 
-<img width="1260" alt="3" src="https://user-images.githubusercontent.com/88045217/235365392-39923864-10e3-48f8-ba39-93c138507b82.jpg">
+![Dinosaur Meme](assets/images/knownunknownmeme.jpeg)
 
-The software supply chain is like a rabbit hole that could be very deep and
-could hold a bunch of twists and turns. It's hard to track where the different
+The software supply chain is like a rabbit hole that can be very deep and hold a bunch of twists and turns. It's hard to track where the different
 tunnels may lead. With SBOMs, SLSA attestations, scorecards, VEX, and other
 in-toto ITE-6 attestations, the list of metadata associated with an artifact is
-growing. The common questions that are asked are “Where do I store my SBOMs,
-SLSA attestations, and other metadata documents?”, “Can I find these documents
-quickly?”, and “What do I know (and don’t know) about my supply chain?”
+growing. You may wonder:
+
+Where do I store my SBOMs, SLSA attestations, and other metadata documents?
+Can I find these documents quickly?
+What do I know (and not know) about my supply chain?
 
 GUAC has the ability to ingest and link these documents together into a complete
-picture of the software supply chain! This can allow the user to easily
-determine and answer the question of what are the “known, knowns” “what is
-known, unknowns” and finally “unknown, unknowns”. Let's take a look at this in
-more detail.
+picture of your software supply chain. With GUAC you can easily
+determine what are your:
 
-In the [workflow demo](./workflow/workflow.md), we went through the process of
+- known, knowns
+- known, unknowns
+- unknown, unknowns
+
+In the ["Expanding your view of the software supply chain" demo](https://docs.guac.sh/expanding-your-view/), we went through the process of
 ingesting an SBOM and letting GUAC expand our horizons on what we know about our
-environment autonomously! In this demo, based on the documents ingested and the
-information GUAC was able to pull for us, we will determine what we know but
-also as equally important, what we don’t know about the artifacts.
+environment autonomously. In this demo, we'll take that information and use it to determine what we know and don't know about the artifacts.
 
 ## Requirements
 
-- go
-- Kubernetes 1.19+ ([k3s](https://github.com/k3s-io/k3s/),
-  [minikube](https://github.com/kubernetes/minikube) or
-  [colima](https://github.com/abiosoft/colima) (or another k8s service of your
-  choice))
-- [Helm v3.9.4+](https://helm.sh/)
+- [Go](https://go.dev/doc/install)
+- [Docker](https://docs.docker.com/get-docker/)
+- A fresh copy of the [GUAC service infrastructure through Docker Compose](https://docs.guac.sh/setup/)
 
-**NOTE**: There is also a docker-compose deployment to get GUAC running if you
-don't want to use Kubernetes. Follow the
-[docker compose deployment](../../docs/Compose.md) to get started!
 
-## Clone GUAC
+## Step 1: Clone GUAC
 
-If you haven't already, clone GUAC to a local directory:
+1. Clone GUAC to a local directory:
+  ```bash
+  git clone https://github.com/guacsec/guac.git
+  ```
 
-```bash
-git clone https://github.com/guacsec/guac.git
-```
-
-Also, clone GUAC data, this is used as test data for this demo.
-
-```bash
-git clone https://github.com/guacsec/guac-data.git
-```
+2. Clone GUAC data (this is used as test data for this demo):
+  ```bash
+  git clone https://github.com/guacsec/guac-data.git
+  ```
 
 The rest of the demo will assume you are in the GUAC directory
 
@@ -63,7 +56,7 @@ The rest of the demo will assume you are in the GUAC directory
 cd guac
 ```
 
-## Building the GUAC binaries
+## Step 2: Build the GUAC binaries
 
 Build the GUAC binaries using the `make` command.
 
@@ -71,12 +64,7 @@ Build the GUAC binaries using the `make` command.
 make
 ```
 
-## Installing GUAC via Helm Chart/Docker Compose
-
-Please refer to the GUAC Helm Install Guide<INSERT LINK HERE> or
-[docker compose deployment](../../docs/Compose.md) to have a running instance.
-
-## Ingesting Vault’s SBOM
+## Step 3. Ingest Vault’s SBOM
 
 As this demo builds off [workflow demo](./workflow/workflow.md) please follow
 the steps for ingesting
