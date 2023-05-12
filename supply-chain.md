@@ -74,7 +74,9 @@ vary):
 
 ## Step 4: Set up the experimental GUAC Visualizer
 
-[Start up the GUAC visualizer](https://guac.sh/guac-visualizer/).
+To find out if you're affected by the security incident and decide what you need to patch, utilize the [Guac Visualizer](https://guac.sh/guac-visualizer/). The GUAC visualizer provides a utility to do some basic analysis and exploration
+of the software supply chain. This is a great way to get a sense of the size of
+the problem and helps when developing prototype utilities and queries with GUAC (very much like the [vulnerability CLI](https://guac.sh/querying-via-cli/)).
 
 ## Step 5: Mark packages as bad when a security incident occurs
 
@@ -93,13 +95,7 @@ If we successfully added "CertifyBad", the output will show:
 {"level":"info","ts":1683130083.9894989,"caller":"helpers/assembler.go:69","msg":"assembling CertifyBad: 1"}
 ```
 
-## Step 6: Check if you are affected
-
-To find out if you're affected by the security incident and decide what you need to patch, utilize the [Guac Visualizer](https://guac.sh/guac-visualizer/). The GUAC visualizer provides a utility to do some basic analysis and exploration
-of the software supply chain. This is a great way to get a sense of the size of
-the problem and helps when developing prototype utilities and queries with GUAC (very much like the [vulnerability CLI](https://guac.sh/querying-via-cli/)).
-
-## Step 7: Explore bad packages
+## Step 6: Explore bad packages
 
 1. To explore all the "certifyBad" items (packages, sources, or
    artifacts), run the "query Bad" CLI:
