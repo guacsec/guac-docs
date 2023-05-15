@@ -105,7 +105,9 @@ and a artifact (algorithm:digest).
   ```bash
   ./bin/guacone query known package "pkg:guac/spdx/docker.io/library/vault-latest"
   ```
+  
   The output will look similar to this:
+
   ```bash
   +------------------------------------------------+
   | Package Name Nodes                             |
@@ -122,7 +124,6 @@ and a artifact (algorithm:digest).
   | hasSBOM   | 6964      | SBOM Download Location: file:///../guac-data/top-dh-sboms/vault.json |
   +-----------+-----------+----------------------------------------------------------------------+
   Visualizer url: http://localhost:3000/?path=5,4,3,2,6964
-
   ```
   
   The output has two separate tables: one for the “package name level” and the
