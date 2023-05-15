@@ -10,54 +10,53 @@ nav_order: 3
 
 GUAC's GraphQL API allows us to integrate the knowledge graph into various
 applications. In the other examples, we saw how it can be used to visualize and
-query the graph from a React UI and even a small Python application to query for
-paths between nodes. In this demo, we will utilize a Go CLI that will allow us
+query the graph from a React UI, and even a small Python application to query for
+paths between nodes. 
+
+In this demo, we will utilize a Go CLI that will allow us
 to query if a purl (package URL) has any vulnerabilities based on its direct and
 indirect dependencies. We will so see if a purl is affected by a specific
 vulnerability and which dependencies need to be updated to remediate that
 particular vulnerability.
 
-## Setup
+## Step 1: Setup GUAC with Docker Compose
 
-To get started, please follow the [docker compose setup](../docs/Compose.md) to
-get setup and started.
+Follow the [Docker Compose setup](https://docs.guac.sh/setup/).
 
-## Clone GUAC
+## Step 2: Clone GUAC
 
-If you haven't already, clone GUAC to a local directory:
+1. Clone GUAC to a local directory:
+  ```bash
+  git clone https://github.com/guacsec/guac.git
+  ```
 
-```bash
-git clone https://github.com/guacsec/guac.git
-```
+2. Clone GUAC data (this is used as test data for this demo):
+  ```bash
+  git clone https://github.com/guacsec/guac-data.git
+  ```
 
-Also, clone GUAC data, this is used as test data for this demo.
-
-```bash
-git clone https://github.com/guacsec/guac-data.git
-```
-
-The rest of the demo will assume you are in the GUAC directory
+The rest of the demo will assume you are in the GUAC directory.
 
 ```bash
 cd guac
 ```
 
-## Building the GUAC binaries
+## Step 3: Build the GUAC binaries
 
-Build the GUAC binaries using the `make` command.
+Build the GUAC binaries using the `make` command:
 
 ```bash
 make
 ```
 
-## Running the GUAC Visualizer
+## Step 4. Run the GUAC Visualizer
 
-To get the GUAC visualizer up and running please follow the
-[GUAC visualizer setup](https://github.com/guacsec/guac-visualizer/blob/main/docs/setup.md).
+To get the GUAC visualizer up and running, follow the
+[GUAC visualizer setup](https://docs.guac.sh/guac-visualizer/).
 This will be used in this demo to show the various paths from package to
 vulnerability.
 
-## Ingesting a vulnerability SPDX SBOM
+## Step 5. Ingest a vulnerability SPDX SBOM
 
 For demo purposes, let's ingest a known bad SPDX SBOM that contains a bunch of
 vulnerabilities. To do this, we will use the help of the `guacone` command,
@@ -81,19 +80,21 @@ Once ingested you will see the following message:
 {"level":"info","ts":1681821120.1626382,"caller":"cmd/files.go:201","msg":"completed ingesting 1 documents of 1"}
 ```
 
-## Drawing further insight from OSV.dev
+## Step 6: Draw further insight from OSV.dev
 
-One of the benefits of GUAC is that it’s not a static database, it is constantly
+One of the benefits of GUAC is that it’s not a static database; it is constantly
 evolving and trying to find more information on the artifacts ingested. To
 demonstrate this, we will utilize one of the components of GUAC known as a
 “certifier”. The role of the certifier is to continuously run and query for
 additional information from various sources (such as osv.dev and scorecard to
 start with) and keep the information specified up-to-date within GUAC.
 
-The certifier can be run in two modes, polling (for continuous updates on the
-information) or non-polling (run once and collect the data). For this demo, the
-polling version of the osv certifier is already running as part of the docker
-compose.
+The certifier can be run in two modes:
+- **Polling:** For continuous updates on the information
+- **Non-polling:** Run once and collect the data
+
+For this demo, the polling version of the osv certifier is already running as part of the Docker
+Compose.
 
 The OSV certifier will query osv.dev and determine if the various components
 that make up our images have vulnerabilities we should be worried about.
@@ -102,14 +103,6 @@ Switch back to the compose window and you will soon see that the OSV certifier
 recognized the new packages and is looking up vulnerability information for
 them.
 
-**NOTE**: The OSV certifier is set to run at a five minute interval
-(configurable by the user). If the quires below return an error you can either
-wait for the OSV certifier to re-scan or force it to run manually via:
-
-```bash
-./bin/guacone certifier osv
-```
-
 Once the OSV certifier has completed running and you will see the following
 message:
 
@@ -117,43 +110,42 @@ message:
 {"level":"info","ts":1681821205.06338,"caller":"cmd/osv.go:122","msg":"certifier ended gracefully"}
 ```
 
+**If the queries return an error,** you can wait for the OSV certifier to re-scan (this is done every 5 minutes)
+or force it to run manually via:
+
+```bash
+./bin/guacone certifier osv
+```
+
 In a running instance of GUAC, as you are ingesting new SBOMs and artifacts, the
 certifier will automatically query OSV for the latest information and populate
 GUAC. After a set period of time (set by the user), it will re-query the
-information to ensure that it's always up to date. For demo purposes, we ran it
+information to ensure that it's always up-to-date. For demo purposes, we ran it
 just once.
 
-## Running the Query Vulnerability CLI
+## Step 7: Run the Query Vulnerability CLI
 
-Now that we have our GUAC instance up and running with up-to-date information on
-the vulnerable image that we ingest, we will now look at how we can utilize this
+Now that our GUAC instance is up and running with up-to-date information on
+the vulnerable image that we ingest, we will look at how we can utilize this
 data effectively.
 
 ### Query PURL to determine vulnerabilities
 
 In this first example, we will query if our image has any vulnerabilities
-(either directly or indirectly).
-
-We will start off by running the following command:
+(either directly or indirectly) by running:
 
 ```bash
 ./bin/guacone query vuln "pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest"
 ```
 
-**Note**: if you see the following error:
+**If you get this error:**
 
 ```bash
 {"level":"fatal","ts":1681822176.390916,"caller":"cmd/query_vulnerability.go:179","msg":"error searching dependency packages match: error querying neighbor: error certify vulnerability node not found, incomplete data. Please ensure certifier has run"}
 ```
 
-This error message is a check that all dependent packages have been scanned for
-vulnerabilities via the certifier (either OSV or some other) to ensure that
-there is no incomplete data or a false sense of security from a lack of
-information.
-
-The OSV certifier may not have completed the scan for all the packages (set to a
-five minute interval to keep re-scanning for any new packages in GUAC). To force
-the scan to occur immediately please run:
+The OSV certifier may not have completed the scan for all the packages. To force
+the scan to occur immediately, run:
 
 ```bash
 ./bin/guacone certifier osv
@@ -178,13 +170,11 @@ Visualizer url: http://localhost:3000/?path=15337,15336,15335,2,15432,15431,1543
 
 From the output, you can see that there are vulnerabilities associated with the
 image we ingested. This information can be output into a JSON format that we can
-use elsewhere to make policy decisions or to visualize the issue, we can use the
+use elsewhere to make policy decisions or to visualize the issue. We can use the
 GUAC visualizer to explore the vulnerabilities quickly. Copying the provided URL
 and pasting it into a browser will show the following:
 
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/88045217/232806365-3c68a9b3-10f5-4c98-b072-55dadab8abde.png">
-</p>
+![Image from visualizer](assets/images/cliimage.png)
 
 From the visualizer, we can determine that the image we are working with is
 vulnerable to both log4j and text4shell vulnerabilities. These packages need to
@@ -200,27 +190,25 @@ that we can remediate the culprit.
 return a certain number, you can use the `--num-path` flag to specify the
 number.
 
-To do this we will run the following:
+Run:
 
 ```bash
 ./bin/guacone query vuln "pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest" --vuln-id "ghsa-7rjr-3q55-vv33"
 ```
 
-**Note**: if you see the following:
+**If you get this error:**
 
 ```bash
 Failed to identify vulnerability as cve or ghsa and no results found for OSV
 No path to vulnerability ID found!
 ```
 
-This means that the vulnerability node was not found within GUAC.
+The OSV certifier may not have completed the scan for all the packages. To force
+the scan to occur immediately, run:
 
 ```bash
-{"level":"fatal","ts":1681822176.390916,"caller":"cmd/query_vulnerability.go:179","msg":"error searching dependency packages match: error querying neighbor: error certify vulnerability node not found, incomplete data. Please ensure certifier has run"}
+./bin/guacone certifier osv
 ```
-
-As above, there may be incomplete data from the certifier not being run
-successfully to provide accurate results.
 
 Successful output will show the following:
 
@@ -233,13 +221,11 @@ Successful output will show the following:
 Visualizer url: http://localhost:3000/?path=138449,138450,15573,15572,15515,2509,15574,15337,15336,15335,2
 ```
 
-Based on the output we see that there is a path to the vulnerability, we can use
+Based on the output we see that there is a path to the vulnerability and we can use
 the GUAC visualizer to inspect in more detail. Copying the provided URL and
 pasting it into a browser will show the following:
 
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/88045217/232806473-ea50ca96-7d32-482e-8955-6ff089d9094b.png">
-</p>
+![Image from visualizer](assets/images/cliimage2.png)
 
 From this, we can see that the Apache logging library, log4j, is the culprit and
 needs to be remediated immediately!
