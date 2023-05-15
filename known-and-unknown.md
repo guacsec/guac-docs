@@ -36,6 +36,8 @@ environment autonomously. In this demo, we'll take that information and use it t
 - [Go](https://go.dev/doc/install)
 - [Docker](https://docs.docker.com/get-docker/)
 - A fresh copy of the [GUAC service infrastructure through Docker Compose](https://docs.guac.sh/setup/)
+- Completion of the [Expanding your view of the software supply chain demo](https://docs.guac.sh/expanding-your-view/)
+
 
 
 ## Step 1: Clone GUAC
@@ -64,142 +66,7 @@ Build the GUAC binaries using the `make` command.
 make
 ```
 
-## Step 3: Ingest Vault’s SBOM
-
-For demo purposes, let's ingest Vault’s SBOM. To do this, we will use the help
-of the `guaccollect` file command.
-
-1. Run:
-  ```bash
-  ./bin/guaccollect files ../guac-data/top-dh-sboms/vault.json
-  ```
-2. Run the file collector:
-  ```bash
-  {"level":"info","ts":1681994359.2474601,"caller":"cmd/files.go:112","msg":"collector ended gracefully"}
-  ```
-
-## Step 4. Check the ingestion logs
-
-We can pull the logs from Kubernetes to see the progress of the ingestion:
-
-**NOTE**: The name of the pod will be different per instantiation, please use
-the name from your cluster.
-
-```bash
-kubectl logs ingestor-<IDENTIFIER>
-```
-
-The results for the Vault SBOM ingestion will look like the following:
-
-```bash
-{"level":"info","ts":1681992933.3817039,"caller":"emitter/nats_emitter.go:121","msg":"creating stream \"DOCUMENTS\" and subjects \"DOCUMENTS.*\""}
-{"level":"info","ts":1681994359.306624,"caller":"process/process.go:97","msg":"[processor: 856ef1f5-1627-4ec9-b9e1-507b7bdee58f] docTree Processed: {Collector:FileCollector Source:file:///../guac-data/top-dh-sboms/vault.json}"}
-{"level":"info","ts":1681994359.31475,"caller":"parser/parser.go:128","msg":"parsing document tree with root type: SPDX"}
-{"level":"info","ts":1681994359.3263202,"caller":"helpers/assembler.go:34","msg":"assembling CertifyScorecard: 0"}
-{"level":"info","ts":1681994359.32635,"caller":"helpers/assembler.go:39","msg":"assembling IsDependency: 2260"}
-{"level":"info","ts":1681994359.7843368,"caller":"helpers/assembler.go:44","msg":"assembling IsOccurence: 963"}
-{"level":"info","ts":1681994359.954613,"caller":"helpers/assembler.go:49","msg":"assembling HasSLSA: 0"}
-{"level":"info","ts":1681994359.954643,"caller":"helpers/assembler.go:54","msg":"assembling CertifyVuln: 0"}
-{"level":"info","ts":1681994359.954647,"caller":"helpers/assembler.go:59","msg":"assembling IsVuln: 0"}
-{"level":"info","ts":1681994359.954649,"caller":"helpers/assembler.go:64","msg":"assembling HasSourceAt: 0"}
-{"level":"info","ts":1681994359.9546518,"caller":"helpers/assembler.go:69","msg":"assembling CertifyBad: 0"}
-{"level":"info","ts":1681994359.954654,"caller":"helpers/assembler.go:74","msg":"assembling CertifyGood: 0"}
-{"level":"info","ts":1681994359.9546711,"caller":"cmd/ingest.go:118","msg":"got collect entries to add: 349"}
-{"level":"info","ts":1681994359.9560268,"caller":"parser/parser.go:110","msg":"[ingestor: 04462d2a-a2c7-4aa9-95eb-2183cb5f249d] ingested docTree: {Collector:FileCollector Source:file:///../guac-data/top-dh-sboms/vault.json}"}
-```
-
-## Step 5: Query for more information
-
-As the ingestion process occurs, the collector subscriber service of GUAC
-collects purls, OCI strings, and others to determine if there is more
-information available to be pulled into the graph DB.
-
-As the SBOM is ingested, the collector subscriber: 
-
-- Collects the PURLs of its dependency packages
-- Queries the deps.dev database to grab the source, OpenSSG scorecard, and its dependency information
-- Links this information back to the original top-level artifact of the SBOM
-
-This process is recursive, meaning that the PURLs that the dependency relies on will also be queried.
-
-We can pull the logs from Kubernetes to see which packages deps.dev collector
-found:
-
-**NOTE**: The name of the pod will be different per instantiation, please use
-the name from your cluster.
-
-```bash
-kubectl logs depsdev-collector--<IDENTIFIER>
-```
-
-The results from the deps.dev collector pod will look like the following:
-
-```bash
-{"level":"info","ts":1681994369.748968,"caller":"deps_dev/deps_dev.go:217","msg":"obtained additional metadata for package: pkg:golang/cloud.google.com/go@v0.65.0"}
-{"level":"info","ts":1681994372.493675,"caller":"deps_dev/deps_dev.go:217","msg":"obtained additional metadata for package: pkg:golang/cloud.google.com/go/spanner@v1.5.1"}
-{"level":"info","ts":1681994375.3482509,"caller":"deps_dev/deps_dev.go:217","msg":"obtained additional metadata for package: pkg:golang/cloud.google.com/go/storage@v1.10.0"}
-{"level":"info","ts":1681994376.722956,"caller":"deps_dev/deps_dev.go:217","msg":"obtained additional metadata for package: pkg:golang/code.cloudfoundry.org/gofileutils@v0.0.0-20170111115228-4d0c80011a0f"}
-{"level":"info","ts":1681994377.476279,"caller":"deps_dev/deps_dev.go:217","msg":"obtained additional metadata for package: pkg:golang/github.com/Azure/azure-pipeline-go@v0.2.3"}
-{"level":"info","ts":1681994380.7538428,"caller":"deps_dev/deps_dev.go:217","msg":"obtained additional metadata for package: pkg:golang/github.com/Azure/azure-sdk-for-go@v61.4.0+incompatible"}
-{"level":"info","ts":1681994382.8232992,"caller":"deps_dev/deps_dev.go:217","msg":"obtained additional metadata for package: pkg:golang/github.com/Azure/azure-storage-blob-go@v0.14.0"}
-```
-
-If we go back to the ingestor logs, we will see deps.dev documents being
-ingested.
-
-```bash
-kubectl logs ingestor-<IDENTIFIER>
-```
-
-These logs will show the following with the collector and source being from
-deps.dev.
-
-```bash
-{"level":"info","ts":1681994398.146413,"caller":"parser/parser.go:128","msg":"parsing document tree with root type: DEPS_DEV"}
-{"level":"info","ts":1681994398.146731,"caller":"helpers/assembler.go:34","msg":"assembling CertifyScorecard: 1"}
-{"level":"info","ts":1681994398.148156,"caller":"helpers/assembler.go:39","msg":"assembling IsDependency: 12"}
-{"level":"info","ts":1681994398.156023,"caller":"helpers/assembler.go:44","msg":"assembling IsOccurence: 0"}
-{"level":"info","ts":1681994398.156051,"caller":"helpers/assembler.go:49","msg":"assembling HasSLSA: 0"}
-{"level":"info","ts":1681994398.1560571,"caller":"helpers/assembler.go:54","msg":"assembling CertifyVuln: 0"}
-{"level":"info","ts":1681994398.156063,"caller":"helpers/assembler.go:59","msg":"assembling IsVuln: 0"}
-{"level":"info","ts":1681994398.156069,"caller":"helpers/assembler.go:64","msg":"assembling HasSourceAt: 4"}
-{"level":"info","ts":1681994398.157971,"caller":"helpers/assembler.go:69","msg":"assembling CertifyBad: 0"}
-{"level":"info","ts":1681994398.1579862,"caller":"helpers/assembler.go:74","msg":"assembling CertifyGood: 0"}
-{"level":"info","ts":1681994398.157998,"caller":"cmd/ingest.go:118","msg":"got collect entries to add: 12"}
-{"level":"info","ts":1681994398.158665,"caller":"parser/parser.go:110","msg":"[ingestor: 04462d2a-a2c7-4aa9-95eb-2183cb5f249d] ingested docTree: {Collector:deps.dev Source:deps.dev}"}
-```
-
-From the logs we see that `CertifyScorecard`, `IsDependency` and `HasSourceAt`
-are being ingested. 
-
-## Step 6: Query for vulnerabilities
-
-As we saw in the section above, GUAC automatically looks for more information
-for an ingested SBOM. What about vulnerabilities?
-
-The certifier (currently utilizing the OSV database, with more integrations to
-come) is configured to run and query the vulnerability database to determine if
-a package has a vulnerability.
-
-We can pull the logs from kubernetes to see the OSV certifier in action.
-
-**NOTE**: The name of the pod will be different per instantiation, please use
-the name from your cluster.
-
-```bash
-kubectl logs osv-certifier-<IDENTIFIER>
-```
-
-The results from the osv certifier pod will look like the following:
-
-```bash
-{"level":"info","ts":1681994498.498469,"caller":"cmd/osv.go:115","msg":"[209.458µs] completed doc {Collector:guac Source:guac}"}
-{"level":"info","ts":1681994498.4986901,"caller":"cmd/osv.go:115","msg":"[216µs] completed doc {Collector:guac Source:guac}"}
-{"level":"info","ts":1681994498.4989061,"caller":"cmd/osv.go:115","msg":"[211.042µs] completed doc {Collector:guac Source:guac}"}
-{"level":"info","ts":1681994498.498911,"caller":"cmd/osv.go:122","msg":"certifier ended gracefully"}
-```
-
-## Step 4. Run the query to find the knowns and unknowns
+## Step 3. Run the query to find the knowns and unknowns
 
 Now that we have the data ingested, let's run some queries on the data.
 
@@ -227,8 +94,6 @@ For more information on these, refer to the [grapQL documentation](https://docs.
 Utilizing the CLI and GUAC Visualizer, we can quickly determine the location of
 SBOMs, SLSA attestations, and scorecard information but also what 
 information we are missing.
-
-## Step 5: Query Known/Unknown
 
 We will utilize the “query known” CLI. This CLI has the ability to search a
 package via [PURL](https://github.com/package-url/purl-spec), source URL
