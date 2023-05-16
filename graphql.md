@@ -11,9 +11,9 @@ This demo introduces the GUAC GraphQL API. It covers the basic node "noun" and
 "verb" types and what they contain. It also explores the server-side `path`
 query and demonstrates a client-side search program.
 
-## GraphQL background information
+## Background information
 
-The GUAC graph is queryable using GraphQL. GraphQL is a query language for APIs
+In this demo, we'll query the GUAC graph using GraphQL. GraphQL is a query language for APIs
 and a runtime for fulfilling those queries with your existing data.
 
 > For some background reading, visit https://graphql.org/learn/ . Also, the full
@@ -222,7 +222,7 @@ Output:
 
 ### Full package data
 
-Run `PkgQ3` to get full package data on any package with `name: "libp11-kit0"`.
+Run `PkgQ3` to get full package data on any package with `name: "libp11-kit0"`:
 
 ```bash
 cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ3 | jq
@@ -398,7 +398,7 @@ cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ4 | jq
 ```
 
 Now we will use a query on `IsDependency` to find all the packages that the
-`consul` container image depends on. The query is looks like this:
+`consul` container image depends on. The query looks like this:
 
 ```
 {
@@ -588,8 +588,7 @@ the numbers you found:
 cat demo/queries.gql | gql-cli http://localhost:8080/query -o PathQ1 -V subject:5809 target:6721 | jq
 ```
 
-> Note: in the "Playground" there is a section at the bottom to specify
-> "Variables".
+**Note:** In the "Playground" there is a section at the bottom to specify "Variables".
 
 Here we see a long output with a chain of nodes from the `etcd/client` package
 to `etcd/api`. First is the `client` package node. Then an `IsDependency` node
@@ -600,7 +599,7 @@ container image to the `api` package. Finally, the `Package` node for the
 `api` package.
 
 What we have learned is that the `vault` container image depends on both the
-`client` and `api` package. This is maybe not the dependency relationship we
+`client` and `api` package. This is might not be the dependency relationship we
 were hoping to find.
 
 It is important to understand the limitations of the path GraphQL query in
@@ -764,8 +763,8 @@ def filter(fromID, fromNode, neighbor):
     return False
 ```
 
-`Package`->`Package` links, are only followed downward, "PackageName"
--> "PackageVersion".`Package`->`IsDependency` links, are only followed
+`Package`->`Package` links are only followed downward: "PackageName"
+-> "PackageVersion". `Package`->`IsDependency` links are only followed
 if the Package is the "Subject" and not the "Object", ie: if the previous
 Package node is the one that depends on the newly found Package in the link.
 
@@ -788,8 +787,8 @@ dependency link between an API and a client of that API, but we simply haven't
 ingested an SBOM that contains that link. In this case, only the `vault` SBOM
 was ingested which referenced both packages.
 
-Now let's explore two more packages, the `python` container image, and the
-`libsqlite3-dev` debian package. Run these queries and node the `id`s.
+Now let's explore two more packages: the `python` container image and the
+`libsqlite3-dev` debian package. Run these queries and node the `id`s:
 
 ```bash
 cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ7 | jq
@@ -812,7 +811,7 @@ Now find the path (your `id`s may be different):
 
 A path is found. The program prints the ids of the path, then the nodes. The
 `python` "PackageName" is linked to the "PackageVersion", which is a specific
-tag of the image. Then, an `IsDependency` link has the `python` "PackageVersion"
+tag of the image. An `IsDependency` link has the `python` "PackageVersion"
 as the "subject" of the link, and the "object" `dependentPackage` is the
 "PackageName" node of the `libsqlite3-dev` package. The last node in the path is
 the "PackageName" node of `libsqlite3-dev`.
