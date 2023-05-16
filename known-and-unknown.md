@@ -141,7 +141,7 @@ and a artifact (algorithm:digest).
   quickly locate the SBOM. We also learned that we are missing `hasSLSA`
   attestations for this package.
 
-2. Determine if a artifact has an SLSA attestation associated with it
+2. Determine if an artifact has an SLSA attestation associated with it
 
   Along the same lines, we have the hash of an executable binary that was
   generated. We can ask the question, "Is there an SLSA attestation associated?"
@@ -168,8 +168,8 @@ and a artifact (algorithm:digest).
   ```
   
   From the output, we know that there is a SLSA attestation associated with this
-  particular artifact and it's location. We also see from the output, that the
-  digest is associated with the windows arm64 version of the kubectl!
+  particular artifact and its location. We also see from the output, that the
+  digest is associated with the Windows ARM64 version of the kubectl!
   
   **Note**: Currently, the package "purl" is guessed based on heuristics. This
   will improve as future versions of SLSA adopt
