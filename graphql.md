@@ -5,31 +5,41 @@ permalink: /graphql/
 nav_order: 5
 ---
 
-# GraphQL Demo
+# GraphQL API demo
 
 This demo introduces the GUAC GraphQL API. It covers the basic node "noun" and
-"verb" types and what they contain. Also, it explores the server-side `path`
+"verb" types and what they contain. It also explores the server-side `path`
 query and demonstrates a client-side search program.
+
+## Background information
+
+In this demo, we'll query the GUAC graph using GraphQL. GraphQL is a query language for APIs
+and a runtime for fulfilling those queries with your existing data.
+
+> For some background reading, visit https://graphql.org/learn/ . Also, the full
+> GUAC schema can be saved with this command:
+>
+> ```bash
+> gql-cli http://localhost:8080/query --print-schema > schema.graphql
+> ```
 
 ## Requirements
 
-- go
-- pip (optional)
-- jq (optional)
+- [Go](https://go.dev/doc/install)
+- [pip](https://pip.pypa.io/en/stable/cli/pip_install/) (optional)
+- [jq](https://stedolan.github.io/jq/download/) (optional)
 
-## Clone GUAC
+## Step 1: Clone GUAC
 
-If you haven't already, clone GUAC to a local directory:
+1. Clone GUAC to a local directory:
+  ```bash
+  git clone https://github.com/guacsec/guac.git
+  ```
 
-```bash
-git clone https://github.com/guacsec/guac.git
-```
-
-Also clone GUAC data, this is used as test data for this demo.
-
-```bash
-git clone https://github.com/guacsec/guac-data.git
-```
+2. Clone GUAC data (this is used as test data for this demo):
+  ```bash
+  git clone https://github.com/guacsec/guac-data.git
+  ```
 
 The rest of the demo will assume you are in the GUAC directory
 
@@ -37,15 +47,15 @@ The rest of the demo will assume you are in the GUAC directory
 cd guac
 ```
 
-## Building the GUAC binaries
+## Step 2: Build the GUAC binaries
 
-Build the GUAC binaries using the `make` command.
+Build the GUAC binaries using the `make` command:
 
 ```bash
 make
 ```
 
-## Running the GUAC Server
+## Step 3: Run the GUAC Server
 
 For this demo, we will use the `guacgql --gql-debug` command, which sets up a
 GraphQL endpoint and playground, and runs an in-memory backend to store the GUAC
@@ -56,12 +66,12 @@ running throughout the demo.
 bin/guacgql --gql-debug
 ```
 
-Note: As the data is stored in-memory, whenever you restart the server, the
+**Note:** As the data is stored in-memory, whenever you restart the server, the
 graph will be empty.
 
-## Ingesting the data
+## Step 4: Ingest the data
 
-To ingest the data, we will use the help of the `guacone` command, which is an
+To ingest the data, we will use the `guacone` command, which is an
 all-in-one utility that can take a collection of files and ingest them into the
 GUAC graph.
 
@@ -71,59 +81,47 @@ In your original window, run:
 bin/guacone collect files ../guac-data/docs/
 ```
 
-This can take a minute or two. This dataset consists of a set of document types:
+This can take a minute or two. 
+
+This dataset consists of a set of document types:
 
 - SLSA attestations for kubernetes
 - Scorecard data for kubernetes repos
 - SPDX SBOMs for kubernetes containers
 - CycloneDX SBOMs for some popular DockerHub images
 
-## Running Queries
+## Step 5: Run queries
 
 The queries for this demo are stored in the `demo/queries.gql` file. Running the
 demo queries can be done graphically by opening the GraphQL Playground in a web
-browser, or using the command line.
+browser, or using the command line. The remainder of the demo will have cli commands. 
 
-The remainder of the demo will have cli commands. If you would like to use the
-GraphQL Playground instead, use these steps:
+### Option 1: Use the command line to run queries
+
+**You must use a `bash` or `sh` shell.**
+
+Install the `gql-cli` tool with `pip`:
+
+```bash
+pip install gql[all]
+```
+**Note:**
+If you are using **pyhton3** in your system, you may need to use the `pip3` command instead.
+
+### Option 2: Use the GraphQL Playground to run queries
 
 1. Open the GraphQL Playground by visiting `http://localhost:8080/` in your web
    browser.
 
 1. Open `demo/queries.gql` in a text editor and copy the full contents.
 
-1. Paste the contents in the left pane of the Playground
+1. Paste the contents in the left pane of the Playground.
 
 1. The "Play" button in the top center of the Playground can be used to select
    which query to run.
 
-To use the command line to run queries, install the `gql-cli` tool with `pip`,
-run:
 
-```bash
-pip install gql[all]
-```
-
-Note:
-
-- if you are using a shell like `zsh` it will not be able to run the command
-  above properly. Instead, use a `bash` or `sh` shell.
-- in your system, if you are using pyhton3, you may need to use the `pip3`
-  command instead.
-
-## GraphQL
-
-The GUAC graph is queryable using GraphQL. GraphQL is a query language for APIs
-and a runtime for fulfilling those queries with your existing data.
-
-> For some background reading, visit https://graphql.org/learn/ . Also, the full
-> GUAC schema can be saved with this command:
->
-> ```bash
-> gql-cli http://localhost:8080/query --print-schema > schema.graphql
-> ```
-
-## A Simple Query
+## Step 6: Run a simple query
 
 A primary type of node in GUAC is a Package. Packages are stored in hierarchical
 nodes by Type -> Namespace -> Name -> Version. First we will run the below
@@ -224,7 +222,7 @@ Output:
 
 ### Full package data
 
-Run `PkgQ3` to get full package data on any package with `name: "libp11-kit0"`.
+Run `PkgQ3` to get full package data on any package with `name: "libp11-kit0"`:
 
 ```bash
 cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ3 | jq
@@ -352,7 +350,7 @@ that it uses the `allPkgTree` fragment. This fragment specifies all the possible
 fields in a GUAC package. Fragments can be used to avoid duplicating long lists
 of attributes.
 
-## Dependencies
+## Step 7: Explore dependencies
 
 We have explored Package nodes, which are called "nouns" in GUAC. Now let's
 explore nodes that are called "verbs". `IsDependency` is a node that links two
@@ -400,7 +398,7 @@ cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ4 | jq
 ```
 
 Now we will use a query on `IsDependency` to find all the packages that the
-`consul` container image depends on. The query is looks like this:
+`consul` container image depends on. The query looks like this:
 
 ```
 {
@@ -554,12 +552,12 @@ cat demo/queries.gql | gql-cli http://localhost:8080/query -o IsDependencyQ2 | j
 Here are the full details of the dependency link, including the SBOM that
 declared it.
 
-## Finding paths
+## Step 8: Find paths
 
 GUAC has a `path` query to find the shortest path between any two nodes. To use
 this, we will need to pay attention to the `id` field of the nodes we want to
 query. For this example we will pick the `etcd/client` and `etcd/api` Go
-packages. Run these two queries to find the `id` of the packages.
+packages. Run these two queries to find the `id` of the packages:
 
 ```bash
 cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ5 | jq
@@ -584,32 +582,31 @@ Make a note the two `id`s printed. The path query will look like this:
 
 However, the query saved in `demo/queries.gql` is parameterized so you may pass
 in the two ids you found, which may be different. Replace `5809` and `6721` with
-the numbers you found.
+the numbers you found:
 
 ```bash
 cat demo/queries.gql | gql-cli http://localhost:8080/query -o PathQ1 -V subject:5809 target:6721 | jq
 ```
 
-> Note: in the "Playground" there is a section at the bottom to specify
-> "Variables".
+**Note:** In the "Playground" there is a section at the bottom to specify "Variables".
 
 Here we see a long output with a chain of nodes from the `etcd/client` package
 to `etcd/api`. First is the `client` package node. Then an `IsDependency` node
 which describes the dependency from the `vault` container image to the `client`
 package. Next is the `Package` node for the `vault` container image. Then
 another `IsDependency` node which describes the dependency from the `vault`
-container image to the `api` package. Finally is the `Package` node for the
+container image to the `api` package. Finally, the `Package` node for the
 `api` package.
 
 What we have learned is that the `vault` container image depends on both the
-`client` and `api` package. This is maybe not the dependency relationship we
+`client` and `api` package. This is might not be the dependency relationship we
 were hoping to find.
 
 It is important to understand the limitations of the path GraphQL query in
 isolation and understand how to use client-side processing to get the desired
 results. An example of how to do this is in the section below.
 
-## Vulnerabilities
+## Step 9: Find vulnerabilities
 
 The data we have ingested in GUAC is based on the SBOM files in the `guac-data`
 repo, but does not contain any vulnerability information. GUAC has built-in
@@ -717,13 +714,13 @@ cat demo/queries.gql | gql-cli http://localhost:8080/query -o CertifyVulnQ1 | jq
 This node has the package and vulnerability nodes along with the metadata that
 records how this link was found.
 
-## Client-side search
+## Step 10: Perform a client-side search
 
 All of the above examples use a single GraphQL query. However, the query results
 are all easily parsed `json` that can be interpreted to build powerful scripts.
 GUAC has a `neighbors` query that will return all the nodes with a relationship
-to the specified node. This can be used to search through relationships, finding
-the specific type of path you are looking for. The neighbor query also take in a
+to the specified node. This can be used to search through relationships and find
+the specific type of path you are looking for. The neighbor query also takes in a
 set of edge filters of which to traverse. However, we are not using that field
 in this query.
 
@@ -766,13 +763,13 @@ def filter(fromID, fromNode, neighbor):
     return False
 ```
 
-For `Package`->`Package` links, they are only followed downward, "PackageName"
--> "PackageVersion". For `Package`->`IsDependency` links, they are only followed
+`Package`->`Package` links are only followed downward: "PackageName"
+-> "PackageVersion". `Package`->`IsDependency` links are only followed
 if the Package is the "Subject" and not the "Object", ie: if the previous
 Package node is the one that depends on the newly found Package in the link.
 
 First, run with the previous two ids from the `etcd/client` and `etcd/api`
-packages found above.
+packages found above:
 
 ```bash
 ./demo/path.py 5809 6721
@@ -786,19 +783,19 @@ packages found above.
 Nothing is found. Before, we saw dependency links from the `vault` image to both
 of these packages, but now with the filter we have in place, we don't follow the
 dependency link "up" to the `vault` image. We would normally expect to find a
-dependency link between an api and a client of that api, but we simply haven't
+dependency link between an API and a client of that API, but we simply haven't
 ingested an SBOM that contains that link. In this case, only the `vault` SBOM
 was ingested which referenced both packages.
 
-Now let's explore two more packages, the `python` container image, and the
-`libsqlite3-dev` debian package. Run these queries and node the `id`s.
+Now let's explore two more packages: the `python` container image and the
+`libsqlite3-dev` debian package. Run these queries and node the `id`s:
 
 ```bash
 cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ7 | jq
 cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ8 | jq
 ```
 
-Now find the path, your `id`s may be different
+Now find the path (your `id`s may be different):
 
 ```bash
 ./demo/path.py 3616 4422
@@ -814,13 +811,13 @@ Now find the path, your `id`s may be different
 
 A path is found. The program prints the ids of the path, then the nodes. The
 `python` "PackageName" is linked to the "PackageVersion", which is a specific
-tag of the image. Then, an `IsDependency` link has the `python` "PackageVersion"
+tag of the image. An `IsDependency` link has the `python` "PackageVersion"
 as the "subject" of the link, and the "object" `dependentPackage` is the
 "PackageName" node of the `libsqlite3-dev` package. The last node in the path is
 the "PackageName" node of `libsqlite3-dev`.
 
-## Exploring
+## Explore on your own!
 
-Now you have the knowledge and tools to import data, query nodes an
-relationships and find interesting discoveries. Share your novel queries and
-usecases with the [community](README.md#communication)!
+Now you have the knowledge and tools to import data, query nodes and
+relationships, and find interesting discoveries. Share your novel queries and
+use cases with the [community](https://guac.sh/community/)!
