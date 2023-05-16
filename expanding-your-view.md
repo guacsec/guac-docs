@@ -58,7 +58,7 @@ cd guac
 
 ## Step 2: Build the GUAC binaries
 
-Build the GUAC binaries using the `make` command.
+Build the GUAC binaries using the `make` command:
 
 ```bash
 make
@@ -83,7 +83,7 @@ of the `guaccollect` file command.
 
 We can pull the logs from Kubernetes to see the progress of the ingestion:
 
-**NOTE**: the name of the pod will be different per instantiation, please use
+**NOTE**: The name of the pod will be different per instantiation, please use
 the name from your cluster.
 
 ```bash
@@ -119,15 +119,15 @@ As the SBOM is ingested it:
 - Collects the PURLs of its dependency packages
 - Queries the deps.dev database automatically to grab the source, OpenSSF
 scorecard, and its dependency information
-- Links this back to the original top-level artifact of the SBOM
+- Links this information back to the original top-level artifact of the SBOM
 
 This process is recursive, meaning that the PURLs that the dependency relies on will also be queried!
 
 We can pull the logs from Kubernetes to see which packages deps.dev collector
 found:
 
-**NOTE**: the name of the pod will be different per instantiation, please use
-the name from your cluster
+**NOTE**: The name of the pod will be different per instantiation, please use
+the name from your cluster.
 
 ```bash
 kubectl logs depsdev-collector--<IDENTIFIER>
@@ -205,10 +205,10 @@ We will further inspect these vulnerabilities in the following section.
 
 ## Step 7: Examine the information collected
 
-To understand what was collected, we will utilize the graphQL playground. The playground will be accessible via: `http://localhost:8080/graphql`
+To understand what was collected, we will utilize the graphQL playground. The playground is accessible via: `http://localhost:8080/graphql`
 
 From graphQL Playground, we can use the provided
-[graphQL queries](https://docs.guac.sh/graphql/) and paste that into the left
+[graphQL queries](https://docs.guac.sh/graphql/) and paste them into the left
 column that defines the queries.
 
 ### IsDepdendency
@@ -454,8 +454,7 @@ This will output the following:
       },
 ```
 
-From this, we can see that as the collector subscriber and deps.dev collector
-captured that the `pkg:golang/cloud.google.com/go` has a source repo at
+The collector subscriber and deps.dev collector captured that the `pkg:golang/cloud.google.com/go` has a source repo at
 `github.com/googleapis/google-cloud-go`. This information shows the origin being
 deps.dev.
 
@@ -682,13 +681,13 @@ This will output the following:
 This information came from the OSV certifier service that is constantly running
 within GUAC. From this, we can see that two versions of
 `github.com/prometheus/client_golang` contain the same `ghsa-cg3q-j54f-5p7p`. In
-the vulnerability CLI demo (https://docs.guac.sh/querying-via-cli/) we can use this information to
+the [vulnerability CLI demo](https://docs.guac.sh/querying-via-cli/), we can use this information to
 determine if there is a path between this and the version of Vault we are using. Here is a quick look
 at what the visualization would look like for that:
 
 ![Visualization of data](assets/images/expandviewvisualization.png)
 
-## Expanded your view of the software supply chain
+## Expanding your view of the software supply chain
 
 Through this demo, we learned that GUAC services are designed to extract as much
 information as possible about an SBOM that it ingests. Utilizing this
