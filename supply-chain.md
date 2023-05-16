@@ -80,8 +80,8 @@ the problem and helps when developing prototype utilities and queries with GUAC 
 
 ## Step 5: Mark packages as bad when a security incident occurs
 
-A new security incident has occurred and various communities have pointed out that a particular package is affected. In this scenario, the package debian package
-"tzdata" has been found to have a critical vulnerability (yikes!). We know the package and the specific version that is vulnerable. Can we be proactive with this information and quickly find where this package is being used?
+A new security incident has occurred and various communities have pointed out that a particular package is affected. In this scenario, the debian package
+"tzdata" has been found to have a critical vulnerability (yikes!). Now that we know the package and the vulnerable version, can we use this information to quickly find where this package is being used?
 
 The first step we can take is to mark this package as bad by using the `guacone certify` command. This command defaults to assert a negative
 certification (instead of a positive one), as well as a `justification` to indicate why the package is bad. In this case, it is a critical vulnerability:
@@ -140,15 +140,15 @@ If we successfully added "CertifyBad", the output will show:
    We can tell from this example (arranging the graph a little) the bad
    debian package (used for timezone information) is commonly used throughout a
    bunch of dependant container images! All are a cause for concern as they are
-   notable images for kubernetes, redis, nginx and python. We need to remediate
+   notable images for Kubernetes, Redis, Nginx and Python. We need to remediate
    these right away! This allows us to quickly figure out what needs to be updated,
-   so we are not scrambling to first scan and determine where `tzdata` might be
+   so that we are not scrambling to first scan and determine where `tzdata` might be
    used.
 
 
-## Running through a more complex example
+## Exploring a known bad source repo
 
-The above example, we look at a specific package. For this demo, we'll use a git repo that we know 
+In the above example, we looked at a specific package. For this demo, we'll use a git repo that we know 
 is producing a bunch of bad packages. We want to mark the repo as compromised, learn which packages are linked to the repo, and figure out where the packages could be used.
 
 For example, let's take the `googleapis/google-cloud-go` git repo. We will begin by certifying it as bad:
