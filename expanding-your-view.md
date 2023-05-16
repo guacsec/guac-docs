@@ -81,13 +81,10 @@ of the `guaccollect` file command.
 
 ## Step 4: Check the ingestion logs
 
-We can pull the logs from Kubernetes to see the progress of the ingestion:
-
-**NOTE**: The name of the pod will be different per instantiation, please use
-the name from your cluster.
+We can pull the logs from docker to see the progress of the ingestion:
 
 ```bash
-kubectl logs ingestor-<IDENTIFIER>
+docker logs guac-guac-ingestor-1
 ```
 
 The results for the Vault SBOM ingestion will look like the following:
@@ -123,17 +120,14 @@ scorecard, and its dependency information
 
 This process is recursive, meaning that the PURLs that the dependency relies on will also be queried!
 
-We can pull the logs from Kubernetes to see which packages deps.dev collector
+We can pull the logs from docker to see which packages deps.dev collector
 found:
 
-**NOTE**: The name of the pod will be different per instantiation, please use
-the name from your cluster.
-
 ```bash
-kubectl logs depsdev-collector--<IDENTIFIER>
+docker logs guac-depsdev-collector-1
 ```
 
-The results from the deps.dev collector pod will look like the following:
+The results from the deps.dev collector logs will look like the following:
 
 ```bash
 {"level":"info","ts":1681994369.748968,"caller":"deps_dev/deps_dev.go:217","msg":"obtained additional metadata for package: pkg:golang/cloud.google.com/go@v0.65.0"}
@@ -149,7 +143,7 @@ If we go back to the ingestor logs, we will see deps.dev documents being
 ingested.
 
 ```bash
-kubectl logs ingestor-<IDENTIFIER>
+docker logs guac-guac-ingestor-1
 ```
 
 These logs will show the following with the collector and source being from
@@ -183,16 +177,13 @@ The certifier (currently utilizing the OSV database, with more integrations to
 come) is configured to run and query the vulnerability database to determine if
 a package has a vulnerability.
 
-We can pull the logs from kubernetes to see the OSV certifier in action.
-
-**NOTE**: The name of the pod will be different per instantiation, please use
-the name from your cluster.
+We can pull the logs from docker to see the OSV certifier in action.
 
 ```bash
-kubectl logs osv-certifier-<IDENTIFIER>
+docker logs guac-osv-certifier-1
 ```
 
-The results from the osv certifier pod will look like the following:
+The results from the osv certifier logs will look like the following:
 
 ```bash
 {"level":"info","ts":1681994498.498469,"caller":"cmd/osv.go:115","msg":"[209.458µs] completed doc {Collector:guac Source:guac}"}
@@ -208,7 +199,7 @@ We will further inspect these vulnerabilities in the following section.
 To understand what was collected, we will utilize the graphQL playground. The playground is accessible via: `http://localhost:8080/graphql`
 
 From graphQL Playground, we can use the provided
-[graphQL queries](https://docs.guac.sh/graphql/) and paste them into the left
+[graphQL queries](https://github.com/guacsec/guac/blob/main/demo/graphql/queries.gql) and paste them into the left
 column that defines the queries.
 
 ### IsDepdendency
@@ -697,8 +688,8 @@ a low OpenSSF scorecard score or critical vulnerability.
 
 ## Cleanup
 
-To delete all the GUAC resources from the cluster run:
+To delete all the GUAC resources, run:
 
 ```bash
-helm uninstall <RELEASE NAME>
+docker-compose down
 ```
