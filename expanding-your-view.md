@@ -28,37 +28,27 @@ supply chain environment.
 In this demo, we will go through the process of ingesting an SBOM and letting
 GUAC expand our horizons on what we know about our environment autonomously!
 
-<img width="1260" alt="3" src="https://user-images.githubusercontent.com/88045217/233640614-3976703c-d971-4b34-97e7-306f4efe5d31.png">
+![Diagram of how GUAC works](assets/images/expandviewdiagram.png)
 
-We will demonstrate the various integrations of GUAC and how it works together
-with in the ingested SBOM.
+We will demonstrate the various integrations of GUAC and how they work together
+within the ingested SBOM.
 
 ## Requirements
 
-- go
-- Kubernetes 1.19+ ([k3s](https://github.com/k3s-io/k3s/),
-  [minikube](https://github.com/kubernetes/minikube) or
-  [colima](https://github.com/abiosoft/colima) (or another k8s service of your
-  choice))
-- [Helm v3.9.4+](https://helm.sh/)
+- [Go](https://go.dev/doc/install)
+- A fresh copy of the [GUAC service infrastructure through Docker Compose](https://docs.guac.sh/setup/)
 
-**NOTE**: There is also a docker compose deployment to get GUAC running if you
-don't want to use Kubernetes. Follow the
-[docker compose deployment](../../docs/Compose.md) to get started!
+## Step 1. Clone GUAC
 
-## Clone GUAC
+1. Clone GUAC to a local directory:
+  ```bash
+  git clone https://github.com/guacsec/guac.git
+  ```
 
-If you haven't already, clone GUAC to a local directory:
-
-```bash
-git clone https://github.com/guacsec/guac.git
-```
-
-Also, clone GUAC data, this is used as test data for this demo.
-
-```bash
-git clone https://github.com/guacsec/guac-data.git
-```
+2. Clone GUAC data (this is used as test data for this demo):
+  ```bash
+  git clone https://github.com/guacsec/guac-data.git
+  ```
 
 The rest of the demo will assume you are in the GUAC directory
 
@@ -66,68 +56,35 @@ The rest of the demo will assume you are in the GUAC directory
 cd guac
 ```
 
-## Building the GUAC binaries
+## Step 2: Build the GUAC binaries
 
-Build the GUAC binaries using the `make` command.
+Build the GUAC binaries using the `make` command:
 
 ```bash
 make
 ```
 
-## Installing GUAC via Helm Chart
-
-Please refer to the [INSERT GUAC Helm Install Guide] to have a running instance.
-
-**NOTE**: There is also a docker compose deployment to get GUAC running if you
-don't want to use Kubernetes. Follow the
-[docker compose deployment](../../docs/Compose.md) to get started!
-
-Once that process is completed, you will see the following pods running (the pod
-names are auto-generated so they might differ):
-
-```bash
-default       osv-certifier-c7c67d89d-f5ndx             1/1     Running     0             11m
-default       guac-nats-box-774449cffc-vdkmx            1/1     Running     0             11m
-default       collectsub-855c4578f6-69nfx               1/1     Running     0             11m
-default       graphql-server-589c77fdb4-hvprm           1/1     Running     0             11m
-default       guac-nats-0                               3/3     Running     0             11m
-default       depsdev-collector-8698956798-x74vr        1/1     Running     2 (11m ago)   11m
-default       oci-collector-7ff77d9b7-k24zk             1/1     Running     2 (11m ago)   11m
-default       ingestor-5c75564464-s5v2s                 1/1     Running     2 (11m ago)   11m
-```
-
-## Ingesting Vault’s SBOM
+## Step 3: Ingest Vault’s SBOM
 
 For demo purposes, let's ingest Vault’s SBOM. To do this, we will use the help
 of the `guaccollect` file command.
 
-To do this we must first port-forward a the ports needed (graphqQL server,
-collector subscriber and NATS):
+1. Run the following command:
+  ```bash
+  ./bin/guaccollect files ../guac-data/top-dh-sboms/vault.json
+  ```
 
-```bash
-kubectl port-forward svc/guac-nats 4222:4222
-kubectl port-forward svc/collectsub 2782:2782
-kubectl port-forward svc/graphql-server 8080:8080
-```
+2. Run File collector:
+  ```bash
+  {"level":"info","ts":1681994359.2474601,"caller":"cmd/files.go:112","msg":"collector ended gracefully"}
+  ```
 
-Run the following command:
-
-```bash
-./bin/guaccollect files ../guac-data/top-dh-sboms/vault.json
-```
-
-File collector
-
-```bash
-{"level":"info","ts":1681994359.2474601,"caller":"cmd/files.go:112","msg":"collector ended gracefully"}
-```
-
-## Checking the ingestion logs
+## Step 4: Check the ingestion logs
 
 We can pull the logs from Kubernetes to see the progress of the ingestion:
 
-**NOTE**: the name of the pod will be different per instantiation, please use
-the name from your cluster
+**NOTE**: The name of the pod will be different per instantiation, please use
+the name from your cluster.
 
 ```bash
 kubectl logs ingestor-<IDENTIFIER>
@@ -152,23 +109,25 @@ The results for the Vault SBOM ingestion will look like the following:
 {"level":"info","ts":1681994359.9560268,"caller":"parser/parser.go:110","msg":"[ingestor: 04462d2a-a2c7-4aa9-95eb-2183cb5f249d] ingested docTree: {Collector:FileCollector Source:file:///../guac-data/top-dh-sboms/vault.json}"}
 ```
 
-## Automated query for more information
+## Step 5: Review the automated query for more information
 
 As the ingestion process occurs, the collector subscriber service of GUAC
 collects purls, OCI strings, and others to determine if there is more
 information available to be pulled into the graph DB.
 
-As the SBOM is ingested, it collects the PURLs of its dependency packages and
-queries the deps.dev database automatically to grab the source, OpenSSF
-scorecard, and its dependency information and links this back to the original
-top-level artifact of the SBOM. This process is recursive, meaning that the
-PURLs that the dependency relies on will also be queried!
+As the SBOM is ingested it:
+- Collects the PURLs of its dependency packages
+- Queries the deps.dev database automatically to grab the source, OpenSSF
+scorecard, and its dependency information
+- Links this information back to the original top-level artifact of the SBOM
+
+This process is recursive, meaning that the PURLs that the dependency relies on will also be queried!
 
 We can pull the logs from Kubernetes to see which packages deps.dev collector
 found:
 
-**NOTE**: the name of the pod will be different per instantiation, please use
-the name from your cluster
+**NOTE**: The name of the pod will be different per instantiation, please use
+the name from your cluster.
 
 ```bash
 kubectl logs depsdev-collector--<IDENTIFIER>
@@ -215,19 +174,19 @@ From the logs we see that `CertifyScorecard`, `IsDependency` and `HasSourceAt`
 are being ingested. We will further inspect this information in the coming
 sections.
 
-## Automated query for vulnerabilities
+## Step 6: Review the automated query for vulnerabilities
 
 As we saw in the section above, GUAC automatically looks for more information
 for an ingested SBOM. What about vulnerabilities?
 
 The certifier (currently utilizing the OSV database, with more integrations to
 come) is configured to run and query the vulnerability database to determine if
-a package has a vulnerability
+a package has a vulnerability.
 
 We can pull the logs from kubernetes to see the OSV certifier in action.
 
-**NOTE**: the name of the pod will be different per instantiation, please use
-the name from your cluster
+**NOTE**: The name of the pod will be different per instantiation, please use
+the name from your cluster.
 
 ```bash
 kubectl logs osv-certifier-<IDENTIFIER>
@@ -244,22 +203,13 @@ The results from the osv certifier pod will look like the following:
 
 We will further inspect these vulnerabilities in the following section.
 
-## Examining the information collected
+## Step 7: Examine the information collected
 
-To understand what was collected, we will utilize the graphQL playground. To
-access, we must first port-forward from kubernetes cluster.
-
-Run the following command to port-forward:
-
-```bash
-kubectl port-forward svc/graphql-server 8080:8080
-```
-
-The playground will be accessible via: `http://localhost:8080/graphql`
+To understand what was collected, we will utilize the graphQL playground. The playground is accessible via: `http://localhost:8080/graphql`
 
 From graphQL Playground, we can use the provided
-[graphQL queries](/demo/workflow/queries.gql) and paste that into the left
-column that defines the queries
+[graphQL queries](https://docs.guac.sh/graphql/) and paste them into the left
+column that defines the queries.
 
 ### IsDepdendency
 
@@ -276,7 +226,7 @@ IsDependency(
 
 The query will search all the `IsDepdendency` nodes and find the one that
 depends on the following package:
-`pkg:golang/github.com/prometheus/client_golang`.
+`pkg:golang/github.com/prometheus/client_golang`
 
 This will output the following:
 
@@ -434,7 +384,7 @@ This will output the following:
 ```
 
 From the output, we can see that prometheus/client_golang is used by a bunch of
-packages. The first one shows the origin being the document that we ingest at
+packages. The first one shows the origin as the document that we ingested at
 the beginning (related to vault). The other entries all come from deps.dev that
 show that other packages `github.com/armon/go-metrics` also depend on
 `prometheus/client_golang`. Meaning that `prometheus/client_golang` is both a
@@ -504,8 +454,7 @@ This will output the following:
       },
 ```
 
-From this, we can see that as the collector subscriber and deps.dev collector
-captured that the `pkg:golang/cloud.google.com/go` has a source repo at
+The collector subscriber and deps.dev collector captured that the `pkg:golang/cloud.google.com/go` has a source repo at
 `github.com/googleapis/google-cloud-go`. This information shows the origin being
 deps.dev.
 
@@ -732,20 +681,19 @@ This will output the following:
 This information came from the OSV certifier service that is constantly running
 within GUAC. From this, we can see that two versions of
 `github.com/prometheus/client_golang` contain the same `ghsa-cg3q-j54f-5p7p`. In
-the vulnerability CLI demo (LINK TO DEMO) we can use this information to
-determine if there is a path (there is based on the `isDepdendency` we saw
-above) between this and the version of Vault we are using. Here is a quick look
+the [vulnerability CLI demo](https://docs.guac.sh/querying-via-cli/), we can use this information to
+determine if there is a path between this and the version of Vault we are using. Here is a quick look
 at what the visualization would look like for that:
 
-<img width="1260" alt="3" src="https://user-images.githubusercontent.com/88045217/233479721-318cc19a-ea39-4524-adfe-890e4b2ddbd5.png">
+![Visualization of data](assets/images/expandviewvisualization.png)
 
-## Expanded your view of the software supply chain
+## Expanding your view of the software supply chain
 
 Through this demo, we learned that GUAC services are designed to extract as much
 information as possible about an SBOM that it ingests. Utilizing this
-information, we can quickly make up-to-date policy decisions or even integrate
-it into an IDE to provide information on if a package should not be used due to
-a low OpenSSF scorecard score or may contain a critical vulnerability!
+information, we can quickly make up-to-date policy decisions.  We can even integrate
+GUAC services into an IDE to provide information on whether or not a package should be used due to
+a low OpenSSF scorecard score or critical vulnerability.
 
 ## Cleanup
 
