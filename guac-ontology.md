@@ -18,7 +18,7 @@ Composition). GUAC allows us to efficiently query information about
 software supply chain properties and efficiently update the state of the supply
 chain.
 
-## Distilling an Ontology for GUAC
+## Distilling an ontology for GUAC
 
 At a low level, a software supply chain is a series of _actions_ carried out by
 _actors_ to produce _artifacts._ Generally speaking, determining the quality
@@ -41,7 +41,7 @@ appropriately collect the following information:
 - Software and its lineage
 
 With this, we are able to transform any informational query into one that
-involves the triple (artifacts, actors, actions).
+involves all three (artifacts, actors, actions).
 
 ## Mapping the three elements of supply chains to a universal graph
 
@@ -94,10 +94,10 @@ trees.
 
 ### The software tree
 
-FInally, the software tree represents a series of software properties that
+Finally, the software tree represents a series of software properties that
 relate to their logical collection up to their "physical instantiations". This
 can be easily modeled using a pURL semantic, which describes a software
-artifact. Take for example the following purl pkg:pypi/django@1.11.1, it can be
+artifact. Take for example the following purl: pkg:pypi/django@1.11.1. It can be
 used to model software relationships with the following properties:
 
 - A software type (pkg)
@@ -129,7 +129,7 @@ Given a starting node, retrieve the entire connected component of it.
 
 **Example diagram**
 
-An Organization wants to dumb all the metadata and assertions related to an
+An organization wants to dump all the metadata and assertions related to an
 artifact.
 
 **_Query_:** Connected component given start node artifact C  
@@ -144,13 +144,11 @@ An organization wants to check if its software is affected by a recently
 published vulnerability with an assigned CVE number, signed by a specific
 vulnerability database.
 
-- Query the GUAC Graph such that based on the artifact nodes of the software,
-  Can you reach the CVE evidence, then the vulnerability database ? If yes, then
-  the software is vulnerable to it.
+- Query the GUAC Graph such that based on the artifact nodes of the software, can you reach the CVE evidence, then the vulnerability database? If yes, then the software is vulnerable to it.
 
 **Example diagram**
 
-**_Query_:** Is artifact C affected by CVE#2 and has that report been done by
+**_Query_:** Is artifact C affected by CVE#2, and has that report been done by
 the national vulnerability database?  
 **_Approach_:** From Identity tree, determine which nodes belong to that class
 of identities. Is there a path from the artifact -> CVE -> any node in the class
@@ -187,7 +185,7 @@ Conflicting information should be flagged as something to be analyzed further.
 ## Hypergraph semantics (not part of v0.1 BETA)
 
 A hypergraph is a graph in which hyperedges can connect to a subset of nodes
-rather than two nodes. Hyperedges can be used to do logical grouping for nodes
+rather than two nodes. Hyperedges can be used to make logical groupings for nodes
 that represent the same thing, and they may appear in GUAC in couple of ways:
 
 - **Artifacts:** Identical artifacts or packages. For example, an SLSA document
