@@ -11,7 +11,7 @@ nav_order: 3
 This document provides some insights into how the GUAC ontology was defined.
 
 For a comprehensive and up-to-date listing of the GUAC ontology, please refer to
-the [GraphQL documentation](https://docs.guac.sh/graphql/](https://github.com/guacsec/guac/blob/main/docs/GraphQL.md).
+the [GraphQL documentation](https://github.com/guacsec/guac/blob/main/docs/GraphQL.md).
 
 ## Overview
 
@@ -22,12 +22,12 @@ The [GUAC Onlotogy](https://docs.guac.sh/guac-ontology/) document defines the 3 
   views, and are an extension of the idea of factual software identifiers nodes as
   described in
   [GUAC Identity Problem Design Doc](https://docs.google.com/document/d/1BUEi7q2i-KXlAhsh1adYvL1fkWN-q8FrgLyEre7c5kg/edit?resourcekey=0-02sC5-9IbTfwJckze_CDQw)(Issue
-  [#217](https://github.com/guacsec/guac/issues/217))
+  [#217](https://github.com/guacsec/guac/issues/217)).
 - **Evidence Tree:** A structure to communicate claims about nodes in a software
   tree and tie them to the actor tree. All claims are considered skeptical and
   need to be evaluated based on observing their evidence (through linking with
-  the actor tree)
-- **Actor Tree:** A structure to model trust and trust relationships
+  the actor tree).
+- **Actor Tree:** A structure to model trust and trust relationships.
 
 ## GUAC software tree
 
@@ -42,29 +42,25 @@ the
 
 This is based on the [purl-spec](https://github.com/package-url/purl-spec) and defined as: **scheme:type/namespace/name@version?qualifiers#subpath**. The definition for each component is:
 
-   1.  **Scheme** (Required): The URL scheme with the constant value of "pkg". One
-        of the primary reasons for this single scheme is to facilitate the future
-        official registration of the "pkg" scheme for package URLs.
-   1.  **Type** (Required): The package "type" or package "protocol" such as maven, npm,
-        nuget, gem, pypi, etc. 
-   1.  **Namespace** (Optional): Type-specific name prefix such as a Maven groupid, a Docker image
-        owner, a GitHub user, or an organization. 
-   1.  **Name** (Required): Name of the package.
-   1.  **Version** (Optional): Version of the package.
-   1.  **Qualifiers** (Optional): Type-specific, extra qualifying data for a package such as an OS,
-        architecture, a distro, etc. 
-   1.  **Subpath** (Optional): Extra subpath within a package, relative to the package
-        root. 
+- **Scheme** (Required): The URL scheme with the constant value of "pkg". One of the primary reasons for this single scheme is to   
+  facilitate the future official registration of the "pkg" scheme for package URLs.
+- **Type** (Required): The package "type" or package "protocol" such as maven, npm, nuget, gem, pypi, etc. 
+- **Namespace** (Optional): Type-specific, name prefix such as a Maven groupid, a Docker image owner, a GitHub user, or an 
+  organization. 
+- **Name** (Required): Name of the package.
+- **Version** (Optional): Version of the package.
+- **Qualifiers** (Optional): Type-specific, extra qualifying data for a package such as an OS, architecture, a distro, etc. 
+- **Subpath** (Optional): Extra subpath within a package, relative to the package root. 
         
 It was decided that mapping to hashes as leaf nodes should not be part of the software tree and should be linked via an attestation/evidence tree. This is due to the fact that saying a package has an occurrence of an artifact with hash is an opinion, and software trees need to remain factual. For example, an SBOM may contain an entry that says "pkg://abc" has hash "sha256:def", however, this may be incorrect - and thus GUAC providing the ability to raise counterfactuals becomes important _if_ there is a conflict of two
 trusted document metadata.
 
 ### Source
 Source is used to define the location of the software artifact. Similar to the purl spec this is defined as:
-    1.  **Type:**: Version control system type (git/svn/cvs)
-    1.  **Namespace**: Location of the repo (github/gitlab/bitbucket)
-    1.  **Name**: URL to the repo
-    1.  **Qualifier**: Tag or commit
+- **Type:**: Version control system type (git/svn/cvs).
+- **Namespace**: Location of the repo (github/gitlab/bitbucket).
+- **Name**: URL to the repo.
+- **Qualifier**: Tag or commit.
     
 ### Artifact
 Artifact contains the hash of the software component.
@@ -125,14 +121,14 @@ We determined there to be 3 different dimensions of trust of action:
 
 - **Identity**: Do I trust verification of the entity that has made this claim?
 - **Capability**: Do I trust the entity to assert that claim?
-- **Subject**: Do I trust the entity is an authority to such a claim?
+- **Subject**: Do I trust that the entity is an authority to such a claim?
 
 Then we decided to start with the following:
 
-- **Structure:** Only interested in the leaf nodes of a trust ontology
+- **Structure:** Only interested in the leaf nodes of a trust ontology.
 - **Reasoning:** We only care about the identity for the GUAC BETA, and capabilities
   as far as intrinsic protocols allow the expressiveness of (x509 expiry and key
-  capabilities)
+  capabilities).
 
 The way to do this is to have identity nodes as part of the "Actor Tree" be 
 singletons represented by a URI with information on whether or not they've been verified. These
