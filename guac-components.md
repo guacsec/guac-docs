@@ -19,9 +19,9 @@ nav_order: 1
 </details>
 
 The full GUAC component deployment is a set of asynchronous services that
-combine to form a robust and scaleable pipeline. In some of our [demos](https://docs.guac.sh/guac-use-cases/), you may have seen
-these components work in concert. Read on to learn more of what
-goes on behind the hood!
+combine to form a robust and scaleable pipeline. In some of our [demos]({{
+site.baseurl }}{%link guac-use-cases.md %}), you may have seen these components
+work in concert. Read on to learn more of what goes on behind the hood!
 
 ## GUAC Components
 
@@ -44,7 +44,7 @@ to GUAC will not affect the GraphQL interface that the server provides.
 | Assembler  | Takes GUAC objects and puts them in a datastore, queryable by the GraphQL server   |
 | CollectSub | Takes identifiers of interest and creates a subscription for collectors to follow  |
 
-#### Collectors 
+#### Collectors
 
 Collectors gather data from various sources. These sources can be internal to
 the organization, public (like open source), or third-party
@@ -75,9 +75,11 @@ to the OSV vulnerability.
 
 #### Ingestor
 
-Ingestors take in documents and parse them into the [GUAC data model/ontology](https://docs.guac.sh/guac-ontology/).
-This process extracts meaning from documents and translates them into a common reasoning
-model (GUAC ontology). In the process, it also finds identifiers of interest that it passes to the CollectSub service to request additional information for.
+Ingestors take in documents and parse them into the [GUAC data
+model/ontology]({{ site.baseurl }}{%link guac-ontology.md %}).  This process
+extracts meaning from documents and translates them into a common reasoning
+model (GUAC ontology). In the process, it also finds identifiers of interest
+that it passes to the CollectSub service to request additional information for.
 
 Today, GUAC can understand multiple data formats like SPDX, CycloneDX, and SLSA. The ingestor listens for documents to parse via [Nats](https://nats.io/),
 and talks to the assembler via a GraphQL API.

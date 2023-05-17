@@ -8,19 +8,21 @@ nav_order: 4
 
 # Reacting to a supply chain incident
 
-A new high-profile vulnerability landed and now you're wondering how you should react to it. 
+A new high-profile vulnerability landed and now you're wondering how you should
+react to it.
 
-How do you discover which of your products and software are vulnerable? 
-How should you go about remediating the problem in your organization? 
-What is the patch plan?
+How do you discover which of your products and software are vulnerable? How
+should you go about remediating the problem in your organization? What is the
+patch plan?
 
-Using the GraphQL API, you can expose the necessary information to discover how your organization's software catalog is affected and remediate against large-scale security incidents.
+Using the GraphQL API, you can expose the necessary information to discover how
+your organization's software catalog is affected and remediate against
+large-scale security incidents.
 
-This demo simulates the discovery of a high-profile vulnerability and
-shows how you can discover what software needs to be reviewed or patched. In the future,
-CertifyBad/CertifyGood will be similar to a binary authorization,
-where certain checks or policies have determined that an artifact should be
-utilized or not.
+This demo simulates the discovery of a high-profile vulnerability and shows how
+you can discover what software needs to be reviewed or patched. In the future,
+CertifyBad/CertifyGood will be similar to a binary authorization, where certain
+checks or policies have determined that an artifact should be utilized or not.
 
 ## Requirements
 
@@ -28,7 +30,7 @@ utilized or not.
 - [Git](https://github.com/git-guides/install-git)
 - [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [Docker](https://docs.docker.com/get-docker/)
-- A fresh copy of the [GUAC service infrastructure through Docker Compose](https://guac.sh/setup/). 
+- A fresh copy of the [GUAC service infrastructure through Docker Compose]({{ site.baseurl }}{%link setup.md %}). 
 
 ## Step 1: Clone GUAC
 
@@ -74,17 +76,26 @@ vary):
 
 ## Step 4: Set up the experimental GUAC Visualizer
 
-To find out if you're affected by the security incident and decide what you need to patch, utilize the [Guac Visualizer](https://guac.sh/guac-visualizer/). The GUAC visualizer provides a utility to do some basic analysis and exploration
-of the software supply chain. This is a great way to get a sense of the size of
-the problem and helps when developing prototype utilities and queries with GUAC (very much like the [vulnerability CLI](https://guac.sh/querying-via-cli/)).
+To find out if you're affected by the security incident and decide what you
+need to patch, utilize the [Guac Visualizer]({{ site.baseurl }}{%link
+guac-visualizer.md %}). The GUAC visualizer provides a utility to do some basic
+analysis and exploration of the software supply chain. This is a great way to
+get a sense of the size of the problem and helps when developing prototype
+utilities and queries with GUAC (very much like the [vulnerability CLI]({{
+site.baseurl }}{%link querying-via-cli.md %})).
 
 ## Step 5: Mark packages as bad when a security incident occurs
 
-A new security incident has occurred and various communities have pointed out that a particular package is affected. In this scenario, the debian package
-"tzdata" has been found to have a critical vulnerability (yikes!). Now that we know the package and the vulnerable version, can we use this information to quickly find where this package is being used?
+A new security incident has occurred and various communities have pointed out
+that a particular package is affected. In this scenario, the debian package
+"tzdata" has been found to have a critical vulnerability (yikes!). Now that we
+know the package and the vulnerable version, can we use this information to
+quickly find where this package is being used?
 
-The first step we can take is to mark this package as bad by using the `guacone certify` command. This command defaults to assert a negative
-certification (instead of a positive one), as well as a `justification` to indicate why the package is bad. In this case, it is a critical vulnerability:
+The first step we can take is to mark this package as bad by using the `guacone
+certify` command. This command defaults to assert a negative certification
+(instead of a positive one), as well as a `justification` to indicate why the
+package is bad. In this case, it is a critical vulnerability:
 
 ```bash
 ./bin/guacone certify package "compromised version of tzdata" "pkg:deb/debian/tzdata@2021a-1+deb11u5?arch=all&distro=debian-11"
@@ -121,7 +132,7 @@ If we successfully added "CertifyBad", the output will show:
    Further iterations of the same CLI tool (or another) could be used
    to give a step-by-step guide to remediation!
 
-   For this scenario, select the 
+   For this scenario, select the
    `pkg:deb/debian/tzdata@2021a-1+deb11u5 (compromised version of tzdata)`
    that we created earlier.
 
@@ -132,7 +143,7 @@ If we successfully added "CertifyBad", the output will show:
       Visualizer url: http://localhost:3000/?path=142605,44614,1372,1305,1304,127547,127527,127526,36248,2,125455,125358,125357,123291,123287,123286,121220,121216,121215,119149,119145,119144,117075,117074,117073,115010,115006,115005,112939,112935,112934,110299,110283,110282,107515,107453,107452,68077,67990,67989,65923,65745,65744,63678,63674,63673,61607,61603,61602,59536,59532,59531,57463,57461,57460,55393,55390,55389,53320,53319,53318,51236,51113,51112,49048,48779,48778,46714,46713,46712,44615,44610,44609,42533,42528,42527,40466,40462,40461,38397,38393,38392,36252,36250,36249,15392,15337,15336,15335,4155,4125,4124,3,3182,2865,2864,2667,2633,2632,2501,2419,2418,2413,2312,2311,2190,2150,2149,2092,2048,2047,1374,1303,1302
       ```
 
-3. Navigate to the URL to visualize the output. 
+3. Navigate to the URL to visualize the output.
    This will show an expanded graph of dependencies.
 
    ![An image of the visualizer output graph](assets/images/supplychain_dependencies_graph.png)
@@ -209,12 +220,13 @@ packages, specifically:
 | pkg:golang/cloud.google.com/go/longrunning      |
 
 With this data, we can investigate further and determine which packages are dependent
-on these compromised packages and remediate them quickly. 
+on these compromised packages and remediate them quickly.
 
 ## Building more advanced patch planning capability
 
-One of the potential next areas of work for the project is to create a CLI to do patch
-planning for the organization. Patch planning will allow an organization to determine which packages to update first.  
+One of the potential next areas of work for the project is to create a CLI to
+do patch planning for the organization. Patch planning will allow an
+organization to determine which packages to update first.
 
-In order to build more robust patch planning, you can leverage the [GraphQL Query
-API](https://guac.sh/graphql/) that GUAC provides. 
+In order to build more robust patch planning, you can leverage the [GraphQL
+Query API]({{ site.baseurl }}{%link graphql.md %}) that GUAC provides.

@@ -11,7 +11,7 @@ nav_order: 3
 GUAC's GraphQL API allows us to integrate the knowledge graph into various
 applications. In the other examples, we saw how it can be used to visualize and
 query the graph from a React UI, and even a small Python application to query for
-paths between nodes. 
+paths between nodes.
 
 In this demo, we will utilize a Go CLI that will allow us
 to query if a purl (package URL) has any vulnerabilities based on its direct and
@@ -21,7 +21,7 @@ particular vulnerability.
 
 ## Step 1: Setup GUAC with Docker Compose
 
-Follow the [Docker Compose setup](https://docs.guac.sh/setup/).
+Follow the [Docker Compose setup]({{ site.baseurl }}{%link setup.md %}).
 
 ## Step 2: Clone GUAC
 
@@ -52,7 +52,7 @@ make
 ## Step 4. Run the GUAC Visualizer
 
 To get the GUAC visualizer up and running, follow the
-[GUAC visualizer setup](https://docs.guac.sh/guac-visualizer/).
+[GUAC visualizer setup]({{ site.baseurl }}{%link guac-visualizer.md %}).
 This will be used in this demo to show the various paths from package to
 vulnerability.
 

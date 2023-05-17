@@ -10,10 +10,11 @@ nav_order: 1
 
 ![Dinosaur Meme](assets/images/knownunknownmeme.jpeg)
 
-The software supply chain is like a rabbit hole that can be very deep and hold many twists and turns. It's hard to track where the different
-tunnels may lead. With SBOMs, SLSA attestations, scorecards, VEX, and other
-in-toto ITE-6 attestations, the list of metadata associated with an artifact is
-growing. You may wonder:
+The software supply chain is like a rabbit hole that can be very deep and hold
+many twists and turns. It's hard to track where the different tunnels may
+lead. With SBOMs, SLSA attestations, scorecards, VEX, and other in-toto ITE-6
+attestations, the list of metadata associated with an artifact is growing. You
+may wonder:
 
 Where do I store my SBOMs, SLSA attestations, and other metadata documents?
 Can I find these documents quickly?
@@ -27,16 +28,18 @@ determine your:
 - known, unknowns
 - unknown, unknowns
 
-In the ["Expanding your view of the software supply chain" demo](https://docs.guac.sh/expanding-your-view/), we went through the process of
-ingesting an SBOM and letting GUAC expand our horizons on what we know about our
-environment autonomously. In this demo, we'll take that information and use it to determine what we know and don't know about the artifacts.
+In the ["Expanding your view of the software supply chain" demo]({{
+site.baseurl }}{%link expanding-your-view.md %}), we went through the process
+of ingesting an SBOM and letting GUAC expand our horizons on what we know about
+our environment autonomously. In this demo, we'll take that information and use
+it to determine what we know and don't know about the artifacts.
 
 ## Requirements
 
 - [Go](https://go.dev/doc/install)
 - [Docker](https://docs.docker.com/get-docker/)
-- A fresh copy of the [GUAC service infrastructure through Docker Compose](https://docs.guac.sh/setup/)
-- Completion of the [Expanding your view of the software supply chain demo](https://docs.guac.sh/expanding-your-view/)
+- A fresh copy of the [GUAC service infrastructure through Docker Compose]({{ site.baseurl }}{%link setup.md %})
+- Completion of the [Expanding your view of the software supply chain demo]({{ site.baseurl }}{%link expanding-your-view.md %})
 
 ## Understanding the data
 
@@ -58,8 +61,9 @@ definitions:
 | `goodLinks`    | List of CertifyGood associated with the package, source or artifact          |
 | `pkgEquals`    | Two packages (with different purls) are equal                                |
 
-For more information on these, refer to the [grapQL documentation](https://docs.guac.sh/graphql/) and 
-[ontology definitions](https://docs.guac.sh/guac-ontology-definition/).
+For more information on these, refer to the [grapQL documentation]({{
+site.baseurl }}{%link graphql.md %}) and [ontology definitions]({{ site.baseurl
+}}{%link guac-ontology-definition.md %}).
 
 
 ## Step 1: Clone GUAC
@@ -105,7 +109,7 @@ and a artifact (algorithm:digest).
   ```bash
   ./bin/guacone query known package "pkg:guac/spdx/docker.io/library/vault-latest"
   ```
-  
+
   The output will look similar to this:
 
   ```bash
@@ -125,7 +129,7 @@ and a artifact (algorithm:digest).
   +-----------+-----------+----------------------------------------------------------------------+
   Visualizer url: http://localhost:3000/?path=5,4,3,2,6964
   ```
-  
+
   The output has two separate tables: one for the “package name level” and the
   other at the “package version level”. Evidence/metadata nodes at the “package
   name level” apply to all the versions that come below it.
@@ -328,7 +332,7 @@ and a artifact (algorithm:digest).
 
   **NOTE**: This is just the vulnerability associated with this specific package
   (not taking into account dependencies). For a full in-depth vulnerability search
-  please follow the [Query Vulnerability demo](https://docs.guac.sh/querying-via-cli/).
+  please follow the [Query Vulnerability demo]({{ site.baseurl }}{%link querying-via-cli.md %}).
 
   We also see that in this case, we did not get a `hasSBOM` associated with it.
   Meaning that we do not have any SBOM information related to this package. We
@@ -484,7 +488,7 @@ Based on the information gathered above:
 
 - We know what we have about the various artifacts (either ingested or determine by the services of GUAC).
 - We can quickly locate an SBOM, an SLSA attestation (other ITE-6 attestations), OpenSSF
-  scorecard information, and other metadata quickly. 
+  scorecard information, and other metadata quickly.
 - We determined what we don’t know. For example, some packages did not have an SBOM
   or SLSA attestation associated. There may have been source repositories that
   weren't scanned by OpenSSF Scorecard.

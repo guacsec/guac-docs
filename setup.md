@@ -9,12 +9,21 @@ nav_order: 2
 # Set up GUAC with Docker Compose
 
 {: .note }
-If you’d prefer, you can set up [GUAC with Kubernetes](https://github.com/kusaridev/helm-charts/tree/main/charts/guac) instead. These instructions are hosted in a third-party repo and may not be synchronized with the GUAC repo.
+
+If you’d prefer, you can set up [GUAC with
+Kubernetes](https://github.com/kusaridev/helm-charts/tree/main/charts/guac)
+instead. These instructions are hosted in a third-party repo and may not be
+synchronized with the GUAC repo.
 
 
-GUAC consists of multiple components. You may have seen a subset of these used in various [GUAC demos](https://guac.sh/guac-demos/). To get the most value out of GUAC, you’ll need to set up all components. This tutorial will walk you through how to deploy GUAC, using Docker Compose, so that you get the full set of components.
+GUAC consists of multiple components. You may have seen a subset of these used
+in various [GUAC demos]({{ site.baseurl }}{% link guac-use-cases.md %}). To get
+the most value out of GUAC, you’ll need to set up all components. This tutorial
+will walk you through how to deploy GUAC, using Docker Compose, so that you get
+the full set of components.
 
-If you’re curious about the various GUAC components and what they do, see [How GUAC components work together](https://guac.sh/guac-components/).
+If you’re curious about the various GUAC components and what they do, see [How
+GUAC components work together]({{ site.baseurl }}{%link guac-components.md %}).
 
 {: .no_toc }
 
@@ -32,7 +41,7 @@ If you’re curious about the various GUAC components and what they do, see [How
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Git](https://github.com/git-guides/install-git)
-- [Go](https://go.dev/doc/install) 
+- [Go](https://go.dev/doc/install)
 - [Make](https://www.gnu.org/software/make/)
 
 ## Step 1: Clone GUAC
