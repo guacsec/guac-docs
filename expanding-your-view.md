@@ -36,7 +36,7 @@ within the ingested SBOM.
 ## Requirements
 
 - [Go](https://go.dev/doc/install)
-- A fresh copy of the [GUAC service infrastructure through Docker Compose](https://docs.guac.sh/setup/)
+- A fresh copy of the [GUAC service infrastructure through Docker Compose]({{ site.baseurl }}{%link setup.md %})
 
 ## Step 1. Clone GUAC
 
@@ -198,9 +198,9 @@ We will further inspect these vulnerabilities in the following section.
 
 To understand what was collected, we will utilize the graphQL playground. The playground is accessible via: `http://localhost:8080/graphql`
 
-From graphQL Playground, we can use the provided
-[graphQL queries](https://github.com/guacsec/guac/blob/main/demo/graphql/queries.gql) and paste them into the left
-column that defines the queries.
+From graphQL Playground, we can use the provided [graphQL
+queries](https://github.com/guacsec/guac/blob/main/demo/graphql/queries.gql)
+and paste them into the left column that defines the queries.
 
 ### IsDepdendency
 
@@ -671,9 +671,10 @@ This will output the following:
 
 This information came from the OSV certifier service that is constantly running
 within GUAC. From this, we can see that two versions of
-`github.com/prometheus/client_golang` contain the same `ghsa-cg3q-j54f-5p7p`. In
-the [vulnerability CLI demo](https://docs.guac.sh/querying-via-cli/), we can use this information to
-determine if there is a path between this and the version of Vault we are using. Here is a quick look
+`github.com/prometheus/client_golang` contain the same
+`ghsa-cg3q-j54f-5p7p`. In the [vulnerability CLI demo]({{ site.baseurl }}{%link
+querying-via-cli.md %}), we can use this information to determine if there is a
+path between this and the version of Vault we are using. Here is a quick look
 at what the visualization would look like for that:
 
 ![Visualization of data](assets/images/expandviewvisualization.png)

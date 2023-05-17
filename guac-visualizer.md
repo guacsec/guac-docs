@@ -8,8 +8,9 @@ nav_order: 5
 
 # Set up the GUAC Visualizer
 
-The GUAC Visualizer is an experimental utility that can be used to interact with GUAC services. It acts as a way to visualize the software supply chain graph,
-as well as a means to explore the supply chain and prototype policies.
+The GUAC Visualizer is an experimental utility that can be used to interact
+with GUAC services. It acts as a way to visualize the software supply chain
+graph, as well as a means to explore the supply chain and prototype policies.
 
 Since the GUAC Visaulizer is still in an early experimental stage, it is likely
 that there may be some unexpected behavior or usage problems.
@@ -30,7 +31,7 @@ that there may be some unexpected behavior or usage problems.
 - [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
 - [Docker](https://docs.docker.com/get-docker/)
-- A fresh copy of the [GUAC service infrastructure through Docker Compose](https://docs.guac.sh/setup/)
+- A fresh copy of the [GUAC service infrastructure through Docker Compose]({{ site.baseurl }}{%link setup.md %})
 
 ## Step 1: Clone the GUAC visualizer repo
 
@@ -106,7 +107,7 @@ http://localhost:3000. The page will look like the following:
 ![ui](assets/images/guacvisserver.png)
 
 For more information on how to use the GUAC visualizer, take a look at some of
-our [GUAC demos](https://docs.guac.sh/guac-use-cases/).
+our [GUAC demos]({{ site.baseurl }}{%link guac-use-cases.md %}).
 
 ### Change the GraphQL endpoint
 

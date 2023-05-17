@@ -15,7 +15,8 @@ the [GraphQL documentation](https://github.com/guacsec/guac/blob/main/docs/Graph
 
 ## Overview
 
-The [GUAC Onlotogy](https://docs.guac.sh/guac-ontology/) document defines the 3 structures as the software tree, evidence tree, and actor tree.
+The [GUAC Onlotogy]({{ site.baseurl }}{%link guac-ontology.md %}) document
+defines the 3 structures as the software tree, evidence tree, and actor tree.
 
 - **Software Tree:** A factual structure that describes software entities. They
   communicate both physical (e.g. artifact and hashes) and logical (e.g. PURL)
@@ -46,12 +47,12 @@ This is based on the [purl-spec](https://github.com/package-url/purl-spec) and d
   facilitate the future official registration of the "pkg" scheme for package URLs.
 - **Type** (Required): The package "type" or package "protocol" such as maven, npm, nuget, gem, pypi, etc. 
 - **Namespace** (Optional): Type-specific, name prefix such as a Maven groupid, a Docker image owner, a GitHub user, or an 
-  organization. 
+  organization.
 - **Name** (Required): Name of the package.
 - **Version** (Optional): Version of the package.
 - **Qualifiers** (Optional): Type-specific, extra qualifying data for a package such as an OS, architecture, a distro, etc. 
 - **Subpath** (Optional): Extra subpath within a package, relative to the package root. 
-        
+
 It was decided that mapping to hashes as leaf nodes should not be part of the software tree and should be linked via an attestation/evidence tree. This is due to the fact that saying a package has an occurrence of an artifact with hash is an opinion, and software trees need to remain factual. For example, an SBOM may contain an entry that says "pkg://abc" has hash "sha256:def", however, this may be incorrect - and thus GUAC providing the ability to raise counterfactuals becomes important _if_ there is a conflict of two
 trusted document metadata.
 
@@ -61,7 +62,7 @@ Source is used to define the location of the software artifact. Similar to the p
 - **Namespace**: Location of the repo (github/gitlab/bitbucket).
 - **Name**: URL to the repo.
 - **Qualifier**: Tag or commit.
-    
+
 ### Artifact
 Artifact contains the hash of the software component.
 
@@ -71,10 +72,10 @@ Builder is the component that built the artifact (for example GitHub actions, FR
 ### [OSV](https://osv.dev/) or Open Source Vulnerability
 OSVs contain the OSV ID that can be mapped to a GHSA or CVE.
 
-### GHSA - GitHub Security Advisory 
+### GHSA - GitHub Security Advisory
 GHSA contains a GHSA ID that maps to the [GitHub Advisory Database](https://github.com/advisories).
 
-### CVE - Common Vulnerabilities and Exposures 
+### CVE - Common Vulnerabilities and Exposures
 CVE contains a CVE ID.
 
 A visualization of some of the above software trees would look like:
@@ -130,7 +131,7 @@ Then we decided to start with the following:
   as far as intrinsic protocols allow the expressiveness of (x509 expiry and key
   capabilities).
 
-The way to do this is to have identity nodes as part of the "Actor Tree" be 
+The way to do this is to have identity nodes as part of the "Actor Tree" be
 singletons represented by a URI with information on whether or not they've been verified. These
 URIs would be validated with the root of trust via trust oracle, which would use
 a trust config per GUAC instance to verify the signatures and provide a URI that
