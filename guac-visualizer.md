@@ -12,7 +12,7 @@ The GUAC Visualizer is an experimental utility that can be used to interact
 with GUAC services. It acts as a way to visualize the software supply chain
 graph, as well as a means to explore the supply chain and prototype policies.
 
-Since the GUAC Visaulizer is still in an early experimental stage, it is likely
+Since the GUAC Visualizer is still in an early experimental stage, it is likely
 that there may be some unexpected behavior or usage problems.
 
 {: .no_toc }
@@ -112,7 +112,7 @@ our [GUAC demos]({{ site.baseurl }}{%link guac-use-cases.md %}).
 ### Change the GraphQL endpoint
 
 This should run the service by default on http://localhost:3000. However, this
-does assume that the graphql server is run on http://localhost:8080/query. If
+does assume that the GraphQL server is run on http://localhost:8080/query. If
 this is not the case, you may edit the `next.config.js`.
 
 The default configuration is set to http://localhost:8080/query as seen here:
