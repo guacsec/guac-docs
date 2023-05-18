@@ -4,6 +4,7 @@ logo: "/assets/images/guac.png"
 
 aux_links:
   "GUAC on GitHub": https://github.com/guacsec/guac
+  "GUAC Homepage": "https://guac.sh"
 
 baseurl: "/guac-docs" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
@@ -34,8 +35,3 @@ callouts:
   warning:
     title: Warning
     color: red
-
-nav_external_links:
-  - title: GUAC Announcement
-    url: https://security.googleblog.com/2022/10/announcing-guac-great-pairing-with-slsa.html
-    hide_icon: false # set to true to hide the external link icon - defaults to false
