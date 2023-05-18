@@ -1,8 +1,9 @@
 ---
 layout: page
-title: GraphQL
+title: Using GUAC's GraphQL interface
 permalink: /graphql/
-nav_order: 5
+parent: GUAC use cases
+nav_order: 6
 ---
 
 # GraphQL API demo

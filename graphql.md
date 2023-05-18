@@ -1,3 +1,10 @@
+---
+layout: page
+title: GraphQL
+permalink: /graphql/
+nav_order: 5
+---
+
 # GUAC GraphQL definitions
 
 [GraphQL](https://graphql.org/) allows developers to define an API for a service
