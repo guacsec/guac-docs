@@ -5,819 +5,768 @@ permalink: /graphql/
 nav_order: 5
 ---
 
-# GraphQL API demo
+# GUAC GraphQL definitions
 
-This demo introduces the GUAC GraphQL API. It covers the basic node "noun" and
-"verb" types and what they contain. It also explores the server-side `path`
-query and demonstrates a client-side search program.
+[GraphQL](https://graphql.org/) allows developers to define an API for a service
+using a definition language and then serve this API via a single endpoint.
+GraphQL also represents the runtime for fulfilling these queries. The design of
+GraphQL is that queries can ask exactly for the data they need and only receive
+that data. This empowers clients to be in control and more resilient in the face
+of API changes. To get started, consult [the official
+documentation](https://graphql.org/learn/).
 
-## Background information
+This documents provides some insight into how the GraphQL API matches the
+[GUAC ontology]({{ site.baseurl }}{%link guac-ontology.md %}) and its
+[definition]({{ site.baseurl }}{%link guac-ontology-definition.md %}).
 
-In this demo, we'll query the GUAC graph using GraphQL. GraphQL is a query language for APIs
-and a runtime for fulfilling those queries with your existing data.
+Note: the GraphQL definitions are not yet stable, they might change in future
+code changes. To get an up to date view of the definitions, you can use one of
+the following:
 
-> For some background reading, visit https://graphql.org/learn/ . Also, the full
-> GUAC schema can be saved with this command:
->
-> ```bash
-> gql-cli http://localhost:8080/query --print-schema > schema.graphql
-> ```
+- Directly consult the source of truth represented by the
+  [GraphQL SDL schema](https://github.com/guacsec/guac/tree/main/pkg/assembler/graphql/schema).
+- Look at the generated Go documentation using `godoc` and analyzing the
+  `guacsec/guac/pkg/assembler/graphql/model` package.
+- Open the playground by passing `--gql-debug` to
+  [`guacgql` component]({{ site.baseurl }}{%link setup.md %}), then consult the
+  documentation tab of the
+  [Graphiql editor](https://github.com/graphql/graphiql).
+- Use [GraphQL Voyager](https://ivangoncharov.github.io/graphql-voyager/). You
+  can load the schema by using the introspection query on the `guacgql` server
+  or by concatenating all the source of truth documents.
 
-## Requirements
+Note: If you change the GraphQL schema, you will need to regenerate the code
+using `make generate` before you can use any of the above steps.
 
-- [Go](https://go.dev/doc/install)
-- [pip](https://pip.pypa.io/en/stable/cli/pip_install/) (optional)
-- [jq](https://stedolan.github.io/jq/download/) (optional)
+Note: GUAC uses GraphQL internally to ingest data and for the integrations
+provided out-of-the box. Consult the
+[GUAC client-side operations](https://github.com/guacsec/guac/tree/main/pkg/assembler/clients/operations)
+for the document queries.
 
-## Step 1: Clone GUAC
+In the remainder of this document, we will go over the existing GraphQL types.
 
-1. Clone GUAC to a local directory:
-  ```bash
-  git clone https://github.com/guacsec/guac.git
-  ```
+For each GraphQL type we also define 2 input types: one is used to filter the
+results of a query (for example, to select only packages with a specific name),
+and the other is used to specify what fields need to be provided to ingest the
+corresponding GraphQL type (for example, for a package we only need to specify
+its type and its name, all other fields are optional). In this document, we will
+only focus on the data types, as the mapping from them to the input types is
+trivial.
 
-2. Clone GUAC data (this is used as test data for this demo):
-  ```bash
-  git clone https://github.com/guacsec/guac-data.git
-  ```
+Each GraphQL type contains an `id` field, of type `ID`. This should be treated
+as an opaque identifier and not shared across different instances of GUAC, as it
+is backend specific.
 
-The rest of the demo will assume you are in the GUAC directory
+## The GUAC Software Trees
 
-```bash
-cd guac
-```
+The software trees can be thought as "nouns" in the GUAC ontology. These
+represent subjects that we can talk about when we talk about the software supply
+chain.
 
-## Step 2: Build the GUAC binaries
+### Artifacts
 
-Build the GUAC binaries using the `make` command:
+An artifact is a file, or binary, an object that can be uniquely identified. For
+each artifact, one can compute a checksum. In GUAC, we separate the algorithm
+used for the checksum from the digest value as this will allow GUAC users to
+find artifacts that are identified by deprecated checksum schemes. To remove
+confusions, both of these fields are canonicalized to lowercase on ingestion and
+querying.
 
-```bash
-make
-```
-
-## Step 3: Run the GUAC Server
-
-For this demo, we will use the `guacgql --gql-debug` command, which sets up a
-GraphQL endpoint and playground, and runs an in-memory backend to store the GUAC
-graph. Run this command in a separate terminal (in the same path) and keep it
-running throughout the demo.
-
-```bash
-bin/guacgql --gql-debug
-```
-
-**Note:** As the data is stored in-memory, whenever you restart the server, the
-graph will be empty.
-
-## Step 4: Ingest the data
-
-To ingest the data, we will use the `guacone` command, which is an
-all-in-one utility that can take a collection of files and ingest them into the
-GUAC graph.
-
-In your original window, run:
-
-```bash
-bin/guacone collect files ../guac-data/docs/
-```
-
-This can take a minute or two. 
-
-This dataset consists of a set of document types:
-
-- SLSA attestations for kubernetes
-- Scorecard data for kubernetes repos
-- SPDX SBOMs for kubernetes containers
-- CycloneDX SBOMs for some popular DockerHub images
-
-## Step 5: Run queries
-
-The queries for this demo are stored in the `demo/queries.gql` file. Running the
-demo queries can be done graphically by opening the GraphQL Playground in a web
-browser, or using the command line. The remainder of the demo will have cli commands. 
-
-### Option 1: Use the command line to run queries
-
-**You must use a `bash` or `sh` shell.**
-
-Install the `gql-cli` tool with `pip`:
-
-```bash
-pip install gql[all]
-```
-**Note:**
-If you are using **pyhton3** in your system, you may need to use the `pip3` command instead.
-
-### Option 2: Use the GraphQL Playground to run queries
-
-1. Open the GraphQL Playground by visiting `http://localhost:8080/` in your web
-   browser.
-
-1. Open `demo/queries.gql` in a text editor and copy the full contents.
-
-1. Paste the contents in the left pane of the Playground.
-
-1. The "Play" button in the top center of the Playground can be used to select
-   which query to run.
-
-
-## Step 6: Run a simple query
-
-A primary type of node in GUAC is a Package. Packages are stored in hierarchical
-nodes by Type -> Namespace -> Name -> Version. First we will run the below
-query:
-
-```
-{
-  packages(pkgSpec: {}) {
-    type
-  }
+```gql
+type Artifact {
+  id: ID!
+  algorithm: String!
+  digest: String!
 }
 ```
 
-This query has an empty `pkgSpec`, that means it will match and return all
-packages. However we are only requesting the `type` field, and not any nested
-nodes. Therefore, we will only receive the top-level Type nodes.
+In Go, if the artifact checksum is in a variable called `checksum`, we can
+compute the two fields by:
 
-```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ1 | jq
+```go
+algorithm := strings.ToLower(string(checksum.Algorithm))
+digest    := checksum.Value
 ```
 
-If you are using the GraphQL playground for the rest of the demo, you would run
-the query with the name at the end of the command. In this case, it is "PkgQ1".
+### Packages
 
-We receive:
+A package is a collection of one or more artifacts from a specific ecosystem
+(e.g., all of the wheels on PyPI for a release of a specific project -- each
+wheel might be used only on some operating system, each wheel is an artifact but
+the package represents the collection of all). We represent a package by a
+[pURL](https://github.com/package-url/purl-spec/blob/0dd92f26f8bb11956ffdf5e8acfcee71e8560407/README.rst),
+but with some GUAC modifications and heuristics to bridge gaps with missing
+naming standards.
 
-```json
-{
-  "packages": [
-    {
-      "type": "alpine"
-    },
-    {
-      "type": "golang"
-    },
-    {
-      "type": "pypi"
-    },
-    {
-      "type": "deb"
-    },
-    {
-      "type": "maven"
-    },
-    {
-      "type": "guac"
-    }
-  ]
+In GUAC, we represent a package as a trie, split across several GraphQL types.
+Each type matches a component of the pURL specification
+(`pkg:<type>/<namespace>/<name>@<version>?<qualifiers>`):
+
+```gql
+type Package {
+  id: ID!
+  type: String!
+  namespaces: [PackageNamespace!]!
+}
+
+type PackageNamespace {
+  id: ID!
+  namespace: String!
+  names: [PackageName!]!
+}
+
+type PackageName {
+  id: ID!
+  name: String!
+  versions: [PackageVersion!]!
+}
+
+type PackageVersion {
+  id: ID!
+  version: String!
+  qualifiers: [PackageQualifier!]!
+  subpath: String!
+}
+
+type PackageQualifier {
+  key: String!
+  value: String!
 }
 ```
 
-These are the top level Types of all the packages we ingested from the
-`guac-data` repository.
+![graphical representation of the package trie](assets/images/gqlpackage.png)
 
-### Query Namespaces
+Optional strings on internal nodes (e.g., `PackageNamespace`) are stored as
+empty. When ingesting, these would have an empty default value. Optional lists
+are stored as empty lists and default to empty lists on ingestion.
 
-Going one level deeper, let us query for all the Namespaces under the "oci"
-Type. The query looks like this:
+Versions are optional. If a package version is specified, the ecosystem that
+defines the package specifies how these should be handled.
 
-```
-{
-  packages(pkgSpec: { type: "deb" }) {
-    type
-    namespaces {
-      namespace
-    }
-  }
+Note: The handling of versions might change before this schema becomes stable!
+
+Subpath and qualifiers are optional. Lack of qualifiers is represented by an
+empty list and lack of subpath by empty string (to be consistent with
+optionality of namespace and version). Two nodes that have different qualifiers
+and/or subpath but the same version mean two different packages in the trie
+(they are different). Two nodes that have same version but qualifiers of one are
+a subset of the qualifier of the other also mean two different packages in the
+trie.
+
+Only some of the nodes in the package trie can be referred by other nodes in the
+GUAC GraphQL definition.
+
+### Sources
+
+Each software package is built from a code repository. We represent these
+repositories as source tries in GUAC. We map source information to a trie, as a
+derivative of the pURL specification: each path in the trie represents a type
+(that is, source control system being used), namespace (e.g., GitHub, GitLab,
+etc.), name of repository and an optional qualifier that stands for tag/commit
+information.
+
+```gql
+type Source {
+  id: ID!
+  type: String!
+  namespaces: [SourceNamespace!]!
+}
+
+type SourceNamespace {
+  id: ID!
+  namespace: String!
+  names: [SourceName!]!
+}
+
+type SourceName {
+  id: ID!
+  name: String!
+  tag: String
+  commit: String
 }
 ```
 
-Run it with:
+![graphical representation of the source trie](assets/images/gqlsource.png)
 
-```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ2 | jq
-```
+The tag and commit fields are optional, but it is an error to specify both.
 
-Output:
+Just like in the package trie, only some of these types can be referred by other
+nodes.
 
-```json
-{
-  "data": {
-    "packages": [
-      {
-        "type": "deb",
-        "namespaces": [
-          {
-            "namespace": "ubuntu"
-          },
-          {
-            "namespace": "debian"
-          }
-        ]
-      }
-    ]
-  }
+### Builders
+
+An artifact for a package is produced by a builder (e.g., FRSCA, GitHub Actions,
+etc.). Currently, we only use an URI field to identify the builders:
+
+```gql
+type Builder {
+  id: ID!
+  uri: String!
 }
 ```
 
-### Full package data
+### Vulnerabilities
 
-Run `PkgQ3` to get full package data on any package with `name: "libp11-kit0"`:
+For vulnerabilities, we define 3 different types: a CVE, a GitHub Security
+Advisory (GHSA) and an [OSV](https://osv.dev/) identifier. Each vulnerability
+can be recorded using at least one of these types.
 
-```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ3 | jq
-```
+```gql
+type GHSA {
+  id: ID!
+  ghsaId: String!
+}
 
-```json
-{
-  "packages": [
-    {
-      "id": "1785",
-      "type": "deb",
-      "namespaces": [
-        {
-          "id": "1786",
-          "namespace": "debian",
-          "names": [
-            {
-              "id": "1935",
-              "name": "libp11-kit0",
-              "versions": [
-                {
-                  "id": "1936",
-                  "version": "0.23.22-1",
-                  "qualifiers": [
-                    {
-                      "key": "distro",
-                      "value": "debian-11"
-                    },
-                    {
-                      "key": "arch",
-                      "value": "amd64"
-                    },
-                    {
-                      "key": "upstream",
-                      "value": "p11-kit"
-                    }
-                  ],
-                  "subpath": ""
-                },
-                {
-                  "id": "12712",
-                  "version": "0.23.22-1",
-                  "qualifiers": [
-                    {
-                      "key": "arch",
-                      "value": "arm64"
-                    },
-                    {
-                      "key": "upstream",
-                      "value": "p11-kit"
-                    },
-                    {
-                      "key": "distro",
-                      "value": "debian-11"
-                    }
-                  ],
-                  "subpath": ""
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "4859",
-          "namespace": "ubuntu",
-          "names": [
-            {
-              "id": "5124",
-              "name": "libp11-kit0",
-              "versions": [
-                {
-                  "id": "5125",
-                  "version": "0.23.20-1ubuntu0.1",
-                  "qualifiers": [
-                    {
-                      "key": "arch",
-                      "value": "amd64"
-                    },
-                    {
-                      "key": "upstream",
-                      "value": "p11-kit"
-                    },
-                    {
-                      "key": "distro",
-                      "value": "ubuntu-20.04"
-                    }
-                  ],
-                  "subpath": ""
-                },
-                {
-                  "id": "5406",
-                  "version": "0.24.0-6build1",
-                  "qualifiers": [
-                    {
-                      "key": "arch",
-                      "value": "amd64"
-                    },
-                    {
-                      "key": "upstream",
-                      "value": "p11-kit"
-                    },
-                    {
-                      "key": "distro",
-                      "value": "ubuntu-22.04"
-                    }
-                  ],
-                  "subpath": ""
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
+type CVE {
+  id: ID!
+  year: Int!
+  cveId: String!
+}
+
+type OSV {
+  id: ID!
+  osvId: String!
 }
 ```
 
-Here you can see the package is a `deb` type and found under both the `debian`
-and `ubuntu` namespaces. Of the two Name nodes found, there are two Version
-nodes underneath.
+Note: The vulnerability types have 2 types of identifiers: one (of type `ID`) is
+used internally by GUAC, the other is the vulnerability identifier. Each
+vulnerability identifier is canonicalized to lower case upon ingestion and
+querying. The vulnerability identifiers are defined by the underlying
+vulnerability database.
 
-If you take a look at the query in the `demo/queries.gql` file, you will see
-that it uses the `allPkgTree` fragment. This fragment specifies all the possible
-fields in a GUAC package. Fragments can be used to avoid duplicating long lists
-of attributes.
+The CVE vulnerability identifier contains a year field, so we are extracting
+that to allow matching for vulnerabilities found in a given year.
 
-## Step 7: Explore dependencies
+## The GUAC Evidence Trees
 
-We have explored Package nodes, which are called "nouns" in GUAC. Now let's
-explore nodes that are called "verbs". `IsDependency` is a node that links two
-packages, signifying that one package depends on the other. First take look at
-the Package node for the `consul` container image:
+The evidence trees represents facts about the software supply chain. In the GUAC
+ontology, these can be thought as "verbs", linking together various "nouns"
+(that is, linking two or more software trees together).
 
-```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ4 | jq
-```
+The evidence trees are created by GUAC after ingesting supply chain metadata
+documents. As such, all evidence trees will record information about the
+collector of such documents as well as the document itself (`source`). Post the
+v0.1 BETA release of GUAC, evidence trees will also contain information about
+actors. This enables GUAC users to control the trust levels that they use in
+queries.
 
-```json
-{
-  "packages": [
-    {
-      "id": "4",
-      "type": "oci",
-      "namespaces": [
-        {
-          "id": "5",
-          "namespace": "docker.io/library",
-          "names": [
-            {
-              "id": "6",
-              "name": "consul",
-              "versions": [
-                {
-                  "id": "7",
-                  "version": "sha256:22ab19cf1326abbfaafec6a14eb68f96e899e88ffe9ce26fa36affcf8ffb582c",
-                  "qualifiers": [
-                    {
-                      "key": "tag",
-                      "value": "latest"
-                    }
-                  ],
-                  "subpath": ""
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
+### Certifications for trust information
+
+A user of GUAC can attach metadata to a package, source or artifact node to
+state that they trust the specified piece of software (i.e., `CertifyGood`) or
+that they have information that the specified piece of software should not be
+used in the user's supply chain (i.e., `CertifyBad`). These are simple
+certifications to determine the blast radius of a policy change or to attach
+unconditional (lack of) trust information.
+
+```gql
+union PackageSourceOrArtifact = Package | Source | Artifact
+
+type CertifyBad {
+  id: ID!
+  subject: PackageSourceOrArtifact!
+  justification: String!
+  origin: String!
+  collector: String!
+}
+
+type CertifyGood {
+  id: ID!
+  subject: PackageSourceOrArtifact!
+  justification: String!
+  origin: String!
+  collector: String!
 }
 ```
 
-Now we will use a query on `IsDependency` to find all the packages that the
-`consul` container image depends on. The query looks like this:
+The user cannot directly attach these metadata. They have to create specific
+documents to ingest using GUAC certifiers. This ensures that the trust
+information is collected (that is, the origin and collector), as well as a
+justification for the metadata.
 
-```
-{
-  IsDependency(isDependencySpec: { package: { type: "oci", namespace: "docker.io/library", name: "consul" }}) {
-    dependentPackage {
-      type
-      namespaces {
-        namespace
-        names {
-          name
-        }
-      }
-    }
-  }
+Note: Although the `subject` field points to the root of the `Source` and
+`Package` tries, these certifications have additional requirements: attesting a
+source must specify information to uniquely identify a `SourceName` whereas
+attesting a package must specify information to uniquely identify a
+`PackageName` or `PackageVersion`.
+
+### Certifications for Scorecard analyses
+
+GUAC can ingest [Scorecard](https://securityscorecards.dev/) information to
+attach it to source tries. We extract the scorecard information to a separate
+type.
+
+```gql
+type CertifyScorecard {
+  id: ID!
+  "The source repository that is being scanned (attestation subject)"
+  source: Source!
+  "The Scorecard attached to the repository (attestation object)"
+  scorecard: Scorecard!
+}
+
+type Scorecard {
+  "Individual Scorecard check scores (Branch-Protection, Code-Review, ...)"
+  checks: [ScorecardCheck!]!
+  "Overall Scorecard score for the source"
+  aggregateScore: Float!
+  "Exact timestamp when the source was last scanned (in RFC 3339 format)"
+  timeScanned: Time!
+  "Version of the Scorecard scanner used to analyze the source"
+  scorecardVersion: String!
+  "Commit of the Scorecards repository at the time of scanning the source"
+  scorecardCommit: String!
+  "Document from which this attestation is generated from"
+  origin: String!
+  "GUAC collector for the document"
+  collector: String!
+}
+
+type ScorecardCheck {
+  check: String!
+  score: Int!
 }
 ```
 
-```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o IsDependencyQ1 | jq
-```
+### Certifications for vulnerability statements.
 
-```json
-{
-  "IsDependency": [
-    {
-      "dependentPackage": {
-        "type": "golang",
-        "namespaces": [
-          {
-            "namespace": "github.com/azure",
-            "names": [
-              {
-                "name": "azure-sdk-for-go"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "dependentPackage": {
-        "type": "alpine",
-        "namespaces": [
-          {
-            "namespace": "",
-            "names": [
-              {
-                "name": "libcurl"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "dependentPackage": {
-        "type": "golang",
-        "namespaces": [
-          {
-            "namespace": "github.com/sirupsen",
-            "names": [
-              {
-                "name": "logrus"
-              }
-            ]
-          }
-        ]
-      }
-    },
-... many more
-```
+We also have two certifications for vulnerabilities. First, a GUAC user can run
+a vulnerability certifier on all packages in GUAC to record what vulnerabilities
+are known at that time. To record that a package does not have vulnerabilities
+at the scan time, we also define a special `NoVuln` type which is a singleton on
+the backend.
 
-We see that the `consul` image depends on the `logrus` Go package. We can query
-the full details of that link as so:
+```gql
+type NoVuln {
+  id: ID!
+}
 
-```
-{
-  IsDependency(isDependencySpec: {
-    package: { type: "oci", namespace: "docker.io/library", name: "consul" }
-    dependentPackage: { type: "golang", namespace: "github.com/sirupsen", name: "logrus" }
-  }) {
-    ...allIsDependencyTree
-  }
+union Vulnerability = OSV | CVE | GHSA | NoVuln
+
+type CertifyVuln {
+  id: ID!
+  "The package that is attested"
+  package: Package!
+  "The vulnerability object. Can be an OSV, CVE, or GHSA or the special NoVuln node."
+  vulnerability: Vulnerability!
+  "Metadata attached to the certification"
+  metadata: VulnerabilityMetaData!
+}
+
+type VulnerabilityMetaData {
+  "Time of scan (in RFC 3339 format)"
+  timeScanned: Time!
+  "URI of the vulnerability database used by the scanner"
+  dbUri: String!
+  "Version of the vulnerability database used by the scanner"
+  dbVersion: String!
+  "URI of the scanner"
+  scannerUri: String!
+  "Version of the scanner"
+  scannerVersion: String!
+  "Document from which this attestation is generated from"
+  origin: String!
+  "GUAC collector for the document"
+  collector: String!
 }
 ```
 
-```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o IsDependencyQ2 | jq
-```
+Next, a user can attach VEX statements to packages or artifacts to help with
+handling of vulnerabilities.
 
-```json
-{
-  "IsDependency": [
-    {
-      "id": "903",
-      "justification": "top-level package GUAC heuristic connecting to each file/package",
-      "versionRange": "",
-      "package": {
-        "id": "4",
-        "type": "oci",
-        "namespaces": [
-          {
-            "id": "5",
-            "namespace": "docker.io/library",
-            "names": [
-              {
-                "id": "6",
-                "name": "consul",
-                "versions": [
-                  {
-                    "id": "7",
-                    "version": "sha256:22ab19cf1326abbfaafec6a14eb68f96e899e88ffe9ce26fa36affcf8ffb582c",
-                    "qualifiers": [
-                      {
-                        "key": "tag",
-                        "value": "latest"
-                      }
-                    ],
-                    "subpath": ""
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "dependentPackage": {
-        "id": "11",
-        "type": "golang",
-        "namespaces": [
-          {
-            "id": "900",
-            "namespace": "github.com/sirupsen",
-            "names": [
-              {
-                "id": "901",
-                "name": "logrus",
-                "versions": []
-              }
-            ]
-          }
-        ]
-      },
-      "origin": "file:///../guac-data/docs/cyclonedx/syft-cyclonedx-docker.io-library-consul:latest.json",
-      "collector": "FileCollector"
-    }
-  ]
+```gql
+union PackageOrArtifact = Package | Artifact
+
+enum VexStatus {
+  NOT_AFFECTED
+  AFFECTED
+  FIXED
+  UNDER_INVESTIGATION
+}
+
+enum VexJustification {
+  COMPONENT_NOT_PRESENT
+  VULNERABLE_CODE_NOT_PRESENT
+  VULNERABLE_CODE_NOT_IN_EXECUTE_PATH
+  VULNERABLE_CODE_CANNOT_BE_CONTROLLED_BY_ADVERSARY
+  INLINE_MITIGATIONS_ALREADY_EXIST
+  NOT_PROVIDED
+}
+
+type CertifyVEXStatement {
+  id: ID!
+  "Subject of attestation"
+  subject: PackageOrArtifact!
+  "Attested vulnerability"
+  vulnerability: Vulnerability!
+  "Status of the vulnerabilities with respect to the subject"
+  status: VexStatus!
+  "Justification from VEX statement"
+  vexJustification: VexJustification!
+  "VEX statement: impact_statement or action_statement depending on status"
+  statement: String!
+  "statusNotes may convey information about how status was determined"
+  statusNotes: String!
+  "Timestamp (exact time in RFC 3339 format) for the VEX statement"
+  knownSince: Time!
+  "Document from which this attestation is generated from"
+  origin: String!
+  "GUAC collector for the document"
+  collector: String!
 }
 ```
 
-Here are the full details of the dependency link, including the SBOM that
-declared it.
+Note: the `NoVuln` node is invalid in VEX statements as these apply to existing
+vulnerabilities.
 
-## Step 8: Find paths
+### Equality evidence
 
-GUAC has a `path` query to find the shortest path between any two nodes. To use
-this, we will need to pay attention to the `id` field of the nodes we want to
-query. For this example we will pick the `etcd/client` and `etcd/api` Go
-packages. Run these two queries to find the `id` of the packages:
+GUAC might ingest information about the same subject from two different metadata
+even if these documents refer to the subject using different identifying
+information. For example, one document might specify an artifact by a SHA256
+digest whereas another might use SHA512. GUAC can certify that these are similar
+by ingesting equality evidence documents.
 
-```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ5 | jq
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ6 | jq
-```
+```gql
+type PkgEqual {
+  id: ID!
+  "Collection of packages that are similar"
+  packages: [Package!]!
+  "Justification for the claim that the packages are similar"
+  justification: String!
+  "Document from which this attestation is generated from"
+  origin: String!
+  "GUAC collector for the document"
+  collector: String!
+}
 
-Make a note the two `id`s printed. The path query will look like this:
-
-```
-{
-  path(subject: 5809, target: 6721, maxPathLength: 10) {
-    __typename
-    ... on Package{
-        ...allPkgTree
-    }
-    ... on IsDependency {
-        ...allIsDependencyTree
-    }
-  }
+type HashEqual {
+  id: ID!
+  "Collection of artifacts that are similar"
+  artifacts: [Artifact!]!
+  "Justification for the claim that the artifacts are similar"
+  justification: String!
+  "Document from which this attestation is generated from"
+  origin: String!
+  "GUAC collector for the document"
+  collector: String!
 }
 ```
 
-However, the query saved in `demo/queries.gql` is parameterized so you may pass
-in the two ids you found, which may be different. Replace `5809` and `6721` with
-the numbers you found:
+### "Is a" evidence trees
 
-```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PathQ1 -V subject:5809 target:6721 | jq
-```
+GUAC defines evidence trees that specify relationships of type "is a": these
+specify that a certain software tree could be considered to be in a relationship
+with another software tree.
 
-**Note:** In the "Playground" there is a section at the bottom to specify "Variables".
+First, GUAC defines evidence trees to link CVE or GHSA vulnerability types to
+the information contained in the OSV database:
 
-Here we see a long output with a chain of nodes from the `etcd/client` package
-to `etcd/api`. First is the `client` package node. Then an `IsDependency` node
-which describes the dependency from the `vault` container image to the `client`
-package. Next is the `Package` node for the `vault` container image. Then
-another `IsDependency` node which describes the dependency from the `vault`
-container image to the `api` package. Finally, the `Package` node for the
-`api` package.
+```gql
+union CveOrGhsa = CVE | GHSA
 
-What we have learned is that the `vault` container image depends on both the
-`client` and `api` package. This is might not be the dependency relationship we
-were hoping to find.
-
-It is important to understand the limitations of the path GraphQL query in
-isolation and understand how to use client-side processing to get the desired
-results. An example of how to do this is in the section below.
-
-## Step 9: Find vulnerabilities
-
-The data we have ingested in GUAC is based on the SBOM files in the `guac-data`
-repo, but does not contain any vulnerability information. GUAC has built-in
-"certifiers" which can search the ingested data and attach vulnerability data to
-them. The OSV certifier will search for OSV vulnerability information. To run
-the OSV certifiers, run:
-
-```bash
-bin/guacone certifier osv
-```
-
-The certifier will take a few minutes to run. A vulnerability "noun" node may be
-queried with a query like this:
-
-```
-{
-  osv(osvSpec: {osvId: "ghsa-jfh8-c2jp-5v3q"}) {
-    ...allOSVTree
-  }
+type IsVulnerability {
+  id: ID!
+  "The OSV that encapsulates the vulnerability"
+  osv: OSV!
+  "The upstream vulnerability information"
+  vulnerability: CveOrGhsa!
+  "Justification for the attested relationship"
+  justification: String!
+  "Document from which this attestation is generated from"
+  origin: String!
+  "GUAC collector for the document"
+  collector: String!
 }
 ```
 
-```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o OSVQ1 | jq
-```
+Next, GUAC records information that an artifact is produced from a source or a
+package.
 
-```json
-{
-  "osv": [
-    {
-      "id": "131666",
-      "osvId": "ghsa-jfh8-c2jp-5v3q"
-    }
-  ]
+```gql
+union PackageOrSource = Package | Source
+
+type IsOccurrence {
+  id: ID!
+  "Package or source from which the artifact originates"
+  subject: PackageOrSource!
+  "The artifact in the relationship"
+  artifact: Artifact!
+  "Justification for the attested relationship"
+  justification: String!
+  "Document from which this attestation is generated from"
+  origin: String!
+  "GUAC collector for the document"
+  collector: String!
 }
 ```
 
-GUAC doesn't store a lot of information here, just the OSV ID which can be
-easily cross-referenced.
+Finally, GUAC records dependency information between two packages.
 
-The "verb" node type that links packages to vulnerabilities is `CertifyVuln`. We
-can query to see all of these nodes that link packages to the above
-vulnerability like so:
+```gql
+enum DependencyType {
+  "direct dependency"
+  DIRECT
+  "indirect dependency"
+  INDIRECT
+  "type not known/not specified"
+  UNKNOWN
+}
 
-```
-{
-  CertifyVuln(certifyVulnSpec: {vulnerability: {osv: {osvId: "ghsa-jfh8-c2jp-5v3q"}}}) {
-    ...allCertifyVulnTree
-  }
+"IsDependency is an attestation to record that a package depends on another."
+type IsDependency {
+  id: ID!
+  "Package that has the dependency"
+  package: Package!
+  "Package for the dependency; MUST BE PackageName, not PackageVersion"
+  dependentPackage: Package!
+  "Version range for the dependency link"
+  versionRange: String!
+  "Type of dependency"
+  dependencyType: DependencyType!
+  "Justification for the attested relationship"
+  justification: String!
+  "Document from which this attestation is generated from"
+  origin: String!
+  "GUAC collector for the document"
+  collector: String!
 }
 ```
 
-```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o CertifyVulnQ1 | jq
-```
+Note: The version range is currently an opaque string but this will likely
+change in the future.
 
-```json
-{
-  "CertifyVuln": [
-    {
-      "id": "131684",
-      "package": {
-        "id": "3197",
-        "type": "maven",
-        "namespaces": [
-          {
-            "id": "12486",
-            "namespace": "org.apache.logging.log4j",
-            "names": [
-              {
-                "id": "12487",
-                "name": "log4j-core",
-                "versions": [
-                  {
-                    "id": "12488",
-                    "version": "2.8.1",
-                    "qualifiers": [],
-                    "subpath": ""
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "vulnerability": {
-        "__typename": "OSV",
-        "id": "131666",
-        "osvId": "ghsa-jfh8-c2jp-5v3q"
-      },
-      "metadata": {
-        "dbUri": "",
-        "dbVersion": "",
-        "scannerUri": "osv.dev",
-        "scannerVersion": "0.0.14",
-        "timeScanned": "2023-04-03T16:28:44.835711634Z",
-        "origin": "guac",
-        "collector": "guac"
-      }
-    }
-  ]
+### "Has a" evidence trees
+
+There are 3 more evidence trees that attest that a software tree has a certain
+property of origin.
+
+The first evidence tree of this type provides the ability to say that a package
+is built from a certain repository:
+
+```gql
+type HasSourceAt {
+  id: ID!
+  "The subject of the attestation: can be a PackageName or a PackageVersion"
+  package: Package!
+  "Source repository from which the package is built"
+  source: Source!
+  "Timestamp since this link between package and source was certified"
+  knownSince: Time!
+  "Justification for the attested relationship"
+  justification: String!
+  "Document from which this attestation is generated from"
+  origin: String!
+  "GUAC collector for the document"
+  collector: String!
 }
 ```
 
-This node has the package and vulnerability nodes along with the metadata that
-records how this link was found.
+We allow for the cases when the source of truth repository is transferred or
+renamed. This also allows for packages in one ecosystem to be built from
+different repositories than packages from another ecosystem (e.g., a similar
+package but with Go sources in one repository and Python sources in another).
 
-## Step 10: Perform a client-side search
+The next evidence tree in this section records that an artifact has been built
+by a builder using a certain set of ingredient artifacts, the SLSA attestation:
 
-All of the above examples use a single GraphQL query. However, the query results
-are all easily parsed `json` that can be interpreted to build powerful scripts.
-GUAC has a `neighbors` query that will return all the nodes with a relationship
-to the specified node. This can be used to search through relationships and find
-the specific type of path you are looking for. The neighbor query also takes in a
-set of edge filters of which to traverse. However, we are not using that field
-in this query.
+```gql
+type HasSLSA {
+  id: ID!
+  "The subject of SLSA attestation"
+  subject: Artifact!
+  "The SLSA attestation"
+  slsa: SLSA!
+}
 
-The neighbors query looks like this:
-
-```
-{
-  neighbors(node: $nodeId, usingOnly: []) {
-    __typename
-    ... on Package{
-      ...allPkgTree
-    }
-    ... on IsDependency {
-      ...allIsDependencyTree
-    }
-  }
+type SLSA {
+  "Materials of the build resulting in subject"
+  builtFrom: [Artifact!]!
+  "Builder performing the build"
+  builtBy: Builder!
+  "Type of the builder"
+  buildType: String!
+  "Individual predicates found in the attestation"
+  slsaPredicate: [SLSAPredicate!]!
+  "Version of the SLSA predicate"
+  slsaVersion: String!
+  "Timestamp (RFC3339Nano format) of build start time"
+  startedOn: Time!
+  "Timestamp (RFC3339Nano format) of build end time"
+  finishedOn: Time!
+  "Document from which this attestation is generated from"
+  origin: String!
+  "GUAC collector for the document"
+  collector: String!
 }
 ```
 
-The `demo/path.py` file contains a simple Python program to do a breadth-first
-search of GUAC nodes, similar to the `path` server-side query. However, in
-`path.py` we have defined a `filter()` function that filters the types and
-direction of links that are searched. This filter has been written in an attempt
-to find "downward" dependency relationships.
+Finally, the last evidence tree defined in GUAC is attaching SBOM information to
+packages and artifacts:
 
-```python
-# filter is used by bfs to decide weather to search a node or not. In this
-# implementation we try to find dependency links between packages
-def filter(fromID, fromNode, neighbor):
-    if neighbor['__typename'] == 'Package':
-        # From Package -> Package, only search downwards
-        if fromNode['__typename'] == 'Package':
-            return containsID(neighbor, fromID)
-        # From other node type -> Package is ok.
-        return True
-    # Only allow IsDependency where the fromID is in the subject package
-    if neighbor['__typename'] == 'IsDependency':
-        return containsID(neighbor['package'], fromID)
-    # Otherwise don't follow path
-    return False
+```gql
+type HasSBOM {
+  id: ID!
+  "SBOM subject"
+  subject: PackageOrArtifact!
+  "Identifier for the SBOM document"
+  uri: String!
+  "Algorithm by which SBOMs digest was computed"
+  algorithm: String!
+  "Digest of SBOM"
+  digest: String!
+  "Location from which the SBOM can be downloaded"
+  downloadLocation: String!
+  "SBOM annotations (e.g., SBOM Scorecard information)"
+  annotations: [Annotation!]!
+  "Document from which this attestation is generated from"
+  origin: String!
+  "GUAC collector for the document"
+  collector: String!
+}
+
+type Annotation {
+  key: String!
+  value: String!
+}
 ```
 
-`Package`->`Package` links are only followed downward: "PackageName"
--> "PackageVersion". `Package`->`IsDependency` links are only followed
-if the Package is the "Subject" and not the "Object", ie: if the previous
-Package node is the one that depends on the newly found Package in the link.
+## The GUAC Actor Trees
 
-First, run with the previous two ids from the `etcd/client` and `etcd/api`
-packages found above:
+These are not defined for the v0.1 BETA version of GUAC. There is no GraphQL
+definition for these as of now.
 
-```bash
-./demo/path.py 5809 6721
+## Topological Definitions
+
+Each GraphQL type defined so far has a semantic meaning, tied to the
+[GUAC ontology]({{ site.baseurl }}{%link guac-ontology.md %}). However, in some
+cases, users might want to see what GraphQL types are linked to a specific type,
+or they might want to find a link between two different nodes. For these cases,
+we currently provide an experimental interface to get topological information
+about the GUAC graph.
+
+Note: These definitions are subject to change and might be removed in future
+versions of GUAC. Treat this interface as experimental.
+
+First, we define a union of all nodes in the GUAC ontology and an enum for all
+the possible edges between them.
+
+```gql
+union Node =
+    Package
+  | Source
+  | Artifact
+  | Builder
+  | OSV
+  | CVE
+  | GHSA
+  | NoVuln
+  | IsOccurrence
+  | IsDependency
+  | IsVulnerability
+  | CertifyVEXStatement
+  | HashEqual
+  | CertifyBad
+  | CertifyGood
+  | PkgEqual
+  | CertifyScorecard
+  | CertifyVuln
+  | HasSourceAt
+  | HasSBOM
+  | HasSLSA
+
+enum Edge {
+  ARTIFACT_CERTIFY_BAD
+  ARTIFACT_CERTIFY_GOOD
+  ARTIFACT_CERTIFY_VEX_STATEMENT
+  ARTIFACT_HASH_EQUAL
+  ARTIFACT_HAS_SBOM
+  ARTIFACT_HAS_SLSA
+  ARTIFACT_IS_OCCURRENCE
+  BUILDER_HAS_SLSA
+  CVE_CERTIFY_VEX_STATEMENT
+  CVE_CERTIFY_VULN
+  CVE_IS_VULNERABILITY
+  GHSA_CERTIFY_VEX_STATEMENT
+  GHSA_CERTIFY_VULN
+  GHSA_IS_VULNERABILITY
+  NO_VULN_CERTIFY_VULN
+  OSV_CERTIFY_VEX_STATEMENT
+  OSV_CERTIFY_VULN
+  OSV_IS_VULNERABILITY
+  PACKAGE_CERTIFY_BAD
+  PACKAGE_CERTIFY_GOOD
+  PACKAGE_CERTIFY_VEX_STATEMENT
+  PACKAGE_CERTIFY_VULN
+  PACKAGE_HAS_SBOM
+  PACKAGE_HAS_SOURCE_AT
+  PACKAGE_IS_DEPENDENCY
+  PACKAGE_IS_OCCURRENCE
+  PACKAGE_PKG_EQUAL
+  SOURCE_CERTIFY_BAD
+  SOURCE_CERTIFY_GOOD
+  SOURCE_CERTIFY_SCORECARD
+  SOURCE_HAS_SOURCE_AT
+  SOURCE_IS_OCCURRENCE
+
+  CERTIFY_BAD_ARTIFACT
+  CERTIFY_BAD_PACKAGE
+  CERTIFY_BAD_SOURCE
+  CERTIFY_GOOD_ARTIFACT
+  CERTIFY_GOOD_PACKAGE
+  CERTIFY_GOOD_SOURCE
+  CERTIFY_SCORECARD_SOURCE
+  CERTIFY_VEX_STATEMENT_ARTIFACT
+  CERTIFY_VEX_STATEMENT_CVE
+  CERTIFY_VEX_STATEMENT_GHSA
+  CERTIFY_VEX_STATEMENT_OSV
+  CERTIFY_VEX_STATEMENT_PACKAGE
+  CERTIFY_VULN_CVE
+  CERTIFY_VULN_GHSA
+  CERTIFY_VULN_NO_VULN
+  CERTIFY_VULN_OSV
+  CERTIFY_VULN_PACKAGE
+  HASH_EQUAL_ARTIFACT
+  HAS_SBOM_ARTIFACT
+  HAS_SBOM_PACKAGE
+  HAS_SLSA_BUILT_BY
+  HAS_SLSA_MATERIALS
+  HAS_SLSA_SUBJECT
+  HAS_SOURCE_AT_PACKAGE
+  HAS_SOURCE_AT_SOURCE
+  IS_DEPENDENCY_PACKAGE
+  IS_OCCURRENCE_ARTIFACT
+  IS_OCCURRENCE_PACKAGE
+  IS_OCCURRENCE_SOURCE
+  IS_VULNERABILITY_CVE
+  IS_VULNERABILITY_GHSA
+  IS_VULNERABILITY_OSV
+  PKG_EQUAL_PACKAGE
+}
 ```
 
-```
-[]
-[]
-```
+Each member of the edges enumeration is formed by merging two `Node` names with
+`_`. Each name is converted from `CamelCase` to `CAPITALS_WITH_UNDERSCORES`.
+Only valid edges (pairs from Node to Node) are included.
 
-Nothing is found. Before, we saw dependency links from the `vault` image to both
-of these packages, but now with the filter we have in place, we don't follow the
-dependency link "up" to the `vault` image. We would normally expect to find a
-dependency link between an API and a client of that API, but we simply haven't
-ingested an SBOM that contains that link. In this case, only the `vault` SBOM
-was ingested which referenced both packages.
+The only exception to this above rule is for links out of `HasSLSA`. The names
+are `HAS_SLSA_SUBJECT`, `HAS_SLSA_BUILT_BY`, and `HAS_SLSA_MATERIALS`. This is
+because `ARTIFACT_HAS_SLSA` is only defined from subject `Artifact` to
+`HasSLSA`.
 
-Now let's explore two more packages: the `python` container image and the
-`libsqlite3-dev` debian package. Run these queries and node the `id`s:
+With these, we can define 4 queries that return `Node`s without looking at their
+type, but only at their connectivity:
 
-```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ7 | jq
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ8 | jq
-```
-
-Now find the path (your `id`s may be different):
-
-```bash
-./demo/path.py 3616 4422
+```gql
+node(node: ID!): Node!
+nodes(nodes: [ID!]!): [Node!]!
+neighbors(node: ID!, usingOnly: [Edge!]!): [Node!]!
+path(subject: ID!, target: ID!, maxPathLength: Int!, usingOnly: [Edge!]!): [Node!]!
 ```
 
-```
-['3616', '3617', '4424', '4422']
-[
-  {
-    "__typename": "Package",
-...
-```
-
-A path is found. The program prints the ids of the path, then the nodes. The
-`python` "PackageName" is linked to the "PackageVersion", which is a specific
-tag of the image. An `IsDependency` link has the `python` "PackageVersion"
-as the "subject" of the link, and the "object" `dependentPackage` is the
-"PackageName" node of the `libsqlite3-dev` package. The last node in the path is
-the "PackageName" node of `libsqlite3-dev`.
-
-## Explore on your own!
-
-Now you have the knowledge and tools to import data, query nodes and
-relationships, and find interesting discoveries. Share your novel queries and
-use cases with the [community](https://guac.sh/community/)!
+In a path query, all connecting evidence nodes along with their intermediate
+subject nodes need to be returned in order to create a complete graph. The
+`usingOnly` argument allow filtering what edges to include in `neighbors` and
+`path`: if it is empty then all edge types are included, otherwise only the
+edges that are specified.
