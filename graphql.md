@@ -195,7 +195,7 @@ nodes.
 
 ### Builders
 
-An artifact for a package is produced by a builder (e.g., FRSA, GitHub Actions,
+An artifact for a package is produced by a builder (e.g., FRSCA, GitHub Actions,
 etc.). Currently, we only use an URI field to identify the builders:
 
 ```gql

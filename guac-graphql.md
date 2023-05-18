@@ -82,7 +82,7 @@ In your original window, run:
 bin/guacone collect files ../guac-data/docs/
 ```
 
-This can take a minute or two. 
+This can take a minute or two.
 
 This dataset consists of a set of document types:
 
