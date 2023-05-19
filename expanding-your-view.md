@@ -2,7 +2,8 @@
 layout: page
 title: Expanding your view of the software supply chain
 permalink: /expanding-your-view/
-parent: GUAC use cases
+parent: GUAC demos
+grand_parent: Getting started with GUAC
 nav_order: 2
 ---
 
