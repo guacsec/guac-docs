@@ -229,4 +229,4 @@ do patch planning for the organization. Patch planning will allow an
 organization to determine which packages to update first.
 
 In order to build more robust patch planning, you can leverage the [GraphQL
-Query API]({{ site.baseurl }}{%link graphql.md %}) that GUAC provides.
+Query API]({{ site.baseurl }}{%link guac-graphql.md %}) that GUAC provides.

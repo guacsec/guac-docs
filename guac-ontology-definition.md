@@ -11,7 +11,7 @@ nav_order: 3
 This document provides some insights into how the GUAC ontology was defined.
 
 For a comprehensive and up-to-date listing of the GUAC ontology, please refer to
-the [GraphQL documentation](https://github.com/guacsec/guac/blob/main/docs/GraphQL.md).
+the [GraphQL documentation]({{ site.baseurl }}{%link graphql.md %}).
 
 ## Overview
 
@@ -37,7 +37,7 @@ into: PURL, source, artifact, builder, OSV, GHSA, and CVE.
 
 For a comprehensive and up-to-date listing of the GUAC ontology, please refer to
 the
-[GraphQL documentation](https://github.com/guacsec/guac/blob/main/docs/GraphQL.md).
+[GraphQL documentation]({{ site.baseurl }}{%link graphql.md %}).
 
 ### Package (Pkg)
 
@@ -110,7 +110,7 @@ An example of a predicate is:
   - collector ( string )
 
 For a list of all predicates, please refer to the
-[GraphQL documentation](https://github.com/guacsec/guac/blob/main/docs/GraphQL.md).
+[GraphQL documentation]({{ site.baseurl }}{%link graphql.md %}).
 
 ## GUAC Actor Tree (Not in v0.1 BETA)
 
