@@ -36,19 +36,22 @@ within the ingested SBOM.
 ## Requirements
 
 - [Go](https://go.dev/doc/install)
-- A fresh copy of the [GUAC service infrastructure through Docker Compose]({{ site.baseurl }}{%link setup.md %})
+- A fresh copy of the [GUAC service infrastructure through Docker
+  Compose]({{ site.baseurl }}{%link setup.md %})
 
 ## Step 1. Clone GUAC
 
 1. Clone GUAC to a local directory:
-  ```bash
-  git clone https://github.com/guacsec/guac.git
-  ```
+
+   ```bash
+   git clone https://github.com/guacsec/guac.git
+   ```
 
 2. Clone GUAC data (this is used as test data for this demo):
-  ```bash
-  git clone https://github.com/guacsec/guac-data.git
-  ```
+
+   ```bash
+   git clone https://github.com/guacsec/guac-data.git
+   ```
 
 The rest of the demo will assume you are in the GUAC directory
 
@@ -70,14 +73,16 @@ For demo purposes, let's ingest Vault’s SBOM. To do this, we will use the help
 of the `guaccollect` file command.
 
 1. Run the following command:
-  ```bash
-  ./bin/guaccollect files ../guac-data/top-dh-sboms/vault.json
-  ```
+
+   ```bash
+   ./bin/guaccollect files ../guac-data/top-dh-sboms/vault.json
+   ```
 
 2. Run File collector:
-  ```bash
-  {"level":"info","ts":1681994359.2474601,"caller":"cmd/files.go:112","msg":"collector ended gracefully"}
-  ```
+
+   ```bash
+   {"level":"info","ts":1681994359.2474601,"caller":"cmd/files.go:112","msg":"collector ended gracefully"}
+   ```
 
 ## Step 4: Check the ingestion logs
 
@@ -113,15 +118,16 @@ collects purls, OCI strings, and others to determine if there is more
 information available to be pulled into the graph DB.
 
 As the SBOM is ingested it:
+
 - Collects the PURLs of its dependency packages
 - Queries the deps.dev database automatically to grab the source, OpenSSF
-scorecard, and its dependency information
+  scorecard, and its dependency information
 - Links this information back to the original top-level artifact of the SBOM
 
-This process is recursive, meaning that the PURLs that the dependency relies on will also be queried!
+This process is recursive, meaning that the PURLs that the dependency relies on
+will also be queried!
 
-We can pull the logs from docker to see which packages deps.dev collector
-found:
+We can pull the logs from docker to see which packages deps.dev collector found:
 
 ```bash
 docker logs guac-depsdev-collector-1
@@ -196,10 +202,11 @@ We will further inspect these vulnerabilities in the following section.
 
 ## Step 7: Examine the information collected
 
-To understand what was collected, we will utilize the graphQL playground. The playground is accessible via: `http://localhost:8080/graphql`
+To understand what was collected, we will utilize the graphQL playground. The
+playground is accessible via: `http://localhost:8080/graphql`
 
-From graphQL Playground, we can use the provided [graphQL
-queries](https://github.com/guacsec/guac/blob/main/demo/workflow/queries.gql)
+From graphQL Playground, we can use the provided
+[graphQL queries](https://github.com/guacsec/guac/blob/main/demo/workflow/queries.gql)
 and paste them into the left column that defines the queries.
 
 ### IsDepdendency
@@ -375,9 +382,9 @@ This will output the following:
 ```
 
 From the output, we can see that prometheus/client_golang is used by a bunch of
-packages. The first one shows the origin as the document that we ingested at
-the beginning (related to vault). The other entries all come from deps.dev that
-show that other packages `github.com/armon/go-metrics` also depend on
+packages. The first one shows the origin as the document that we ingested at the
+beginning (related to vault). The other entries all come from deps.dev that show
+that other packages `github.com/armon/go-metrics` also depend on
 `prometheus/client_golang`. Meaning that `prometheus/client_golang` is both a
 direct and transitive dependency for the Vault image SBOM we ingested!
 
@@ -445,7 +452,8 @@ This will output the following:
       },
 ```
 
-The collector subscriber and deps.dev collector captured that the `pkg:golang/cloud.google.com/go` has a source repo at
+The collector subscriber and deps.dev collector captured that the
+`pkg:golang/cloud.google.com/go` has a source repo at
 `github.com/googleapis/google-cloud-go`. This information shows the origin being
 deps.dev.
 
@@ -671,11 +679,11 @@ This will output the following:
 
 This information came from the OSV certifier service that is constantly running
 within GUAC. From this, we can see that two versions of
-`github.com/prometheus/client_golang` contain the same
-`ghsa-cg3q-j54f-5p7p`. In the [vulnerability CLI demo]({{ site.baseurl }}{%link
-querying-via-cli.md %}), we can use this information to determine if there is a
-path between this and the version of Vault we are using. Here is a quick look
-at what the visualization would look like for that:
+`github.com/prometheus/client_golang` contain the same `ghsa-cg3q-j54f-5p7p`. In
+the [vulnerability CLI demo]({{ site.baseurl }}{%link
+querying-via-cli.md %}), we can use this information to determine if there is a path
+between this and the version of Vault we are using. Here is a quick look at what
+the visualization would look like for that:
 
 ![Visualization of data](assets/images/expandviewvisualization.png)
 
@@ -683,9 +691,10 @@ at what the visualization would look like for that:
 
 Through this demo, we learned that GUAC services are designed to extract as much
 information as possible about an SBOM that it ingests. Utilizing this
-information, we can quickly make up-to-date policy decisions.  We can even integrate
-GUAC services into an IDE to provide information on whether or not a package should be used due to
-a low OpenSSF scorecard score or critical vulnerability.
+information, we can quickly make up-to-date policy decisions. We can even
+integrate GUAC services into an IDE to provide information on whether or not a
+package should be used due to a low OpenSSF scorecard score or critical
+vulnerability.
 
 ## Cleanup
 

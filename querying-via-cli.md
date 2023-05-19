@@ -10,14 +10,14 @@ nav_order: 3
 
 GUAC's GraphQL API allows us to integrate the knowledge graph into various
 applications. In the other examples, we saw how it can be used to visualize and
-query the graph from a React UI, and even a small Python application to query for
-paths between nodes.
+query the graph from a React UI, and even a small Python application to query
+for paths between nodes.
 
-In this demo, we will utilize a Go CLI that will allow us
-to query if a purl (package URL) has any vulnerabilities based on its direct and
-indirect dependencies. We will so see if a purl is affected by a specific
-vulnerability and which dependencies need to be updated to remediate that
-particular vulnerability.
+In this demo, we will utilize a Go CLI that will allow us to query if a purl
+(package URL) has any vulnerabilities based on its direct and indirect
+dependencies. We will so see if a purl is affected by a specific vulnerability
+and which dependencies need to be updated to remediate that particular
+vulnerability.
 
 ## Step 1: Setup GUAC with Docker Compose
 
@@ -26,14 +26,16 @@ Follow the [Docker Compose setup]({{ site.baseurl }}{%link setup.md %}).
 ## Step 2: Clone GUAC
 
 1. Clone GUAC to a local directory:
-  ```bash
-  git clone https://github.com/guacsec/guac.git
-  ```
+
+   ```bash
+   git clone https://github.com/guacsec/guac.git
+   ```
 
 2. Clone GUAC data (this is used as test data for this demo):
-  ```bash
-  git clone https://github.com/guacsec/guac-data.git
-  ```
+
+   ```bash
+   git clone https://github.com/guacsec/guac-data.git
+   ```
 
 The rest of the demo will assume you are in the GUAC directory.
 
@@ -51,10 +53,9 @@ make
 
 ## Step 4. Run the GUAC Visualizer
 
-To get the GUAC visualizer up and running, follow the
-[GUAC visualizer setup]({{ site.baseurl }}{%link guac-visualizer.md %}).
-This will be used in this demo to show the various paths from package to
-vulnerability.
+To get the GUAC visualizer up and running, follow the [GUAC visualizer
+setup]({{ site.baseurl }}{%link guac-visualizer.md %}). This will be used in
+this demo to show the various paths from package to vulnerability.
 
 ## Step 5. Ingest a vulnerability SPDX SBOM
 
@@ -90,11 +91,12 @@ additional information from various sources (such as osv.dev and scorecard to
 start with) and keep the information specified up-to-date within GUAC.
 
 The certifier can be run in two modes:
+
 - **Polling:** For continuous updates on the information
 - **Non-polling:** Run once and collect the data
 
-For this demo, the polling version of the osv certifier is already running as part of the Docker
-Compose.
+For this demo, the polling version of the osv certifier is already running as
+part of the Docker Compose.
 
 The OSV certifier will query osv.dev and determine if the various components
 that make up our images have vulnerabilities we should be worried about.
@@ -110,8 +112,8 @@ message:
 {"level":"info","ts":1681821205.06338,"caller":"cmd/osv.go:122","msg":"certifier ended gracefully"}
 ```
 
-**If the queries return an error,** you can wait for the OSV certifier to re-scan (this is done every 5 minutes)
-or force it to run manually via:
+**If the queries return an error,** you can wait for the OSV certifier to
+re-scan (this is done every 5 minutes) or force it to run manually via:
 
 ```bash
 ./bin/guacone certifier osv
@@ -125,9 +127,9 @@ just once.
 
 ## Step 7: Run the Query Vulnerability CLI
 
-Now that our GUAC instance is up and running with up-to-date information on
-the vulnerable image that we ingest, we will look at how we can utilize this
-data effectively.
+Now that our GUAC instance is up and running with up-to-date information on the
+vulnerable image that we ingest, we will look at how we can utilize this data
+effectively.
 
 ### Query PURL to determine vulnerabilities
 
@@ -221,8 +223,8 @@ Successful output will show the following:
 Visualizer url: http://localhost:3000/?path=138449,138450,15573,15572,15515,2509,15574,15337,15336,15335,2
 ```
 
-Based on the output we see that there is a path to the vulnerability and we can use
-the GUAC visualizer to inspect in more detail. Copying the provided URL and
+Based on the output we see that there is a path to the vulnerability and we can
+use the GUAC visualizer to inspect in more detail. Copying the provided URL and
 pasting it into a browser will show the following:
 
 ![Image from visualizer](assets/images/cliimage2.png)

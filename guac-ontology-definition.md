@@ -20,8 +20,8 @@ defines the 3 structures as the software tree, evidence tree, and actor tree.
 
 - **Software Tree:** A factual structure that describes software entities. They
   communicate both physical (e.g. artifact and hashes) and logical (e.g. PURL)
-  views, and are an extension of the idea of factual software identifiers nodes as
-  described in
+  views, and are an extension of the idea of factual software identifiers nodes
+  as described in
   [GUAC Identity Problem Design Doc](https://docs.google.com/document/d/1BUEi7q2i-KXlAhsh1adYvL1fkWN-q8FrgLyEre7c5kg/edit?resourcekey=0-02sC5-9IbTfwJckze_CDQw)(Issue
   [#217](https://github.com/guacsec/guac/issues/217)).
 - **Evidence Tree:** A structure to communicate claims about nodes in a software
@@ -36,46 +36,67 @@ We first have to define the software tree and components. This can be broken
 into: PURL, source, artifact, builder, OSV, GHSA, and CVE.
 
 For a comprehensive and up-to-date listing of the GUAC ontology, please refer to
-the
-[GraphQL documentation]({{ site.baseurl }}{%link graphql.md %}).
+the [GraphQL documentation]({{ site.baseurl }}{%link graphql.md %}).
 
 ### Package (Pkg)
 
-This is based on the [purl-spec](https://github.com/package-url/purl-spec) and defined as: **scheme:type/namespace/name@version?qualifiers#subpath**. The definition for each component is:
+This is based on the [purl-spec](https://github.com/package-url/purl-spec) and
+defined as: **scheme:type/namespace/name@version?qualifiers#subpath**. The
+definition for each component is:
 
-- **Scheme** (Required): The URL scheme with the constant value of "pkg". One of the primary reasons for this single scheme is to   
-  facilitate the future official registration of the "pkg" scheme for package URLs.
-- **Type** (Required): The package "type" or package "protocol" such as maven, npm, nuget, gem, pypi, etc. 
-- **Namespace** (Optional): Type-specific, name prefix such as a Maven groupid, a Docker image owner, a GitHub user, or an 
-  organization.
+- **Scheme** (Required): The URL scheme with the constant value of "pkg". One of
+  the primary reasons for this single scheme is to  
+  facilitate the future official registration of the "pkg" scheme for package
+  URLs.
+- **Type** (Required): The package "type" or package "protocol" such as maven,
+  npm, nuget, gem, pypi, etc.
+- **Namespace** (Optional): Type-specific, name prefix such as a Maven groupid,
+  a Docker image owner, a GitHub user, or an organization.
 - **Name** (Required): Name of the package.
 - **Version** (Optional): Version of the package.
-- **Qualifiers** (Optional): Type-specific, extra qualifying data for a package such as an OS, architecture, a distro, etc. 
-- **Subpath** (Optional): Extra subpath within a package, relative to the package root. 
+- **Qualifiers** (Optional): Type-specific, extra qualifying data for a package
+  such as an OS, architecture, a distro, etc.
+- **Subpath** (Optional): Extra subpath within a package, relative to the
+  package root.
 
-It was decided that mapping to hashes as leaf nodes should not be part of the software tree and should be linked via an attestation/evidence tree. This is due to the fact that saying a package has an occurrence of an artifact with hash is an opinion, and software trees need to remain factual. For example, an SBOM may contain an entry that says "pkg://abc" has hash "sha256:def", however, this may be incorrect - and thus GUAC providing the ability to raise counterfactuals becomes important _if_ there is a conflict of two
-trusted document metadata.
+It was decided that mapping to hashes as leaf nodes should not be part of the
+software tree and should be linked via an attestation/evidence tree. This is due
+to the fact that saying a package has an occurrence of an artifact with hash is
+an opinion, and software trees need to remain factual. For example, an SBOM may
+contain an entry that says "pkg://abc" has hash "sha256:def", however, this may
+be incorrect - and thus GUAC providing the ability to raise counterfactuals
+becomes important _if_ there is a conflict of two trusted document metadata.
 
 ### Source
-Source is used to define the location of the software artifact. Similar to the purl spec this is defined as:
+
+Source is used to define the location of the software artifact. Similar to the
+purl spec this is defined as:
+
 - **Type:**: Version control system type (git/svn/cvs).
 - **Namespace**: Location of the repo (github/gitlab/bitbucket).
 - **Name**: URL to the repo.
 - **Qualifier**: Tag or commit.
 
 ### Artifact
+
 Artifact contains the hash of the software component.
 
 ### Builder
-Builder is the component that built the artifact (for example GitHub actions, FRSCA). This contains the URI of the builder.
+
+Builder is the component that built the artifact (for example GitHub actions,
+FRSCA). This contains the URI of the builder.
 
 ### [OSV](https://osv.dev/) or Open Source Vulnerability
+
 OSVs contain the OSV ID that can be mapped to a GHSA or CVE.
 
 ### GHSA - GitHub Security Advisory
-GHSA contains a GHSA ID that maps to the [GitHub Advisory Database](https://github.com/advisories).
+
+GHSA contains a GHSA ID that maps to the
+[GitHub Advisory Database](https://github.com/advisories).
 
 ### CVE - Common Vulnerabilities and Exposures
+
 CVE contains a CVE ID.
 
 A visualization of some of the above software trees would look like:
@@ -109,8 +130,8 @@ An example of a predicate is:
   - source ( string )
   - collector ( string )
 
-For a list of all predicates, please refer to the
-[GraphQL documentation]({{ site.baseurl }}{%link graphql.md %}).
+For a list of all predicates, please refer to the [GraphQL
+documentation]({{ site.baseurl }}{%link graphql.md %}).
 
 ## GUAC Actor Tree (Not in v0.1 BETA)
 
@@ -127,16 +148,16 @@ We determined there to be 3 different dimensions of trust of action:
 Then we decided to start with the following:
 
 - **Structure:** Only interested in the leaf nodes of a trust ontology.
-- **Reasoning:** We only care about the identity for the GUAC BETA, and capabilities
-  as far as intrinsic protocols allow the expressiveness of (x509 expiry and key
-  capabilities).
+- **Reasoning:** We only care about the identity for the GUAC BETA, and
+  capabilities as far as intrinsic protocols allow the expressiveness of (x509
+  expiry and key capabilities).
 
 The way to do this is to have identity nodes as part of the "Actor Tree" be
-singletons represented by a URI with information on whether or not they've been verified. These
-URIs would be validated with the root of trust via trust oracle, which would use
-a trust config per GUAC instance to verify the signatures and provide a URI that
-can be used to make trust decisions. This is building upon the proposal as in
-the "Trust Policy" section of this document:
+singletons represented by a URI with information on whether or not they've been
+verified. These URIs would be validated with the root of trust via trust oracle,
+which would use a trust config per GUAC instance to verify the signatures and
+provide a URI that can be used to make trust decisions. This is building upon
+the proposal as in the "Trust Policy" section of this document:
 [GUAC Identity Problem Design Doc](https://docs.google.com/document/d/1BUEi7q2i-KXlAhsh1adYvL1fkWN-q8FrgLyEre7c5kg/edit?resourcekey=0-02sC5-9IbTfwJckze_CDQw#heading=h.h9kfextfhlqn),
 and discussed as part of
 [this issue](https://github.com/guacsec/guac/issues/75).
