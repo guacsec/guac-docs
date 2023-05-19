@@ -2,7 +2,8 @@
 layout: page
 title: What is Known and Unknown about your Software Supply Chain?
 permalink: /known-and-unknown/
-parent: GUAC use cases
+parent: GUAC demos
+grand_parent: Getting started with GUAC
 nav_order: 1
 ---
 

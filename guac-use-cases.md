@@ -1,12 +1,13 @@
 ---
 layout: page
-title: GUAC use cases
+title: GUAC demos
 permalink: /guac-use-cases/
+parent: Getting started with GUAC
 has_children: true
-nav_order: 3
+nav_order: 2
 ---
 
-# GUAC use cases
+# GUAC demos
 
 The following are demos that show you the multitude of ways that you can use
 GUAC. If you are following along and want to visualize the output from the

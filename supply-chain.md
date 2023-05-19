@@ -2,7 +2,8 @@
 layout: page
 title: Reacting to a supply chain incident
 permalink: /supply-chain/
-parent: GUAC use cases
+parent: GUAC demos
+grand_parent: Getting started with GUAC
 nav_order: 4
 ---
 

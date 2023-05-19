@@ -2,8 +2,8 @@
 layout: page
 title: Using GUAC's GraphQL interface
 permalink: /guac-graphql/
-parent: GUAC use cases
-nav_order: 6
+parent: Developing tools on top of GUAC
+nav_order: 1
 ---
 
 # GraphQL API demo

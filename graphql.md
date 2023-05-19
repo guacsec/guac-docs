@@ -2,7 +2,8 @@
 layout: page
 title: GraphQL
 permalink: /graphql/
-nav_order: 5
+parent: Developing tools on top of GUAC
+nav_order: 2
 ---
 
 # GUAC GraphQL definitions
