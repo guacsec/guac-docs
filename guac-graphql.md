@@ -14,8 +14,9 @@ query and demonstrates a client-side search program.
 
 ## Background information
 
-In this demo, we'll query the GUAC graph using GraphQL. GraphQL is a query language for APIs
-and a runtime for fulfilling those queries with your existing data.
+In this demo, we'll query the GUAC graph using GraphQL. GraphQL is a query
+language for APIs and a runtime for fulfilling those queries with your existing
+data.
 
 > For some background reading, visit https://graphql.org/learn/ . Also, the full
 > GUAC schema can be saved with this command:
@@ -33,14 +34,16 @@ and a runtime for fulfilling those queries with your existing data.
 ## Step 1: Clone GUAC
 
 1. Clone GUAC to a local directory:
-  ```bash
-  git clone https://github.com/guacsec/guac.git
-  ```
+
+   ```bash
+   git clone https://github.com/guacsec/guac.git
+   ```
 
 2. Clone GUAC data (this is used as test data for this demo):
-  ```bash
-  git clone https://github.com/guacsec/guac-data.git
-  ```
+
+   ```bash
+   git clone https://github.com/guacsec/guac-data.git
+   ```
 
 The rest of the demo will assume you are in the GUAC directory
 
@@ -72,9 +75,8 @@ graph will be empty.
 
 ## Step 4: Ingest the data
 
-To ingest the data, we will use the `guacone` command, which is an
-all-in-one utility that can take a collection of files and ingest them into the
-GUAC graph.
+To ingest the data, we will use the `guacone` command, which is an all-in-one
+utility that can take a collection of files and ingest them into the GUAC graph.
 
 In your original window, run:
 
@@ -95,7 +97,8 @@ This dataset consists of a set of document types:
 
 The queries for this demo are stored in the `demo/queries.gql` file. Running the
 demo queries can be done graphically by opening the GraphQL Playground in a web
-browser, or using the command line. The remainder of the demo will have cli commands. 
+browser, or using the command line. The remainder of the demo will have cli
+commands.
 
 ### Option 1: Use the command line to run queries
 
@@ -106,8 +109,9 @@ Install the `gql-cli` tool with `pip`:
 ```bash
 pip install gql[all]
 ```
-**Note:**
-If you are using **pyhton3** in your system, you may need to use the `pip3` command instead.
+
+**Note:** If you are using **pyhton3** in your system, you may need to use the
+`pip3` command instead.
 
 ### Option 2: Use the GraphQL Playground to run queries
 
@@ -120,7 +124,6 @@ If you are using **pyhton3** in your system, you may need to use the `pip3` comm
 
 1. The "Play" button in the top center of the Playground can be used to select
    which query to run.
-
 
 ## Step 6: Run a simple query
 
@@ -589,15 +592,16 @@ the numbers you found:
 cat demo/queries.gql | gql-cli http://localhost:8080/query -o PathQ1 -V subject:5809 target:6721 | jq
 ```
 
-**Note:** In the "Playground" there is a section at the bottom to specify "Variables".
+**Note:** In the "Playground" there is a section at the bottom to specify
+"Variables".
 
 Here we see a long output with a chain of nodes from the `etcd/client` package
 to `etcd/api`. First is the `client` package node. Then an `IsDependency` node
 which describes the dependency from the `vault` container image to the `client`
 package. Next is the `Package` node for the `vault` container image. Then
 another `IsDependency` node which describes the dependency from the `vault`
-container image to the `api` package. Finally, the `Package` node for the
-`api` package.
+container image to the `api` package. Finally, the `Package` node for the `api`
+package.
 
 What we have learned is that the `vault` container image depends on both the
 `client` and `api` package. This is might not be the dependency relationship we
@@ -721,8 +725,8 @@ All of the above examples use a single GraphQL query. However, the query results
 are all easily parsed `json` that can be interpreted to build powerful scripts.
 GUAC has a `neighbors` query that will return all the nodes with a relationship
 to the specified node. This can be used to search through relationships and find
-the specific type of path you are looking for. The neighbor query also takes in a
-set of edge filters of which to traverse. However, we are not using that field
+the specific type of path you are looking for. The neighbor query also takes in
+a set of edge filters of which to traverse. However, we are not using that field
 in this query.
 
 The neighbors query looks like this:
@@ -764,10 +768,10 @@ def filter(fromID, fromNode, neighbor):
     return False
 ```
 
-`Package`->`Package` links are only followed downward: "PackageName"
--> "PackageVersion". `Package`->`IsDependency` links are only followed
-if the Package is the "Subject" and not the "Object", ie: if the previous
-Package node is the one that depends on the newly found Package in the link.
+`Package`->`Package` links are only followed downward: "PackageName" ->
+"PackageVersion". `Package`->`IsDependency` links are only followed if the
+Package is the "Subject" and not the "Object", ie: if the previous Package node
+is the one that depends on the newly found Package in the link.
 
 First, run with the previous two ids from the `etcd/client` and `etcd/api`
 packages found above:
@@ -812,8 +816,8 @@ Now find the path (your `id`s may be different):
 
 A path is found. The program prints the ids of the path, then the nodes. The
 `python` "PackageName" is linked to the "PackageVersion", which is a specific
-tag of the image. An `IsDependency` link has the `python` "PackageVersion"
-as the "subject" of the link, and the "object" `dependentPackage` is the
+tag of the image. An `IsDependency` link has the `python` "PackageVersion" as
+the "subject" of the link, and the "object" `dependentPackage` is the
 "PackageName" node of the `libsqlite3-dev` package. The last node in the path is
 the "PackageName" node of `libsqlite3-dev`.
 

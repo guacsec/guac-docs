@@ -5,16 +5,14 @@ permalink: /setup/
 nav_order: 2
 ---
 
-
 # Set up GUAC with Docker Compose
 
 {: .note }
 
-If you’d prefer, you can set up [GUAC with
-Kubernetes](https://github.com/kusaridev/helm-charts/tree/main/charts/guac)
+If you’d prefer, you can set up
+[GUAC with Kubernetes](https://github.com/kusaridev/helm-charts/tree/main/charts/guac)
 instead. These instructions are hosted in a third-party repo and may not be
 synchronized with the GUAC repo.
-
 
 GUAC consists of multiple components. You may have seen a subset of these used
 in various [GUAC demos]({{ site.baseurl }}{% link guac-use-cases.md %}). To get
@@ -45,59 +43,65 @@ GUAC components work together]({{ site.baseurl }}{%link guac-components.md %}).
 - [Make](https://www.gnu.org/software/make/)
 
 ## Step 1: Clone GUAC
+
 1. Clone GUAC to a local directory:
-  ```bash
-  git clone https://github.com/guacsec/guac.git
-  ```
+
+   ```bash
+   git clone https://github.com/guacsec/guac.git
+   ```
 
 2. Optional: If you want test data to use, clone GUAC’s test data:
-  ```bash
-  git clone https://github.com/guacsec/guac-data.git
-  ```
 
-3. Go to your GUAC directory (the rest of the steps need to be done from this directory):
-  ```bash
-  cd guac
-  ```
+   ```bash
+   git clone https://github.com/guacsec/guac-data.git
+   ```
+
+3. Go to your GUAC directory (the rest of the steps need to be done from this
+   directory):
+
+   ```bash
+   cd guac
+   ```
 
 ## Step 2: Build the containers
 
 From your GUAC directory, run:
 
-  ```bash
-  make container
-  ```
+```bash
+make container
+```
 
 ## Step 3: Start the GUAC server
 
 1. In another terminal, from your GUAC directory, run:
-  ```bash
-  docker-compose up
-  ```
+
+   ```bash
+   docker-compose up
+   ```
 
 2. Verify that GUAC is running:
-  ```bash
-  docker compose ls --filter "name=guac"
-  ```
 
-  You should see:
+   ```bash
+   docker compose ls --filter "name=guac"
+   ```
 
-  ```bash
-  NAME                STATUS              CONFIG FILES
-  guac                running(7)          /Users/lumb/go/src/github.com/guacsec/guac/docker-compose.yml
-  ```
+   You should see:
 
-  **If you don’t see the above,** run `docker-compose down` and try starting up GUAC again. Because Docker Compose caches the containers used, the unclean state can cause issues.
+   ```bash
+   NAME                STATUS              CONFIG FILES
+   guac                running(7)          /Users/lumb/go/src/github.com/guacsec/guac/docker-compose.yml
+   ```
+
+   **If you don’t see the above,** run `docker-compose down` and try starting up
+   GUAC again. Because Docker Compose caches the containers used, the unclean
+   state can cause issues.
 
 ### GUAC Ports
 
-|---
-| Port Number | GUAC Component | Note
-|-|:-|:-:|-:
-| 8080 | GraphQL server | To see the GraphQL playground, <br />visit [http://localhost:8080](http://localhost:8080)  
-|---
-| 4222 | Nats | This is where any collectors that you run will need to <br />connect to push any docs they find. <br />The GUAC collector command defaults to `nats://127.0.0.1:4222` <br />for the Nats address, so this will work automatically    
-|===
+| Port Number | GUAC Component | Note                                                                                                                                                                                                            |
+| ----------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 8080        | GraphQL server | To see the GraphQL playground, visit [http://localhost:8080](http://localhost:8080)                                                                                                                             |
+| 4222        | Nats           | This is where any collectors that you run will need to connect to push any docs they find. The GUAC collector command defaults to `nats://127.0.0.1:4222` for the Nats address, so this will work automatically |
 
 ## Step 4: Start Ingesting Data
 
@@ -109,6 +113,7 @@ make build
 ```
 
 ### Alternative instructions
+
 You can also run the `guacone collect files` ingestion command to load data into
 your GUAC deployment. For example we can ingest the sample `guac-data` data.
 However, you may ingest what you wish to here instead.
@@ -129,8 +134,6 @@ default, we connect to the existing compose network (`--network guac_default`)
 and use the `guac-graphql` container name to connect to it. The command uses a
 volume mount to mout the `guac-data` into the container for collecting
 (`-v $PWD:/data`).
-
-
 
 ## Step 5: Check that everything is ingesting and running
 
@@ -156,25 +159,27 @@ You should see the types of all the packages ingested
 ```
 
 ## What is running?
-Congratulations, you are now running a full GUAC deployment! Taking a look at the `docker-compose.yaml` we can see what is actually running:
 
-- **Nats**: Used for communication between the GUAC components. It is
-  available on port `4222`.
-- **Collector-Subscriber**: Helps communicate to the collectors
-  when additional information is needed.
+Congratulations, you are now running a full GUAC deployment! Taking a look at
+the `docker-compose.yaml` we can see what is actually running:
+
+- **Nats**: Used for communication between the GUAC components. It is available
+  on port `4222`.
+- **Collector-Subscriber**: Helps communicate to the collectors when additional
+  information is needed.
 - **GraphQL Server**: Serves GUAC GraphQL queries and stores the data. As the
   in-memory backend is used, no separate backend is needed behind the server.
-- **Ingestor**: Listens for things to ingest through Nats, then
-  pushes to the GraphQL Server. The ingestor also runs the assembler and parser
-  internally.
-- **Image Collector**: Can pull OCI image metadata (SBOMs and
-  attestations) from registries for further inspection.
+- **Ingestor**: Listens for things to ingest through Nats, then pushes to the
+  GraphQL Server. The ingestor also runs the assembler and parser internally.
+- **Image Collector**: Can pull OCI image metadata (SBOMs and attestations) from
+  registries for further inspection.
 - **Deps.dev Collector**: Gathers further information from
   [Deps.dev](https://deps.dev/) for supported packages.
 - **OSV Certifier**: Gathers OSV vulnerability information from
   [osv.dev](https://osv.dev/) about packages.
 
 ## Next steps
+
 The compose configuration is suitable to leave running in an environment that is
 accessible to your environment for further GUAC ingestion, discovery, analysis,
 and evaluation. Keep in mind that the in-memory backend is not persistent.

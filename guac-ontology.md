@@ -10,13 +10,14 @@ nav_order: 2
 
 ## The problem with software supply chains
 
-Software supply chains are more sophisticated than ever and so are their compromises. Because of this, various tools have spun up around software metadata, such as SLSA/In-toto and SBOM. To better understand the
-security posture of a software, we need to know the software supply chain properties
-of each used artifact. To solve this problem, we built a software
-supply chain knowledge graph, GUAC (Graph for Understanding Artifact
-Composition). GUAC allows us to efficiently query information about
-software supply chain properties and efficiently update the state of the supply
-chain.
+Software supply chains are more sophisticated than ever and so are their
+compromises. Because of this, various tools have spun up around software
+metadata, such as SLSA/In-toto and SBOM. To better understand the security
+posture of a software, we need to know the software supply chain properties of
+each used artifact. To solve this problem, we built a software supply chain
+knowledge graph, GUAC (Graph for Understanding Artifact Composition). GUAC
+allows us to efficiently query information about software supply chain
+properties and efficiently update the state of the supply chain.
 
 ## Distilling an ontology for GUAC
 
@@ -45,10 +46,10 @@ involves all three (artifacts, actors, actions).
 
 ## Mapping the three elements of supply chains to a universal graph
 
-All three elements can be collected for public
-information and used to construct a _semantic_ _tree_ about their respective
-elements. This allows us to turn the collector functions into a
-_bijection_ and prevent the loss of data during the collection process.
+All three elements can be collected for public information and used to construct
+a _semantic_ _tree_ about their respective elements. This allows us to turn the
+collector functions into a _bijection_ and prevent the loss of data during the
+collection process.
 
 We develop these bijections in the collector to build trees of evidence, trees
 of actions, and trees of software lineage that we can then connect to each other
@@ -56,16 +57,16 @@ to build the graph.
 
 ### The evidence tree
 
-The first tree of information is the evidence tree. For each
-piece of evidence collected we are able to build a tree of the following
-elements by following the **ITE-6 processing model**:
+The first tree of information is the evidence tree. For each piece of evidence
+collected we are able to build a tree of the following elements by following the
+**ITE-6 processing model**:
 
 - **DSSE layer:** Creates an edge between an actor (identity) and an action
 - **Subject layer:** Creates an edge between an action and a software instance
-   (e.g., identified by a purl and a hash)
-- **Predicate layer:** Creates an edge between a collection of software instances
-   and an action (e.g., a series of packages and environmental tools)
-   
+  (e.g., identified by a purl and a hash)
+- **Predicate layer:** Creates an edge between a collection of software
+  instances and an action (e.g., a series of packages and environmental tools)
+
 ![Evidence tree diagram](assets/images/evidencetree.png)
 
 These trees can be broken down to further separate actions and evidence. For
@@ -133,7 +134,9 @@ An organization wants to dump all the metadata and assertions related to an
 artifact.
 
 **_Query_:** Connected component given start node artifact C  
-**_Approach_:** Starting from artifact C, get all first neighbor evidence nodes, then get the connected component of each evidence. The result subgraph is the connected component starting artifact C  
+**_Approach_:** Starting from artifact C, get all first neighbor evidence nodes,
+then get the connected component of each evidence. The result subgraph is the
+connected component starting artifact C  
 **_Result_:**
 
 ![Connected components diagram](assets/images/connectedcomponentsdiagram.png)
@@ -144,7 +147,9 @@ An organization wants to check if its software is affected by a recently
 published vulnerability with an assigned CVE number, signed by a specific
 vulnerability database.
 
-- Query the GUAC Graph such that based on the artifact nodes of the software, can you reach the CVE evidence, then the vulnerability database? If yes, then the software is vulnerable to it.
+- Query the GUAC Graph such that based on the artifact nodes of the software,
+  can you reach the CVE evidence, then the vulnerability database? If yes, then
+  the software is vulnerable to it.
 
 **Example diagram**
 
@@ -152,15 +157,15 @@ vulnerability database.
 the national vulnerability database?  
 **_Approach_:** From Identity tree, determine which nodes belong to that class
 of identities. Is there a path from the artifact -> CVE -> any node in the class
-of identities?
-**_Result_:** From identity tree, NVD identities are NVD#Root, NVD#2,NVD#3.  
+of identities? **_Result_:** From identity tree, NVD identities are NVD#Root,
+NVD#2,NVD#3.  
 Walk the path (artifact C -> SLSA evidence -> Artifact A -> CVE#2 evidence->
 identity NVD#3)
 
 ![Reachability diagram](assets/images/reachabilitydiagram.png)
 
-This does not cover a case in which two different reports describe the
-same artifact and do **not** agree on the security posture of an artifact.
+This does not cover a case in which two different reports describe the same
+artifact and do **not** agree on the security posture of an artifact.
 
 ### Counterfactual (not part of the v0.1 BETA)
 
@@ -175,18 +180,19 @@ An organization wants to check the vulnerabilities that affect its software.
 **_Approach_:** Using first neighbor search, is there any neighbor CVE evidence
 for artifact C?  
 **_Result_:** Using first neighbor search, Bob signed CVE#4 evidence, while Sam
-signed CVE#5 evidence. This is conflicting information. Bob and Sam disagree about the
-CVEs affecting artifact C.
+signed CVE#5 evidence. This is conflicting information. Bob and Sam disagree
+about the CVEs affecting artifact C.
 
-Conflicting information should be flagged as something to be analyzed further.  
+Conflicting information should be flagged as something to be analyzed further.
 
 ![Counterfactual diagram](assets/images/counterfactualdiagram.png)
 
 ## Hypergraph semantics (not part of v0.1 BETA)
 
 A hypergraph is a graph in which hyperedges can connect to a subset of nodes
-rather than two nodes. Hyperedges can be used to make logical groupings for nodes
-that represent the same thing, and they may appear in GUAC in couple of ways:
+rather than two nodes. Hyperedges can be used to make logical groupings for
+nodes that represent the same thing, and they may appear in GUAC in couple of
+ways:
 
 - **Artifacts:** Identical artifacts or packages. For example, an SLSA document
   describing an artifact with multiple hashes makes the implicit claim that
