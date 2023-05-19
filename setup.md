@@ -77,7 +77,7 @@ make container
 1. In another terminal, from your GUAC directory, run:
 
    ```bash
-   docker-compose up
+   docker compose up --force-recreate
    ```
 
 2. Verify that GUAC is running:
