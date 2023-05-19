@@ -199,7 +199,7 @@ We will further inspect these vulnerabilities in the following section.
 To understand what was collected, we will utilize the graphQL playground. The playground is accessible via: `http://localhost:8080/graphql`
 
 From graphQL Playground, we can use the provided [graphQL
-queries](https://github.com/guacsec/guac/blob/main/demo/graphql/queries.gql)
+queries](https://github.com/guacsec/guac/blob/main/demo/workflow/queries.gql)
 and paste them into the left column that defines the queries.
 
 ### IsDepdendency
