@@ -180,7 +180,7 @@ and a artifact (algorithm:digest).
   [ResourceDescriptor field type](https://github.com/in-toto/attestation/blob/main/spec/v1/resource_descriptor.md).
   
   For more information on the SLSA attestation, we can look up the SLSA
-  attestation via the Node ID in the [graphQL playground](../graphql/GraphQL.md)
+  attestation via the Node ID in the [graphQL playground]({{ site.baseurl }}{%link guac-graphql.md %})
   that is shown in the output.
   
   ```graphql
