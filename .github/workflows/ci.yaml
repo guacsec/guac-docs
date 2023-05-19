@@ -38,5 +38,5 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # tag=v3
       - name: Check markdown format
         run: npx --yes prettier --write --prose-wrap always *.md
-      - name: Check that all linted text is up to date
-        run: test -z "$(git status -s)"
+      - name: Check that all markdown is up to date
+        run: git status -s && test -z "$(git status -s)"
