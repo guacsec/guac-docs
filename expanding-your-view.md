@@ -76,7 +76,7 @@ of the `guaccollect` file command.
 1. Run the following command:
 
    ```bash
-   ./bin/guaccollect files ../guac-data/top-dh-sboms/vault.json
+   ./bin/guacone collect files ../guac-data/top-dh-sboms/vault.json
    ```
 
 2. Run File collector:
