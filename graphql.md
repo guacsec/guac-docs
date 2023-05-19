@@ -72,7 +72,7 @@ find artifacts that are identified by deprecated checksum schemes. To remove
 confusions, both of these fields are canonicalized to lowercase on ingestion and
 querying.
 
-```gql
+```graphql
 type Artifact {
   id: ID!
   algorithm: String!
@@ -102,7 +102,7 @@ In GUAC, we represent a package as a trie, split across several GraphQL types.
 Each type matches a component of the pURL specification
 (`pkg:<type>/<namespace>/<name>@<version>?<qualifiers>`):
 
-```gql
+```graphql
 type Package {
   id: ID!
   type: String!
@@ -165,7 +165,7 @@ derivative of the pURL specification: each path in the trie represents a type
 etc.), name of repository and an optional qualifier that stands for tag/commit
 information.
 
-```gql
+```graphql
 type Source {
   id: ID!
   type: String!
@@ -198,7 +198,7 @@ nodes.
 An artifact for a package is produced by a builder (e.g., FRSCA, GitHub Actions,
 etc.). Currently, we only use an URI field to identify the builders:
 
-```gql
+```graphql
 type Builder {
   id: ID!
   uri: String!
@@ -211,7 +211,7 @@ For vulnerabilities, we define 3 different types: a CVE, a GitHub Security
 Advisory (GHSA) and an [OSV](https://osv.dev/) identifier. Each vulnerability
 can be recorded using at least one of these types.
 
-```gql
+```graphql
 type GHSA {
   id: ID!
   ghsaId: String!
@@ -260,7 +260,7 @@ used in the user's supply chain (i.e., `CertifyBad`). These are simple
 certifications to determine the blast radius of a policy change or to attach
 unconditional (lack of) trust information.
 
-```gql
+```graphql
 union PackageSourceOrArtifact = Package | Source | Artifact
 
 type CertifyBad {
@@ -297,7 +297,7 @@ GUAC can ingest [Scorecard](https://securityscorecards.dev/) information to
 attach it to source tries. We extract the scorecard information to a separate
 type.
 
-```gql
+```graphql
 type CertifyScorecard {
   id: ID!
   "The source repository that is being scanned (attestation subject)"
@@ -337,7 +337,7 @@ are known at that time. To record that a package does not have vulnerabilities
 at the scan time, we also define a special `NoVuln` type which is a singleton on
 the backend.
 
-```gql
+```graphql
 type NoVuln {
   id: ID!
 }
@@ -375,7 +375,7 @@ type VulnerabilityMetaData {
 Next, a user can attach VEX statements to packages or artifacts to help with
 handling of vulnerabilities.
 
-```gql
+```graphql
 union PackageOrArtifact = Package | Artifact
 
 enum VexStatus {
@@ -428,7 +428,7 @@ information. For example, one document might specify an artifact by a SHA256
 digest whereas another might use SHA512. GUAC can certify that these are similar
 by ingesting equality evidence documents.
 
-```gql
+```graphql
 type PkgEqual {
   id: ID!
   "Collection of packages that are similar"
@@ -463,7 +463,7 @@ with another software tree.
 First, GUAC defines evidence trees to link CVE or GHSA vulnerability types to
 the information contained in the OSV database:
 
-```gql
+```graphql
 union CveOrGhsa = CVE | GHSA
 
 type IsVulnerability {
@@ -484,7 +484,7 @@ type IsVulnerability {
 Next, GUAC records information that an artifact is produced from a source or a
 package.
 
-```gql
+```graphql
 union PackageOrSource = Package | Source
 
 type IsOccurrence {
@@ -504,7 +504,7 @@ type IsOccurrence {
 
 Finally, GUAC records dependency information between two packages.
 
-```gql
+```graphql
 enum DependencyType {
   "direct dependency"
   DIRECT
@@ -545,7 +545,7 @@ property of origin.
 The first evidence tree of this type provides the ability to say that a package
 is built from a certain repository:
 
-```gql
+```graphql
 type HasSourceAt {
   id: ID!
   "The subject of the attestation: can be a PackageName or a PackageVersion"
@@ -571,7 +571,7 @@ package but with Go sources in one repository and Python sources in another).
 The next evidence tree in this section records that an artifact has been built
 by a builder using a certain set of ingredient artifacts, the SLSA attestation:
 
-```gql
+```graphql
 type HasSLSA {
   id: ID!
   "The subject of SLSA attestation"
@@ -605,7 +605,7 @@ type SLSA {
 Finally, the last evidence tree defined in GUAC is attaching SBOM information to
 packages and artifacts:
 
-```gql
+```graphql
 type HasSBOM {
   id: ID!
   "SBOM subject"
@@ -652,7 +652,7 @@ versions of GUAC. Treat this interface as experimental.
 First, we define a union of all nodes in the GUAC ontology and an enum for all
 the possible edges between them.
 
-```gql
+```graphql
 union Node =
     Package
   | Source
@@ -758,7 +758,7 @@ because `ARTIFACT_HAS_SLSA` is only defined from subject `Artifact` to
 With these, we can define 4 queries that return `Node`s without looking at their
 type, but only at their connectivity:
 
-```gql
+```graphql
 node(node: ID!): Node!
 nodes(nodes: [ID!]!): [Node!]!
 neighbors(node: ID!, usingOnly: [Edge!]!): [Node!]!
