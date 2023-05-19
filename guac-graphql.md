@@ -18,8 +18,9 @@ In this demo, we'll query the GUAC graph using GraphQL. GraphQL is a query
 language for APIs and a runtime for fulfilling those queries with your existing
 data.
 
-> For some background reading, visit https://graphql.org/learn/ . Also, the full
-> GUAC schema can be saved with this command:
+> For some background reading, visit
+> [https://graphql.org/learn/](https://graphql.org/learn/) . Also, the full GUAC
+> schema can be saved with this command:
 >
 > ```bash
 > gql-cli http://localhost:8080/query --print-schema > schema.graphql
@@ -95,10 +96,11 @@ This dataset consists of a set of document types:
 
 ## Step 5: Run queries
 
-The queries for this demo are stored in the `demo/queries.gql` file. Running the
-demo queries can be done graphically by opening the GraphQL Playground in a web
-browser, or using the command line. The remainder of the demo will have cli
-commands.
+The queries for this demo are stored in the
+[`demo/graphql/queries.gql`](https://github.com/guacsec/guac/blob/main/demo/graphql/queries.gql)
+file. Running the demo queries can be done graphically by opening the GraphQL
+Playground in a web browser, or using the command line. The remainder of the
+demo will have cli commands.
 
 ### Option 1: Use the command line to run queries
 
@@ -118,7 +120,9 @@ pip install gql[all]
 1. Open the GraphQL Playground by visiting `http://localhost:8080/` in your web
    browser.
 
-1. Open `demo/queries.gql` in a text editor and copy the full contents.
+1. Open
+   [`demo/graphql/queries.gql`](https://github.com/guacsec/guac/blob/main/demo/graphql/queries.gql)
+   and copy the full contents.
 
 1. Paste the contents in the left pane of the Playground.
 
@@ -131,7 +135,7 @@ A primary type of node in GUAC is a Package. Packages are stored in hierarchical
 nodes by Type -> Namespace -> Name -> Version. First we will run the below
 query:
 
-```
+```graphql
 {
   packages(pkgSpec: {}) {
     type
@@ -144,7 +148,7 @@ packages. However we are only requesting the `type` field, and not any nested
 nodes. Therefore, we will only receive the top-level Type nodes.
 
 ```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ1 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o PkgQ1 | jq
 ```
 
 If you are using the GraphQL playground for the rest of the demo, you would run
@@ -185,7 +189,7 @@ These are the top level Types of all the packages we ingested from the
 Going one level deeper, let us query for all the Namespaces under the "oci"
 Type. The query looks like this:
 
-```
+```graphql
 {
   packages(pkgSpec: { type: "deb" }) {
     type
@@ -199,7 +203,7 @@ Type. The query looks like this:
 Run it with:
 
 ```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ2 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o PkgQ2 | jq
 ```
 
 Output:
@@ -229,7 +233,7 @@ Output:
 Run `PkgQ3` to get full package data on any package with `name: "libp11-kit0"`:
 
 ```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ3 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o PkgQ3 | jq
 ```
 
 ```json
@@ -349,10 +353,10 @@ Here you can see the package is a `deb` type and found under both the `debian`
 and `ubuntu` namespaces. Of the two Name nodes found, there are two Version
 nodes underneath.
 
-If you take a look at the query in the `demo/queries.gql` file, you will see
-that it uses the `allPkgTree` fragment. This fragment specifies all the possible
-fields in a GUAC package. Fragments can be used to avoid duplicating long lists
-of attributes.
+If you take a look at the query in the `demo/graphql/queries.gql` file, you will
+see that it uses the `allPkgTree` fragment. This fragment specifies all the
+possible fields in a GUAC package. Fragments can be used to avoid duplicating
+long lists of attributes.
 
 ## Step 7: Explore dependencies
 
@@ -362,7 +366,7 @@ packages, signifying that one package depends on the other. First take look at
 the Package node for the `consul` container image:
 
 ```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ4 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o PkgQ4 | jq
 ```
 
 ```json
@@ -404,9 +408,13 @@ cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ4 | jq
 Now we will use a query on `IsDependency` to find all the packages that the
 `consul` container image depends on. The query looks like this:
 
-```
+```graphql
 {
-  IsDependency(isDependencySpec: { package: { type: "oci", namespace: "docker.io/library", name: "consul" }}) {
+  IsDependency(
+    isDependencySpec: {
+      package: { type: "oci", namespace: "docker.io/library", name: "consul" }
+    }
+  ) {
     dependentPackage {
       type
       namespaces {
@@ -421,7 +429,7 @@ Now we will use a query on `IsDependency` to find all the packages that the
 ```
 
 ```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o IsDependencyQ1 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o IsDependencyQ1 | jq
 ```
 
 ```json
@@ -478,19 +486,25 @@ cat demo/queries.gql | gql-cli http://localhost:8080/query -o IsDependencyQ1 | j
 We see that the `consul` image depends on the `logrus` Go package. We can query
 the full details of that link as so:
 
-```
+```graphql
 {
-  IsDependency(isDependencySpec: {
-    package: { type: "oci", namespace: "docker.io/library", name: "consul" }
-    dependentPackage: { type: "golang", namespace: "github.com/sirupsen", name: "logrus" }
-  }) {
+  IsDependency(
+    isDependencySpec: {
+      package: { type: "oci", namespace: "docker.io/library", name: "consul" }
+      dependentPackage: {
+        type: "golang"
+        namespace: "github.com/sirupsen"
+        name: "logrus"
+      }
+    }
+  ) {
     ...allIsDependencyTree
   }
 }
 ```
 
 ```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o IsDependencyQ2 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o IsDependencyQ2 | jq
 ```
 
 ```json
@@ -560,56 +574,54 @@ declared it.
 
 GUAC has a `path` query to find the shortest path between any two nodes. To use
 this, we will need to pay attention to the `id` field of the nodes we want to
-query. For this example we will pick the `etcd/client` and `etcd/api` Go
+query. For this example we will pick the `consul/sdk` and `consul/api` Go
 packages. Run these two queries to find the `id` of the packages:
 
 ```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ5 | jq
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ6 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o PkgQ5 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o PkgQ6 | jq
 ```
 
 Make a note the two `id`s printed. The path query will look like this:
 
-```
+```graphql
 {
   path(subject: 5809, target: 6721, maxPathLength: 10) {
     __typename
-    ... on Package{
-        ...allPkgTree
+    ... on Package {
+      ...allPkgTree
     }
     ... on IsDependency {
-        ...allIsDependencyTree
+      ...allIsDependencyTree
     }
   }
 }
 ```
 
-However, the query saved in `demo/queries.gql` is parameterized so you may pass
-in the two ids you found, which may be different. Replace `5809` and `6721` with
-the numbers you found:
+However, the query saved in `demo/graphql/queries.gql` is parameterized so you
+may pass in the two ids you found, which may be different. Replace `5809` and
+`6721` with the numbers you found:
 
 ```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PathQ1 -V subject:5809 target:6721 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o PathQ1 -V subject:5809 target:6721 | jq
 ```
 
 **Note:** In the "Playground" there is a section at the bottom to specify
 "Variables".
 
-Here we see a long output with a chain of nodes from the `etcd/client` package
-to `etcd/api`. First is the `client` package node. Then an `IsDependency` node
-which describes the dependency from the `vault` container image to the `client`
-package. Next is the `Package` node for the `vault` container image. Then
-another `IsDependency` node which describes the dependency from the `vault`
-container image to the `api` package. Finally, the `Package` node for the `api`
-package.
+Here we see an output with a chain of nodes from the `sdk` package to `api`.
+First is the "PackageName" node for the `sdk` package. Next is the
+"PackageNamespace" node for the `github.com/hashicorp/consul` namespace. Last is
+the "PackageName" node for the `api` package.
 
-What we have learned is that the `vault` container image depends on both the
-`client` and `api` package. This is might not be the dependency relationship we
-were hoping to find.
+What we have learned is that the shortest path between these two nodes is the
+namespace node that they both share. Likely, we were hoping to find an
+`IsDependency` path between the two, but didn't find such a path, as it would be
+longer.
 
 It is important to understand the limitations of the path GraphQL query in
 isolation and understand how to use client-side processing to get the desired
-results. An example of how to do this is in the section below.
+results. An example of how to do this is further below in this demo.
 
 ## Step 9: Find vulnerabilities
 
@@ -626,16 +638,16 @@ bin/guacone certifier osv
 The certifier will take a few minutes to run. A vulnerability "noun" node may be
 queried with a query like this:
 
-```
+```graphql
 {
-  osv(osvSpec: {osvId: "ghsa-jfh8-c2jp-5v3q"}) {
+  osv(osvSpec: { osvId: "ghsa-jfh8-c2jp-5v3q" }) {
     ...allOSVTree
   }
 }
 ```
 
 ```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o OSVQ1 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o OSVQ1 | jq
 ```
 
 ```json
@@ -656,16 +668,20 @@ The "verb" node type that links packages to vulnerabilities is `CertifyVuln`. We
 can query to see all of these nodes that link packages to the above
 vulnerability like so:
 
-```
+```graphql
 {
-  CertifyVuln(certifyVulnSpec: {vulnerability: {osv: {osvId: "ghsa-jfh8-c2jp-5v3q"}}}) {
+  CertifyVuln(
+    certifyVulnSpec: {
+      vulnerability: { osv: { osvId: "ghsa-jfh8-c2jp-5v3q" } }
+    }
+  ) {
     ...allCertifyVulnTree
   }
 }
 ```
 
 ```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o CertifyVulnQ1 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o CertifyVulnQ1 | jq
 ```
 
 ```json
@@ -731,11 +747,11 @@ in this query.
 
 The neighbors query looks like this:
 
-```
+```graphql
 {
   neighbors(node: $nodeId, usingOnly: []) {
     __typename
-    ... on Package{
+    ... on Package {
       ...allPkgTree
     }
     ... on IsDependency {
@@ -745,11 +761,13 @@ The neighbors query looks like this:
 }
 ```
 
-The `demo/path.py` file contains a simple Python program to do a breadth-first
-search of GUAC nodes, similar to the `path` server-side query. However, in
-`path.py` we have defined a `filter()` function that filters the types and
-direction of links that are searched. This filter has been written in an attempt
-to find "downward" dependency relationships.
+The
+[`demo/graphql/path.py`](https://github.com/guacsec/guac/blob/main/demo/graphql/path.py)
+file contains a simple Python program to do a breadth-first search of GUAC
+nodes, similar to the `path` server-side query. However, in `path.py` we have
+defined a `filter()` function that filters the types and direction of links that
+are searched. This filter has been written in an attempt to find "downward"
+dependency relationships.
 
 ```python
 # filter is used by bfs to decide weather to search a node or not. In this
@@ -773,11 +791,11 @@ def filter(fromID, fromNode, neighbor):
 Package is the "Subject" and not the "Object", ie: if the previous Package node
 is the one that depends on the newly found Package in the link.
 
-First, run with the previous two ids from the `etcd/client` and `etcd/api`
+First, run with the previous two ids from the `consul/sdk` and `consul/api`
 packages found above:
 
 ```bash
-./demo/path.py 5809 6721
+./demo/graphql/path.py 5809 6721
 ```
 
 ```
@@ -785,25 +803,24 @@ packages found above:
 []
 ```
 
-Nothing is found. Before, we saw dependency links from the `vault` image to both
-of these packages, but now with the filter we have in place, we don't follow the
-dependency link "up" to the `vault` image. We would normally expect to find a
-dependency link between an API and a client of that API, but we simply haven't
-ingested an SBOM that contains that link. In this case, only the `vault` SBOM
-was ingested which referenced both packages.
+Nothing is found. Before, we saw the shared `github.com/hashicorp/consul`
+namespace path between those two packages, but now with the filter we have in
+place, we don't follow the link "up" to the "PackageNamespace" node. We would
+normally expect to find a dependency link between an API and a SDK of that API,
+but we simply haven't ingested an SBOM that contains that link.
 
 Now let's explore two more packages: the `python` container image and the
 `libsqlite3-dev` debian package. Run these queries and node the `id`s:
 
 ```bash
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ7 | jq
-cat demo/queries.gql | gql-cli http://localhost:8080/query -o PkgQ8 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o PkgQ7 | jq
+cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o PkgQ8 | jq
 ```
 
 Now find the path (your `id`s may be different):
 
 ```bash
-./demo/path.py 3616 4422
+./demo/graphql/path.py 3616 4422
 ```
 
 ```
