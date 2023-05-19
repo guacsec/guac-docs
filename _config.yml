@@ -15,6 +15,7 @@ heading_anchors: true
 remote_theme: just-the-docs/just-the-docs
 plugins:
   - jekyll-feed
+  - jeql
 
 color_scheme: better_contrast
 markdown: kramdown
