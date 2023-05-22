@@ -113,6 +113,22 @@ and a artifact (algorithm:digest).
    ([vault](https://github.com/guacsec/guac-data/blob/main/top-dh-sboms/vault.json))
    to see if it has an SBOM associated with and where it can be found:
 
+   Ingest the vault's SBOM:
+
+   ```bash
+   ./bin/guacone collect files ../guac-data/top-dh-sboms/vault.json
+   ```
+
+   The output should be similar to:
+
+   ```bash
+   {"level":"info","ts":1684774157.098919,"caller":"cmd/files.go:167","msg":"[2.054952875s] completed doc {Collector:FileCollector Source:file:///../guac-data/top-dh-sboms/vault.json}"}
+   {"level":"info","ts":1684774157.098937,"caller":"cmd/files.go:174","msg":"collector ended gracefully"}
+   {"level":"info","ts":1684774157.09894,"caller":"cmd/files.go:187","msg":"completed ingesting 1 documents of 1"}
+   ```
+
+   Next Run the query command:
+
    ```bash
    ./bin/guacone query known package "pkg:guac/spdx/docker.io/library/vault-latest"
    ```
