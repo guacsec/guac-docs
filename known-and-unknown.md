@@ -113,6 +113,22 @@ and a artifact (algorithm:digest).
    ([vault](https://github.com/guacsec/guac-data/blob/main/top-dh-sboms/vault.json))
    to see if it has an SBOM associated with and where it can be found:
 
+   Ingest the vault's SBOM:
+
+   ```bash
+   ./bin/guacone collect files ../guac-data/top-dh-sboms/vault.json
+   ```
+
+   The output should be similar to:
+
+   ```bash
+   {"level":"info","ts":1684774157.098919,"caller":"cmd/files.go:167","msg":"[2.054952875s] completed doc {Collector:FileCollector Source:file:///../guac-data/top-dh-sboms/vault.json}"}
+   {"level":"info","ts":1684774157.098937,"caller":"cmd/files.go:174","msg":"collector ended gracefully"}
+   {"level":"info","ts":1684774157.09894,"caller":"cmd/files.go:187","msg":"completed ingesting 1 documents of 1"}
+   ```
+
+   Next Run the query command:
+
    ```bash
    ./bin/guacone query known package "pkg:guac/spdx/docker.io/library/vault-latest"
    ```
@@ -189,12 +205,38 @@ and a artifact (algorithm:digest).
    For more information on the SLSA attestation, we can look up the SLSA
    attestation via the Node ID in the [graphQL
    playground]({{ site.baseurl }}{%link guac-graphql.md %}) that is shown in the
-   output.
+   output. Be sure to replace the ID with the one you received from the output.
 
    ```graphql
    query SLSAQ3 {
      HasSLSA(hasSLSASpec: { id: "6364" }) {
-       ...allHasSLSATree
+       id
+       subject {
+         id
+         algorithm
+         digest
+       }
+       slsa {
+         builtFrom {
+           id
+           algorithm
+           digest
+         }
+         builtBy {
+           id
+           uri
+         }
+         buildType
+         slsaPredicate {
+           key
+           value
+         }
+         slsaVersion
+         startedOn
+         finishedOn
+         origin
+         collector
+       }
      }
    }
    ```
