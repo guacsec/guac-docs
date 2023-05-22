@@ -39,7 +39,7 @@ GUAC components work together]({{ site.baseurl }}{%link guac-components.md %}).
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-- [Git](https://github.com/git-guides/install-git)
+- [Git](https://git-scm.com/downloads)
 - [Go](https://go.dev/doc/install)
 - [Make](https://www.gnu.org/software/make/)
 - [jq](https://stedolan.github.io/jq/download/) (optional)
@@ -111,31 +111,19 @@ Build the GUAC binaries for your local machine and run them natively:
 
 ```bash
 make build
-./bin/guacone collect files ../guac-data/docs
 ```
 
-### Alternative instructions
-
-You can also run the `guacone collect files` ingestion command to load data into
-your GUAC deployment. For example we can ingest the sample `guac-data` data.
-However, you may ingest what you wish to here instead.
+You can run the `guacone collect files` ingestion command to load data into your
+GUAC deployment. For example we can ingest the sample `guac-data` data. However,
+you may ingest what you wish to here instead.
 
 ```bash
-pushd ../guac-data/docs
-docker run --rm -v $PWD:/data --network guac_default local-organic-guac:latest /opt/guac/guacone collect files /data --gql-addr http://guac-graphql:8080/query
-popd
+./bin/guacone collect files ../guac-data/docs
 ```
 
 Switch back to the compose window and you will soon see that the OSV certifier
 recognized the new packages and is looking up vulnerability information for
 them.
-
-This command uses the `guacone` GUAC binary from the `local-organic-guac`
-container we built earlier. Because containers don't have access to localhost by
-default, we connect to the existing compose network (`--network guac_default`)
-and use the `guac-graphql` container name to connect to it. The command uses a
-volume mount to mout the `guac-data` into the container for collecting
-(`-v $PWD:/data`).
 
 ## Step 5: Check that everything is ingesting and running
 

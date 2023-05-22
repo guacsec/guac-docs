@@ -28,7 +28,7 @@ checks or policies have determined that an artifact should be utilized or not.
 ## Requirements
 
 - [Go](https://go.dev/doc/install)
-- [Git](https://github.com/git-guides/install-git)
+- [Git](https://git-scm.com/downloads)
 - [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [Docker](https://docs.docker.com/get-docker/)
 - A fresh copy of the [GUAC service infrastructure through Docker
