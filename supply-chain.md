@@ -22,8 +22,9 @@ large-scale security incidents.
 
 This demo simulates the discovery of a high-profile vulnerability and shows how
 you can discover what software needs to be reviewed or patched. In the future,
-CertifyBad/CertifyGood will be similar to a binary authorization, where certain
-checks or policies have determined that an artifact should be utilized or not.
+`CertifyBad`/`CertifyGood` will be similar to a binary authorization, where
+certain checks or policies have determined that an artifact should be utilized
+or not.
 
 ## Requirements
 

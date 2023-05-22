@@ -71,7 +71,7 @@ make
 ## Step 3: Ingest Vault’s SBOM
 
 For demo purposes, let's ingest Vault’s SBOM. To do this, we will use the help
-of the `guaccollect` file command.
+of the `guacone collect files` command.
 
 1. Run the following command:
 
@@ -117,17 +117,17 @@ The results for the Vault SBOM ingestion will look like the following:
 ## Step 5: Review the automated query for more information
 
 As the ingestion process occurs, the collector subscriber service of GUAC
-collects purls, OCI strings, and others to determine if there is more
+collects pURLs, OCI strings, and others to determine if there is more
 information available to be pulled into the graph DB.
 
 As the SBOM is ingested it:
 
-- Collects the PURLs of its dependency packages
+- Collects the pURLs of its dependency packages
 - Queries the deps.dev database automatically to grab the source, OpenSSF
-  scorecard, and its dependency information
+  Scorecard, and its dependency information
 - Links this information back to the original top-level artifact of the SBOM
 
-This process is recursive, meaning that the PURLs that the dependency relies on
+This process is recursive, meaning that the pURLs that the dependency relies on
 will also be queried!
 
 We can pull the logs from docker to see which packages deps.dev collector found:
@@ -205,11 +205,11 @@ We will further inspect these vulnerabilities in the following section.
 
 ## Step 7: Examine the information collected
 
-To understand what was collected, we will utilize the graphQL playground. The
+To understand what was collected, we will utilize the GraphQL playground. The
 playground is accessible via: `http://localhost:8080/graphql`
 
-From graphQL Playground, we can use the provided
-[graphQL queries](https://github.com/guacsec/guac/blob/main/demo/workflow/queries.gql)
+From GraphQL Playground, we can use the provided
+[GraphQL queries](https://github.com/guacsec/guac/blob/main/demo/workflow/queries.gql)
 and paste them into the left column that defines the queries.
 
 ### IsDepdendency
@@ -221,8 +221,8 @@ The query:
 
 ```bash
 IsDependency(
-    isDependencySpec: {dependentPackage: {namespace: "github.com/prometheus", name: "client_golang"}}
-  )
+  isDependencySpec: {dependentPackage: {namespace: "github.com/prometheus", name: "client_golang"}}
+)
 ```
 
 The query will search all the `IsDepdendency` nodes and find the one that
@@ -384,10 +384,10 @@ This will output the following:
 }
 ```
 
-From the output, we can see that prometheus/client_golang is used by a bunch of
-packages. The first one shows the origin as the document that we ingested at the
-beginning (related to vault). The other entries all come from deps.dev that show
-that other packages `github.com/armon/go-metrics` also depend on
+From the output, we can see that `prometheus/client_golang` is used by a bunch
+of packages. The first one shows the origin as the document that we ingested at
+the beginning (related to vault). The other entries all come from deps.dev that
+show that other packages `github.com/armon/go-metrics` also depend on
 `prometheus/client_golang`. Meaning that `prometheus/client_golang` is both a
 direct and transitive dependency for the Vault image SBOM we ingested!
 
@@ -399,9 +399,9 @@ selecting the `HasSourceAt`.
 The query:
 
 ```bash
-  HasSourceAt(
-    hasSourceAtSpec: {package: {namespace: "cloud.google.com", name: "go"}}
-  )
+HasSourceAt(
+  hasSourceAtSpec: {package: {namespace: "cloud.google.com", name: "go"}}
+)
 ```
 
 The query will search all the `HasSourceAt` nodes and find the one related to
@@ -410,49 +410,50 @@ the package specified above.
 This will output the following:
 
 ```bash
-    "HasSourceAt": [
-      {
-        "id": "7046",
-        "justification": "collected via deps.dev",
-        "knownSince": "2023-04-20T12:39:26.823782Z",
-        "package": {
-          "id": "6",
-          "type": "golang",
-          "namespaces": [
+"HasSourceAt": [
+  {
+    "id": "7046",
+    "justification": "collected via deps.dev",
+    "knownSince": "2023-04-20T12:39:26.823782Z",
+    "package": {
+      "id": "6",
+      "type": "golang",
+      "namespaces": [
+        {
+          "id": "1075",
+          "namespace": "cloud.google.com",
+          "names": [
             {
-              "id": "1075",
-              "namespace": "cloud.google.com",
-              "names": [
-                {
-                  "id": "1076",
-                  "name": "go",
-                  "versions": []
-                }
-              ]
+              "id": "1076",
+              "name": "go",
+              "versions": []
             }
           ]
-        },
-        "source": {
-          "id": "6964",
-          "type": "git",
-          "namespaces": [
+        }
+      ]
+    },
+    "source": {
+      "id": "6964",
+      "type": "git",
+      "namespaces": [
+        {
+          "id": "6965",
+          "namespace": "github.com/googleapis",
+          "names": [
             {
-              "id": "6965",
-              "namespace": "github.com/googleapis",
-              "names": [
-                {
-                  "id": "6966",
-                  "name": "google-cloud-go",
-                  "tag": "",
-                  "commit": ""
-                }
-              ]
+              "id": "6966",
+              "name": "google-cloud-go",
+              "tag": "",
+              "commit": ""
             }
           ]
-        },
-        "origin": "deps.dev",
-        "collector": "deps.dev"
-      },
+        }
+      ]
+    },
+    "origin": "deps.dev",
+    "collector": "deps.dev"
+  }
+]
 ```
 
 The collector subscriber and deps.dev collector captured that the
@@ -469,8 +470,8 @@ The query:
 
 ```bash
 scorecards(
-    scorecardSpec: {source: {namespace: "github.com/googleapis", name: "google-cloud-go"}}
-  )
+  scorecardSpec: {source: {namespace: "github.com/googleapis", name: "google-cloud-go"}}
+)
 ```
 
 The query will search all the `scorecard` nodes and find the one related to the
@@ -480,94 +481,95 @@ This will output the following:
 
 ```bash
 "scorecards": [
-      {
-        "id": "6967",
-        "source": {
-          "id": "6964",
-          "type": "git",
-          "namespaces": [
-            {
-              "id": "6965",
-              "namespace": "github.com/googleapis",
-              "names": [
-                {
-                  "id": "6966",
-                  "name": "google-cloud-go",
-                  "tag": "",
-                  "commit": ""
-                }
-              ]
-            }
-          ]
-        },
-        "scorecard": {
-          "timeScanned": "2023-04-10T00:00:00Z",
-          "aggregateScore": 8.300000190734863,
-          "checks": [
-            {
-              "check": "License",
-              "score": 10
-            },
-            {
-              "check": "Signed-Releases",
-              "score": -1
-            },
-            {
-              "check": "Dangerous-Workflow",
-              "score": 10
-            },
-            {
-              "check": "Token-Permissions",
-              "score": 0
-            },
-            {
-              "check": "Maintained",
-              "score": 10
-            },
-            {
-              "check": "Branch-Protection",
-              "score": -1
-            },
-            {
-              "check": "Packaging",
-              "score": -1
-            },
-            {
-              "check": "Security-Policy",
-              "score": 10
-            },
-            {
-              "check": "Fuzzing",
-              "score": 10
-            },
-            {
-              "check": "Binary-Artifacts",
-              "score": 10
-            },
-            {
-              "check": "Pinned-Dependencies",
-              "score": 7
-            },
-            {
-              "check": "Vulnerabilities",
-              "score": 10
-            },
-            {
-              "check": "CII-Best-Practices",
-              "score": 0
-            }
-          ],
-          "scorecardVersion": "v4.10.5-30-gfade79b",
-          "scorecardCommit": "fade79ba6b60232f6ac38070f9f4a388f7580d90",
-          "origin": "deps.dev",
-          "collector": "deps.dev"
-        }
+    {
+      "id": "6967",
+      "source": {
+        "id": "6964",
+        "type": "git",
+        "namespaces": [
+          {
+            "id": "6965",
+            "namespace": "github.com/googleapis",
+            "names": [
+              {
+                "id": "6966",
+                "name": "google-cloud-go",
+                "tag": "",
+                "commit": ""
+              }
+            ]
+          }
+        ]
       },
+      "scorecard": {
+        "timeScanned": "2023-04-10T00:00:00Z",
+        "aggregateScore": 8.300000190734863,
+        "checks": [
+          {
+            "check": "License",
+            "score": 10
+          },
+          {
+            "check": "Signed-Releases",
+            "score": -1
+          },
+          {
+            "check": "Dangerous-Workflow",
+            "score": 10
+          },
+          {
+            "check": "Token-Permissions",
+            "score": 0
+          },
+          {
+            "check": "Maintained",
+            "score": 10
+          },
+          {
+            "check": "Branch-Protection",
+            "score": -1
+          },
+          {
+            "check": "Packaging",
+            "score": -1
+          },
+          {
+            "check": "Security-Policy",
+            "score": 10
+          },
+          {
+            "check": "Fuzzing",
+            "score": 10
+          },
+          {
+            "check": "Binary-Artifacts",
+            "score": 10
+          },
+          {
+            "check": "Pinned-Dependencies",
+            "score": 7
+          },
+          {
+            "check": "Vulnerabilities",
+            "score": 10
+          },
+          {
+            "check": "CII-Best-Practices",
+            "score": 0
+          }
+        ],
+        "scorecardVersion": "v4.10.5-30-gfade79b",
+        "scorecardCommit": "fade79ba6b60232f6ac38070f9f4a388f7580d90",
+        "origin": "deps.dev",
+        "collector": "deps.dev"
+      }
+    }
+]
 ```
 
 The above source repo we found at `github.com/googleapis/google-cloud-go` now
 has the following scorecard attached to it with a timestamp on when the OpenSSF
-scorecard was taken. Once again we see that we collected this information
+Scorecard was taken. Once again we see that we collected this information
 automatically from deps.dev!
 
 ### Certify Vulnerability
@@ -578,9 +580,9 @@ selecting the `CertifyVuln`.
 The query:
 
 ```bash
-  CertifyVuln(
-    certifyVulnSpec: {vulnerability: {osv: {osvId: "ghsa-cg3q-j54f-5p7p"}}}
-  )
+CertifyVuln(
+  certifyVulnSpec: {vulnerability: {osv: {osvId: "ghsa-cg3q-j54f-5p7p"}}}
+)
 ```
 
 The query will search all the `CertifyVuln` nodes and find the one that relates
@@ -677,7 +679,6 @@ This will output the following:
     ]
   }
 }
-
 ```
 
 This information came from the OSV certifier service that is constantly running
@@ -696,7 +697,7 @@ Through this demo, we learned that GUAC services are designed to extract as much
 information as possible about an SBOM that it ingests. Utilizing this
 information, we can quickly make up-to-date policy decisions. We can even
 integrate GUAC services into an IDE to provide information on whether or not a
-package should be used due to a low OpenSSF scorecard score or critical
+package should be used due to a low OpenSSF Scorecard score or critical
 vulnerability.
 
 ## Cleanup

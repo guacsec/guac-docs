@@ -99,12 +99,12 @@ physically part of the GraphQL server, but logically part of ingestion.
 
 The collect subcriber service provides a way to ask for a datasource to be used
 or indicate that more data about a software identifier is desired. For example,
-in parsing an SBOM, if it sees the use of a package with a PURL, the ingestor
+in parsing an SBOM, if it sees the use of a package with a pURL, the ingestor
 creates an entry to the CollectSub service to indicate more information about
-the PURL is desired (via gRPC).
+the pURL is desired (via gRPC).
 
 The collectors all subscribe to this service and will automatically retrieve
-more information about the PURL (or other identifier/datasource) if they know
-how to handle it. For example, the deps.dev collector knows how to handle PURLs
-and retrieves more information about the PURL entries created from the ingestor
+more information about the pURL (or other identifier/datasource) if they know
+how to handle it. For example, the deps.dev collector knows how to handle pURLs
+and retrieves more information about the pURL entries created from the ingestor
 parsing the SBOM.
