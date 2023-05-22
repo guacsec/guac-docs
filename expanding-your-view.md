@@ -4,7 +4,7 @@ title: Expanding your view of the software supply chain
 permalink: /expanding-your-view/
 parent: GUAC demos
 grand_parent: Getting started with GUAC
-nav_order: 2
+nav_order: 1
 ---
 
 # Expanding your view of the software supply chain
