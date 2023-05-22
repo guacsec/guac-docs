@@ -205,12 +205,38 @@ and a artifact (algorithm:digest).
    For more information on the SLSA attestation, we can look up the SLSA
    attestation via the Node ID in the [graphQL
    playground]({{ site.baseurl }}{%link guac-graphql.md %}) that is shown in the
-   output.
+   output. Be sure to replace the ID with the one you received from the output.
 
    ```graphql
    query SLSAQ3 {
      HasSLSA(hasSLSASpec: { id: "6364" }) {
-       ...allHasSLSATree
+       id
+       subject {
+         id
+         algorithm
+         digest
+       }
+       slsa {
+         builtFrom {
+           id
+           algorithm
+           digest
+         }
+         builtBy {
+           id
+           uri
+         }
+         buildType
+         slsaPredicate {
+           key
+           value
+         }
+         slsaVersion
+         startedOn
+         finishedOn
+         origin
+         collector
+       }
      }
    }
    ```
