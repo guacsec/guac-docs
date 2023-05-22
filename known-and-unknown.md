@@ -103,7 +103,7 @@ Utilizing the CLI and GUAC Visualizer, we can determine:
 - What information we are missing
 
 We will utilize the “query known” CLI. This CLI has the ability to search a
-package via [PURL](https://github.com/package-url/purl-spec), source URL
+package via [pURL](https://github.com/package-url/purl-spec), source URL
 following the definition of VCS uri from the
 [SPDX documentation](https://spdx.github.io/spdx-spec/v2.3/package-information/#771-description)
 `<vcs_tool>+<transport>://<host_name>[/<path_to_repository>][@<revision_tag_or_branch>][#<sub_path>])`
@@ -203,9 +203,10 @@ and a artifact (algorithm:digest).
    [ResourceDescriptor field type](https://github.com/in-toto/attestation/blob/main/spec/v1/resource_descriptor.md).
 
    For more information on the SLSA attestation, we can look up the SLSA
-   attestation via the Node ID in the [graphQL
-   playground]({{ site.baseurl }}{%link guac-graphql.md %}) that is shown in the
-   output. Be sure to replace the ID with the one you received from the output.
+   attestation via the Node ID in the
+   [GraphQL playground]({{ site.baseurl }}{%link guac-graphql.md %}) that is
+   shown in the output. Be sure to replace the ID with the one you received from
+   the output.
 
    ```graphql
    query SLSAQ3 {

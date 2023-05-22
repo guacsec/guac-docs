@@ -19,7 +19,7 @@ The [GUAC Onlotogy]({{ site.baseurl }}{%link guac-ontology.md %}) document
 defines the 3 structures as the software tree, evidence tree, and actor tree.
 
 - **Software Tree:** A factual structure that describes software entities. They
-  communicate both physical (e.g. artifact and hashes) and logical (e.g. PURL)
+  communicate both physical (e.g. artifact and hashes) and logical (e.g. pURL)
   views, and are an extension of the idea of factual software identifiers nodes
   as described in
   [GUAC Identity Problem Design Doc](https://docs.google.com/document/d/1BUEi7q2i-KXlAhsh1adYvL1fkWN-q8FrgLyEre7c5kg/edit?resourcekey=0-02sC5-9IbTfwJckze_CDQw)(Issue
@@ -33,7 +33,7 @@ defines the 3 structures as the software tree, evidence tree, and actor tree.
 ## GUAC software tree
 
 We first have to define the software tree and components. This can be broken
-into: PURL, source, artifact, builder, OSV, GHSA, and CVE.
+into: pURL, source, artifact, builder, OSV, GHSA, and CVE.
 
 For a comprehensive and up-to-date listing of the GUAC ontology, please refer to
 the [GraphQL documentation]({{ site.baseurl }}{%link graphql.md %}).
@@ -45,9 +45,8 @@ defined as: **scheme:type/namespace/name@version?qualifiers#subpath**. The
 definition for each component is:
 
 - **Scheme** (Required): The URL scheme with the constant value of "pkg". One of
-  the primary reasons for this single scheme is to  
-  facilitate the future official registration of the "pkg" scheme for package
-  URLs.
+  the primary reasons for this single scheme is to facilitate the future
+  official registration of the "pkg" scheme for package URLs.
 - **Type** (Required): The package "type" or package "protocol" such as maven,
   npm, nuget, gem, pypi, etc.
 - **Namespace** (Optional): Type-specific, name prefix such as a Maven groupid,
@@ -109,7 +108,7 @@ An evidence tree would then create attestations/actions against nodes of a
 software tree and link them to each other and to nodes in the actor tree. We
 note that attestations/actions represented as evidence trees can be overlaid not
 only on leaf nodes. For example, an attestation may be on all software versions,
-and thus may be applied upon the software tree representation of the PURL:
+and thus may be applied upon the software tree representation of the pURL:
 pkg://pypi/requests, instead of doing it on a particular version number. This
 also applies to the representation of the source where the name and qualifier
 (containing the tag/commit) may be used for the attestation.

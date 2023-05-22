@@ -60,10 +60,10 @@ this demo to show the various paths from package to vulnerability.
 
 ## Step 5. Ingest a vulnerability SPDX SBOM
 
-For demo purposes, let's ingest a known bad SPDX SBOM that contains a bunch of
-vulnerabilities. To do this, we will use the help of the `guacone` command,
-which is an all-in-one utility that can take a collection of files and ingest
-them into the GUAC graph.
+For demo purposes, let's ingest a known bad SPDX SBOM that contains several
+vulnerabilities. To do this, we will use the `guacone` command, which is an
+all-in-one utility that can take a collection of files and ingest them into the
+GUAC graph.
 
 In your terminal window, run:
 
@@ -96,7 +96,7 @@ The certifier can be run in two modes:
 - **Polling:** For continuous updates on the information
 - **Non-polling:** Run once and collect the data
 
-For this demo, the polling version of the osv certifier is already running as
+For this demo, the polling version of the OSV certifier is already running as
 part of the Docker Compose.
 
 The OSV certifier will query osv.dev and determine if the various components
@@ -132,7 +132,7 @@ Now that our GUAC instance is up and running with up-to-date information on the
 vulnerable image that we ingest, we will look at how we can utilize this data
 effectively.
 
-### Query PURL to determine vulnerabilities
+### Query pURL to determine vulnerabilities
 
 In this first example, we will query if our image has any vulnerabilities
 (either directly or indirectly) by running:
@@ -183,7 +183,7 @@ From the visualizer, we can determine that the image we are working with is
 vulnerable to both log4j and text4shell vulnerabilities. These packages need to
 be updated to remove these critical vulnerabilities.
 
-### Query PURL and Vulnerability ID to determine if path exists
+### Query pURL and Vulnerability ID to determine if path exists
 
 In this example, we will query our image to determine if it is affected by a
 particular vulnerability. If it is, return a path to said vulnerability such
@@ -236,8 +236,8 @@ needs to be remediated immediately!
 ## Utilization of GUAC Data
 
 From this demo, we learned how we can quickly analyze the GUAC data to find if a
-specific PURL we are interested in contains a direct or in-direct vulnerability.
-We also learned that this is just one of many utilizations of GUAC’s graphQL API
+specific pURL we are interested in contains a direct or in-direct vulnerability.
+We also learned that this is just one of many utilizations of GUAC’s GraphQL API
 to create more tools such as these quickly and easily!
 
 ## Cleanup
