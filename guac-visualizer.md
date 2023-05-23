@@ -101,7 +101,7 @@ NEXT_PUBLIC_GRAPHQL_DESTINATION=http://localhost:8080/query
 ## Step 4: Accessing the server
 
 1. You can then run the server (which will run by default on
-   `http://localhost:3000`)
+   `http://localhost:3000`). Open another terminal and run:
 
 ```bash
 yarn run dev
