@@ -225,9 +225,8 @@ IsDependency(
 )
 ```
 
-The query will search all the `IsDependency` nodes and find the one that
-depends on the following package:
-`pkg:golang/github.com/prometheus/client_golang`
+The query will search all the `IsDependency` nodes and find the one that depends
+on the following package: `pkg:golang/github.com/prometheus/client_golang`
 
 This will output the following:
 
