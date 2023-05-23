@@ -104,13 +104,13 @@ NEXT_PUBLIC_GRAPHQL_DESTINATION=http://localhost:8080/query
    `http://localhost:3000`)
 
 ```bash
-npm run dev
+yarn run dev
 ```
 
 2. The ouput should look like:
 
 ```bash
-$ npm run dev
+$ yarn run dev
 
 > guac-visualizer@0.1.0 dev
 > next dev
