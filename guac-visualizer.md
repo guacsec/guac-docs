@@ -52,7 +52,7 @@ that there may be some unexpected behavior or usage problems.
 
 All commands run throughout this guide should be in this working directory.
 
-## Step 2: Run the guac-visualizer from source
+## Step 2: Initialize the guac-visualizer from source
 
 1. Install the guac-visualizer dependencies:
 
@@ -82,96 +82,53 @@ All commands run throughout this guide should be in this working directory.
    ✨  Done in 12.78s.
    ```
 
-2. Run the server (which will run by default on `http://localhost:3000`):
+## Step 3: Configuring the GraphQL endpoint
 
-   ```bash
-   npm run dev
-   ```
+The application retrieves the GraphQL endpoint from the environment variable NEXT_PUBLIC_GRAPHQL_DESTINATION. You should set this variable before running the application. By default, if this variable is not set, it assumes that the GraphQL server is run on http://localhost:8080/query.
 
-   The ouput should look like:
+1. To change the GraphQL endpoint you can set the NEXT_PUBLIC_GRAPHQL_DESTINATION environment variable like this:
 
-   ```bash
-   $ npm run dev
+```bash
+export NEXT_PUBLIC_GRAPHQL_DESTINATION=http://localhost:8080/query
+```
 
-   > guac-visualizer@0.1.0 dev
-   > next dev
+Or, create a `.env.local` file in the project's root directory and set a value by adding a line in there like this:
 
-   ready - started server on 0.0.0.0:3000, url: http://localhost:3000
-   warn  - You have enabled experimental feature (appDir) in next.config.js.
-   warn  - Experimental features are not covered by semver, and may cause unexpected or broken application behavior. Use at your own risk.
+```
+NEXT_PUBLIC_GRAPHQL_DESTINATION=http://localhost:8080/query
+```
 
-   info  - Thank you for testing `appDir` please leave your feedback at https://nextjs.link/app-feedback
-   (node:99525) ExperimentalWarning: stream/web is an experimental feature. This feature could change at any time
-   (Use `node --trace-warnings ...` to show where the warning was created)
-   event - compiled client and server successfully in 1867 ms (560 modules)
-   ```
+## Step 4: Accessing the server
 
-## Step 3. Access the server
+1. You can then run the server (which will run by default on
+   `http://localhost:3000`)
 
-Access the server through a web browser and navigate to http://localhost:3000.
-The page will look like the following:
+```bash
+npm run dev
+```
 
-![ui](assets/images/guacvisserver.png)
+2. The ouput should look like:
+
+```bash
+$ npm run dev
+
+> guac-visualizer@0.1.0 dev
+> next dev
+
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
+warn  - You have enabled experimental feature (appDir) in next.config.js.
+warn  - Experimental features are not covered by semver, and may cause unexpected or broken application behavior. Use at your own risk.
+
+info  - Thank you for testing `appDir` please leave your feedback at https://nextjs.link/app-feedback
+(node:99525) ExperimentalWarning: stream/web is an experimental feature. This feature could change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+event - compiled client and server successfully in 1867 ms (560 modules)
+```
+
+3. You can access the server easily through a web browser and navigating to
+   http://localhost:3000. The page will look like the following:
+
+![ui](https://user-images.githubusercontent.com/3060102/233406051-486f4f88-2779-4abf-9d5f-adb98bf51c3a.png)
 
 For more information on how to use the GUAC visualizer, take a look at some of
-our [GUAC demos]({{ site.baseurl }}{%link guac-use-cases.md %}).
-
-### Change the GraphQL endpoint
-
-This should run the service by default on http://localhost:3000. However, this
-does assume that the GraphQL server is run on http://localhost:8080/query. If
-this is not the case, you may edit the `next.config.js`.
-
-The default configuration is set to http://localhost:8080/query as seen here:
-
-```
-$ cat next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  transpilePackages: ['react-cytoscapejs'],
-  typescript: {
-    ignoreBuildErrors: true
-  },
-  experimental: {
-    appDir: true,
-  },
-  rewrites: async () => {
-    return [
-      {
-        source: '/api/graphql',
-        destination: 'http://localhost:8080/query'
-      },
-    ]
-  }
-}
-
-module.exports = nextConfig
-```
-
-To change the GraphQL endpoint you can edit the rewrites destination:
-
-```
-$ cat next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  transpilePackages: ['react-cytoscapejs'],
-  typescript: {
-    ignoreBuildErrors: true
-  },
-  experimental: {
-    appDir: true,
-  },
-  rewrites: async () => {
-    return [
-      {
-        source: '/api/graphql',
-        destination: 'http://example.org:8080/query'
-      },
-    ]
-  }
-}
-
-module.exports = nextConfig
-```
+our [GUAC demos](https://github.com/guacsec/guac/blob/main/demos/).
