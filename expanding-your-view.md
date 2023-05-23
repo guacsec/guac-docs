@@ -212,10 +212,10 @@ From GraphQL Playground, we can use the provided
 [GraphQL queries](https://github.com/guacsec/guac/blob/main/demo/workflow/queries.gql)
 and paste them into the left column that defines the queries.
 
-### IsDepdendency
+### IsDependency
 
-First, we will run the `IsDepdendency` query by clicking the red play button and
-selecting the `IsDepdendency`.
+First, we will run the `IsDependency` query by clicking the red play button and
+selecting the `IsDependency`.
 
 The query:
 
@@ -225,7 +225,7 @@ IsDependency(
 )
 ```
 
-The query will search all the `IsDepdendency` nodes and find the one that
+The query will search all the `IsDependency` nodes and find the one that
 depends on the following package:
 `pkg:golang/github.com/prometheus/client_golang`
 
