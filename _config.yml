@@ -2,6 +2,8 @@ title: GUAC
 description: The site for everyone's favorite software supply chain knowledge graph
 logo: "/assets/images/guac.png"
 
+ga_tracking: G-C1KPW2NZX2
+
 aux_links:
   "GUAC on GitHub": https://github.com/guacsec/guac
   "GUAC Homepage": "https://guac.sh"
