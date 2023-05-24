@@ -1,5 +1,5 @@
 ---
-title: GUAC
+title: GUAC Docs
 layout: home
 nav_order: 1
 ---
