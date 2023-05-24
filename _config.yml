@@ -3,6 +3,8 @@ description: The site for everyone's favorite software supply chain knowledge gr
 logo: "/assets/images/guac.png"
 favicon_ico: "/assets/images/favicon.ico"
 
+ga_tracking: G-C1KPW2NZX2
+
 aux_links:
   "GUAC on GitHub": "https://github.com/guacsec/guac"
   "GUAC Website": "https://guac.sh"
