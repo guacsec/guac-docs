@@ -112,7 +112,7 @@ Install the `gql-cli` tool with `pip`:
 pip install gql[all]
 ```
 
-**Note:** If you are using **pyhton3** in your system, you may need to use the
+**Note:** If you are using **python3** in your system, you may need to use the
 `pip3` command instead.
 
 ### Option 2: Use the GraphQL Playground to run queries
