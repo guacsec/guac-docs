@@ -1,3 +1,3 @@
 # GUAC Documentation
 
-These docs are currently under construction.
+Documentation is rendered [here](https://docs.guac.sh/).
