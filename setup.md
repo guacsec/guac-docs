@@ -41,6 +41,7 @@ GUAC components work together]({{ site.baseurl }}{%link guac-components.md %}).
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Git](https://git-scm.com/downloads)
 - [Go](https://go.dev/doc/install)
+- [GoReleaser](https://goreleaser.com/)
 - [Make](https://www.gnu.org/software/make/)
 - [jq](https://stedolan.github.io/jq/download/) (optional)
 
