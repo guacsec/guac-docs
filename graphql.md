@@ -490,7 +490,7 @@ union PackageOrSource = Package | Source
 
 type IsOccurrence {
   id: ID!
-  "Package or source from which the artifact originates"
+  "Package or source from which the artifact originates: should be PackageVersion or SourceName respectively"
   subject: PackageOrSource!
   "The artifact in the relationship"
   artifact: Artifact!
