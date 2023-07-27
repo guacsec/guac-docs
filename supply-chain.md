@@ -26,50 +26,31 @@ you can discover what software needs to be reviewed or patched. In the future,
 certain checks or policies have determined that an artifact should be utilized
 or not.
 
+To find out if you're affected by the security incident and decide what you need
+to patch, utilize the [Guac Visualizer]({{ site.baseurl }}{%link
+guac-visualizer.md %}). The GUAC visualizer provides a utility to do some basic analysis
+and exploration of the software supply chain. This is a great way to get a sense
+of the size of the problem and helps when developing prototype utilities and queries
+with GUAC (very much like the [vulnerability CLI]({{
+site.baseurl }}{%link querying-via-cli.md %})).
+
 ## Requirements
 
-- [Go](https://go.dev/doc/install)
-- [Git](https://git-scm.com/downloads)
-- [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-- [Docker](https://docs.docker.com/get-docker/)
-- A fresh copy of the [GUAC service infrastructure through Docker
-  Compose]({{ site.baseurl }}{%link setup.md %}).
+- A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
+  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
+  and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
+  extracted to `guac-data-main`.
 
-## Step 1: Clone GUAC
+- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and
+  running.
 
-1. Clone GUAC to a local directory:
-
-   ```bash
-   git clone https://github.com/guacsec/guac.git
-   ```
-
-2. Clone GUAC data (this is used as test data for this demo):
-
-   ```bash
-   git clone https://github.com/guacsec/guac-data.git
-   ```
-
-The rest of the demo will assume you are in the GUAC directory
-
-```bash
-cd guac
-```
-
-## Step 2: Build the GUAC binaries
-
-Build the GUAC binaries using the `make` command:
-
-```bash
-make
-```
-
-## Step 3: Set up your organization's software catalog
+## Step 1: Set up your organization's software catalog
 
 For this demo, we will simulate ingesting an organization's software catalog. To
 do this, we will ingest a collection of SBOMs and SLSA attestations into GUAC:
 
 ```bash
-bin/guacone collect files ../guac-data/docs/
+guacone collect files guac-data-main/docs/
 ```
 
 Once ingested we will see the following message (the number of documents may
@@ -79,17 +60,7 @@ vary):
 {"level":"info","ts":1681864775.1161852,"caller":"cmd/files.go:201","msg":"completed ingesting 67 documents of 67"}
 ```
 
-## Step 4: Set up the experimental GUAC Visualizer
-
-To find out if you're affected by the security incident and decide what you need
-to patch, utilize the [Guac Visualizer]({{ site.baseurl }}{%link
-guac-visualizer.md %}). The GUAC visualizer provides a utility to do some basic analysis
-and exploration of the software supply chain. This is a great way to get a sense
-of the size of the problem and helps when developing prototype utilities and queries
-with GUAC (very much like the [vulnerability CLI]({{
-site.baseurl }}{%link querying-via-cli.md %})).
-
-## Step 5: Mark packages as bad when a security incident occurs
+## Step 2: Mark packages as bad when a security incident occurs
 
 A new security incident has occurred and various communities have pointed out
 that a particular package is affected. In this scenario, the debian package
@@ -103,7 +74,7 @@ certification (instead of a positive one), as well as a `justification` to
 indicate why the package is bad. In this case, it is a critical vulnerability:
 
 ```bash
-./bin/guacone certify package "compromised version of tzdata" "pkg:deb/debian/tzdata@2021a-1+deb11u5?arch=all&distro=debian-11"
+guacone certify package "compromised version of tzdata" "pkg:deb/debian/tzdata@2021a-1+deb11u5?arch=all&distro=debian-11"
 ```
 
 If we successfully added "CertifyBad", the output will show:
@@ -112,13 +83,13 @@ If we successfully added "CertifyBad", the output will show:
 {"level":"info","ts":1683130083.9894989,"caller":"helpers/assembler.go:69","msg":"assembling CertifyBad: 1"}
 ```
 
-## Step 6: Explore bad packages
+## Step 3: Explore bad packages
 
 1. To explore all the "certifyBad" items (packages, sources, or artifacts), run
    the "query Bad" CLI:
 
    ```bash
-   ./bin/guacone query bad
+   guacone query bad
    ```
 
    This query will automatically search the database and find the list of
@@ -174,7 +145,7 @@ For example, let's take the `googleapis/google-cloud-go` git repo. We will begin
 by certifying it as bad:
 
 ```bash
-bin/guacone certify source "github repo compromised" "git+https://github.com/googleapis/google-cloud-go"
+guacone certify source "github repo compromised" "git+https://github.com/googleapis/google-cloud-go"
 ```
 
 You will see an output confirming that it has been added to the database:

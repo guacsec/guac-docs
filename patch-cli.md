@@ -19,53 +19,24 @@ We will get back a patch plan which includes a visual representation of the
 blast radius, meaning a link to view the subgraph of dependent packages in the
 GUAC visualizer. It will also return a list of frontiers. These frontiers
 represent what can be patched to resolve the vulnerability, starting from the
-lowest level possible, i.e. the package itself.  
-If you don't have access to fix this package directly, you could look in the
-next frontier and so on. It will also list out and points of contact for a given
-node, if available in the graph.  
+lowest level possible, i.e. the package itself. If you don't have access to fix
+this package directly, you could look in the next frontier and so on. It will
+also list out and points of contact for a given node, if available in the graph.
 This will help you know who to contact to resolve the issue. All these outputs
 together can be used to help figure out the best plan of action in order to
 resolve a security incident.
 
-## Step 1: Setup GUAC with Docker Compose
+## Requirements
 
-Follow the [Docker Compose setup]({{ site.baseurl }}{%link setup.md %}).
+- A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
+  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
+  and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
+  ingested.
 
-## Step 2: Clone GUAC
+- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and
+  running.
 
-1. Clone GUAC to a local directory:
-
-   ```bash
-   git clone https://github.com/guacsec/guac.git
-   ```
-
-2. Clone GUAC data (this is used as test data for this demo):
-
-   ```bash
-   git clone https://github.com/guacsec/guac-data.git
-   ```
-
-The rest of the demo will assume you are in the GUAC directory.
-
-```bash
-cd guac
-```
-
-## Step 3: Build the GUAC binaries
-
-Build the GUAC binaries using the `make` command:
-
-```bash
-make
-```
-
-## Step 4: Run the GUAC Visualizer
-
-To get the GUAC visualizer up and running, follow the [GUAC visualizer
-setup]({{ site.baseurl }}{%link guac-visualizer.md %}). This will be used in
-this demo to show the various paths from package to vulnerability.
-
-## Step 5: Run the Query Patch CLI
+## Step 1: Run the Query Patch CLI
 
 **Packge Name Node Example**
 
@@ -79,7 +50,7 @@ pkg:golang/github.com/antlr/antlr4/runtime/go/antlr
 The query we will run is as follows:
 
 ```bash
-./bin/guacone query patch --start-purl "pkg:golang/github.com/antlr/antlr4/runtime/go/antlr" --search-depth 10
+guacone query patch --start-purl "pkg:golang/github.com/antlr/antlr4/runtime/go/antlr" --search-depth 10
 ```
 
 Note that we are using a search depth of ten because this example the whole
@@ -150,7 +121,7 @@ To find its patch plan run the following query with the --is-pkg-version-start
 flag:
 
 ```bash
-./bin/guacone query patch --start-purl "pkg:maven/jfr/jfr@1.8.0_342" --search-depth 10 --is-pkg-version-start true
+guacone query patch --start-purl "pkg:maven/jfr/jfr@1.8.0_342" --search-depth 10 --is-pkg-version-start true
 ```
 
 The number after the @ symbol denotes the version.

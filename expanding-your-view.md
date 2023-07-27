@@ -36,39 +36,12 @@ within the ingested SBOM.
 
 ## Requirements
 
-- [Go](https://go.dev/doc/install)
-- A fresh copy of the [GUAC service infrastructure through Docker
-  Compose]({{ site.baseurl }}{%link setup.md %})
+- A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
+  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
+  and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
+  extracted to `guac-data-main`.
 
-## Step 1. Clone GUAC
-
-1. Clone GUAC to a local directory:
-
-   ```bash
-   git clone https://github.com/guacsec/guac.git
-   ```
-
-2. Clone GUAC data (this is used as test data for this demo):
-
-   ```bash
-   git clone https://github.com/guacsec/guac-data.git
-   ```
-
-The rest of the demo will assume you are in the GUAC directory
-
-```bash
-cd guac
-```
-
-## Step 2: Build the GUAC binaries
-
-Build the GUAC binaries using the `make` command:
-
-```bash
-make
-```
-
-## Step 3: Ingest Vault’s SBOM
+## Step 1: Ingest Vault’s SBOM
 
 For demo purposes, let's ingest Vault’s SBOM. To do this, we will use the help
 of the `guacone collect files` command.
@@ -76,7 +49,7 @@ of the `guacone collect files` command.
 1. Run the following command:
 
    ```bash
-   ./bin/guacone collect files ../guac-data/top-dh-sboms/vault.json
+   guacone collect files guac-data-main/top-dh-sboms/vault.json
    ```
 
 2. The output of the file collector should be:
@@ -87,7 +60,7 @@ of the `guacone collect files` command.
    {"level":"info","ts":1684774157.09894,"caller":"cmd/files.go:187","msg":"completed ingesting 1 documents of 1"}
    ```
 
-## Step 4: Check the ingestion logs
+## Step 2: Check the ingestion logs
 
 We can pull the logs from docker to see the progress of the ingestion:
 
@@ -114,7 +87,7 @@ The results for the Vault SBOM ingestion will look like the following:
 {"level":"info","ts":1681994359.9560268,"caller":"parser/parser.go:110","msg":"[ingestor: 04462d2a-a2c7-4aa9-95eb-2183cb5f249d] ingested docTree: {Collector:FileCollector Source:file:///../guac-data/top-dh-sboms/vault.json}"}
 ```
 
-## Step 5: Review the automated query for more information
+## Step 3: Review the automated query for more information
 
 As the ingestion process occurs, the collector subscriber service of GUAC
 collects pURLs, OCI strings, and others to determine if there is more
@@ -177,7 +150,7 @@ From the logs we see that `CertifyScorecard`, `IsDependency` and `HasSourceAt`
 are being ingested. We will further inspect this information in the coming
 sections.
 
-## Step 6: Review the automated query for vulnerabilities
+## Step 4: Review the automated query for vulnerabilities
 
 As we saw in the section above, GUAC automatically looks for more information
 for an ingested SBOM. What about vulnerabilities?
@@ -203,7 +176,7 @@ The results from the osv certifier logs will look like the following:
 
 We will further inspect these vulnerabilities in the following section.
 
-## Step 7: Examine the information collected
+## Step 5: Examine the information collected
 
 To understand what was collected, we will utilize the GraphQL playground. The
 playground is accessible via: `http://localhost:8080/graphql`

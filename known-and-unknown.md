@@ -36,10 +36,10 @@ determine what we know and don't know about the artifacts.
 
 ## Requirements
 
-- [Go](https://go.dev/doc/install)
-- [Docker](https://docs.docker.com/get-docker/)
-- A fresh copy of the [GUAC service infrastructure through Docker
-  Compose]({{ site.baseurl }}{%link setup.md %})
+- A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
+  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
+  and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
+  extracted to `guac-data-main`.
 - Completion of the [Expanding your view of the software supply chain
   demo]({{ site.baseurl }}{%link expanding-your-view.md %})
 
@@ -67,35 +67,7 @@ For more information on these, refer to the [grapQL documentation]({{
 site.baseurl }}{%link graphql.md %}) and [ontology definitions]({{ site.baseurl
 }}{%link guac-ontology-definition.md %}).
 
-## Step 1: Clone GUAC
-
-1. Clone GUAC to a local directory:
-
-   ```bash
-   git clone https://github.com/guacsec/guac.git
-   ```
-
-2. Clone GUAC data (this is used as test data for this demo):
-
-   ```bash
-   git clone https://github.com/guacsec/guac-data.git
-   ```
-
-The rest of the demo will assume you are in the GUAC directory
-
-```bash
-cd guac
-```
-
-## Step 2: Build the GUAC binaries
-
-Build the GUAC binaries using the `make` command.
-
-```bash
-make
-```
-
-## Step 3. Run the query to find the knowns and unknowns
+## Run the query to find the knowns and unknowns
 
 Utilizing the CLI and GUAC Visualizer, we can determine:
 
@@ -116,7 +88,7 @@ and a artifact (algorithm:digest).
    Ingest the vault's SBOM:
 
    ```bash
-   ./bin/guacone collect files ../guac-data/top-dh-sboms/vault.json
+   guacone collect files guac-data-main/top-dh-sboms/vault.json
    ```
 
    The output should be similar to:
@@ -130,7 +102,7 @@ and a artifact (algorithm:digest).
    Next Run the query command:
 
    ```bash
-   ./bin/guacone query known package "pkg:guac/spdx/docker.io/library/vault-latest"
+   guacone query known package "pkg:guac/spdx/docker.io/library/vault-latest"
    ```
 
    The output will look similar to this:
@@ -178,7 +150,7 @@ and a artifact (algorithm:digest).
    This time, we will change query for known `artifact` rather than package:
 
    ```bash
-   ./bin/guacone query known artifact "sha256:625fe537a4c1657bd613be44f7882a8883c13c3b72919cfdbd02d2eb4dbf677b"
+   guacone query known artifact "sha256:625fe537a4c1657bd613be44f7882a8883c13c3b72919cfdbd02d2eb4dbf677b"
    ```
 
    The output should look similar to the following:
@@ -349,7 +321,7 @@ and a artifact (algorithm:digest).
    workflow demo:
 
    ```bash
-   ./bin/guacone query known package "pkg:golang/github.com/prometheus/client_golang@v1.11.1"
+   guacone query known package "pkg:golang/github.com/prometheus/client_golang@v1.11.1"
    ```
 
    The output should be similar to this:
@@ -400,7 +372,7 @@ and a artifact (algorithm:digest).
 4. Use the CLI to query the other version:
 
    ```bash
-   ./bin/guacone query known package "pkg:golang/github.com/prometheus/client_golang@v1.4.0"
+   guacone query known package "pkg:golang/github.com/prometheus/client_golang@v1.4.0"
    ```
 
    ```bash
@@ -490,7 +462,7 @@ and a artifact (algorithm:digest).
    **Note**: `source` is specified to indicate we are querying a source repo.
 
    ```bash
-   ./bin/guacone query known source "git+https://github.com/prometheus/client_golang"
+   guacone query known source "git+https://github.com/prometheus/client_golang"
    ```
 
    ```bash
@@ -512,7 +484,7 @@ and a artifact (algorithm:digest).
 6. Finally, let’s query for another source repo:
 
    ```bash
-   ./bin/guacone query known source "git+https://github.com/googleapis/google-cloud-go"
+   guacone query known source "git+https://github.com/googleapis/google-cloud-go"
    ```
 
    The output should be similar to:

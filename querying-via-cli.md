@@ -20,45 +20,17 @@ dependencies. We will so see if a purl is affected by a specific vulnerability
 and which dependencies need to be updated to remediate that particular
 vulnerability.
 
-## Step 1: Setup GUAC with Docker Compose
+## Requirements
 
-Follow the [Docker Compose setup]({{ site.baseurl }}{%link setup.md %}).
+- A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
+  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
+  and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
+  extracted to `guac-data-main`.
 
-## Step 2: Clone GUAC
+- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and
+  running.
 
-1. Clone GUAC to a local directory:
-
-   ```bash
-   git clone https://github.com/guacsec/guac.git
-   ```
-
-2. Clone GUAC data (this is used as test data for this demo):
-
-   ```bash
-   git clone https://github.com/guacsec/guac-data.git
-   ```
-
-The rest of the demo will assume you are in the GUAC directory.
-
-```bash
-cd guac
-```
-
-## Step 3: Build the GUAC binaries
-
-Build the GUAC binaries using the `make` command:
-
-```bash
-make
-```
-
-## Step 4. Run the GUAC Visualizer
-
-To get the GUAC visualizer up and running, follow the [GUAC visualizer
-setup]({{ site.baseurl }}{%link guac-visualizer.md %}). This will be used in
-this demo to show the various paths from package to vulnerability.
-
-## Step 5. Ingest a vulnerability SPDX SBOM
+## Step 1. Ingest a vulnerability SPDX SBOM
 
 For demo purposes, let's ingest a known bad SPDX SBOM that contains several
 vulnerabilities. To do this, we will use the `guacone` command, which is an
@@ -68,7 +40,7 @@ GUAC graph.
 In your terminal window, run:
 
 ```bash
-./bin/guacone collect files ../guac-data/docs/spdx/spdx_vuln.json
+guacone collect files guac-data-main/docs/spdx/spdx_vuln.json
 ```
 
 This will ingest the vulnerable SPDX SBOM into GUAC so that various insights can
@@ -77,12 +49,12 @@ be easily queried.
 Once ingested you will see the following message:
 
 ```bash
-{"level":"info","ts":1681821120.162612,"caller":"cmd/files.go:181","msg":"[2.158961542s] completed doc {Collector:FileCollector Source:file:///../guac-data/docs/spdx/spdx_vuln.json}"}
+{"level":"info","ts":1681821120.162612,"caller":"cmd/files.go:181","msg":"[2.158961542s] completed doc {Collector:FileCollector Source:file:///guac-data-main/docs/spdx/spdx_vuln.json}"}
 {"level":"info","ts":1681821120.162633,"caller":"cmd/files.go:188","msg":"collector ended gracefully"}
 {"level":"info","ts":1681821120.1626382,"caller":"cmd/files.go:201","msg":"completed ingesting 1 documents of 1"}
 ```
 
-## Step 6: Draw further insight from OSV.dev
+## Step 2: Draw further insight from OSV.dev
 
 One of the benefits of GUAC is that it’s not a static database; it is constantly
 evolving and trying to find more information on the artifacts ingested. To
@@ -117,7 +89,7 @@ message:
 re-scan (this is done every 5 minutes) or force it to run manually via:
 
 ```bash
-./bin/guacone certifier osv
+guacone certifier osv
 ```
 
 In a running instance of GUAC, as you are ingesting new SBOMs and artifacts, the
@@ -126,7 +98,7 @@ GUAC. After a set period of time (set by the user), it will re-query the
 information to ensure that it's always up-to-date. For demo purposes, we ran it
 just once.
 
-## Step 7: Run the Query Vulnerability CLI
+## Step 3: Run the Query Vulnerability CLI
 
 Now that our GUAC instance is up and running with up-to-date information on the
 vulnerable image that we ingest, we will look at how we can utilize this data
@@ -138,7 +110,7 @@ In this first example, we will query if our image has any vulnerabilities
 (either directly or indirectly) by running:
 
 ```bash
-./bin/guacone query vuln "pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest"
+guacone query vuln "pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest"
 ```
 
 **If you get this error:**
@@ -151,7 +123,7 @@ The OSV certifier may not have completed the scan for all the packages. To force
 the scan to occur immediately, run:
 
 ```bash
-./bin/guacone certifier osv
+guacone certifier osv
 ```
 
 Successful output will show the following:
@@ -196,7 +168,7 @@ number.
 Run:
 
 ```bash
-./bin/guacone query vuln "pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest" --vuln-id "ghsa-7rjr-3q55-vv33"
+guacone query vuln "pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest" --vuln-id "ghsa-7rjr-3q55-vv33"
 ```
 
 **If you get this error:**
@@ -210,7 +182,7 @@ The OSV certifier may not have completed the scan for all the packages. To force
 the scan to occur immediately, run:
 
 ```bash
-./bin/guacone certifier osv
+guacone certifier osv
 ```
 
 Successful output will show the following:

@@ -39,53 +39,48 @@ GUAC components work together]({{ site.baseurl }}{%link guac-components.md %}).
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-- [Git](https://git-scm.com/downloads)
-- [Go](https://go.dev/doc/install) (v1.20+)
-- [GoReleaser](https://goreleaser.com/)
-- [Make](https://www.gnu.org/software/make/)
 - [jq](https://stedolan.github.io/jq/download/)
 
-## Step 1: Clone GUAC
+## Step 1: Download GUAC
 
-1. Clone GUAC to a local directory:
+1. Download the GUAC CLI `guacone` binary for your machine's OS and architecture
+   from the
+   [latest GUAC release](https://github.com/guacsec/guac/releases/latest). For
+   example Linux x86_64 is
+   [`guacone-linux-amd64'](https://github.com/guacsec/guac/releases/latest/download/guacone-linux-amd64).
+
+1. Rename the binary to `guacone`, mark it executable if necessary, and add it
+   to your shell's path.
+
+1. Download the compose files from the
+   [latest GUAC release](https://github.com/guacsec/guac/releases/latest). Look
+   for an attached file `guac-compose-<release-tag>.tar.gz`. At the time of
+   writing, this is:
+   [`guac-compose-v0.1.1.tar.gz`](https://github.com/guacsec/guac/releases/download/v0.1.1/guac-compose-v0.1.1.tar.gz).
+
+1. Untar the compose files and change to that directory. (the rest of the steps
+   need to be done from this directory):
 
    ```bash
-   git clone https://github.com/guacsec/guac.git
+   tar zxvf guac-compose-v0.1.1.tar.gz
+   cd guac-compose
    ```
 
-2. Optional: If you want test data to use, clone GUAC’s test data:
+1. Optional: If you want test data to use,
+   [download and unzip GUAC’s test data.](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
 
-   ```bash
-   git clone https://github.com/guacsec/guac-data.git
-   ```
-
-3. Go to your GUAC directory (the rest of the steps need to be done from this
-   directory):
-
-   ```bash
-   cd guac
-   ```
-
-## Step 2: Build the containers
-
-From your GUAC directory, run:
-
-```bash
-make container
-```
-
-## Step 3: Start the GUAC server
+## Step 2: Start the GUAC server
 
 1. In another terminal, from your GUAC directory, run:
 
    ```bash
-   docker compose up --force-recreate
+   docker-compose up --force-recreate
    ```
 
 2. Verify that GUAC is running:
 
    ```bash
-   docker compose ls --filter "name=guac"
+   docker-compose ls --filter "name=guac"
    ```
 
    You should see:
@@ -106,27 +101,21 @@ make container
 | 8080        | GraphQL server | To see the GraphQL playground, visit [http://localhost:8080](http://localhost:8080)                                                                                                                             |
 | 4222        | Nats           | This is where any collectors that you run will need to connect to push any docs they find. The GUAC collector command defaults to `nats://127.0.0.1:4222` for the Nats address, so this will work automatically |
 
-## Step 4: Start Ingesting Data
-
-Build the GUAC binaries for your local machine and run them natively:
-
-```bash
-make build
-```
+## Step 3: Start Ingesting Data
 
 You can run the `guacone collect files` ingestion command to load data into your
 GUAC deployment. For example we can ingest the sample `guac-data` data. However,
 you may ingest what you wish to here instead.
 
 ```bash
-./bin/guacone collect files ../guac-data/docs
+guacone collect files guac-data-main/docs
 ```
 
 Switch back to the compose window and you will soon see that the OSV certifier
 recognized the new packages and is looking up vulnerability information for
 them.
 
-## Step 5: Check that everything is ingesting and running
+## Step 4: Check that everything is ingesting and running
 
 Run:
 
