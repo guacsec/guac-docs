@@ -9,11 +9,11 @@ nav_order: 3
 
 # Query for a patch plan via CLI Demo
 
-In this demo, we will utilize a Go CLI that will allow us to input a vulnerable
-purl (package URL) and see what else is affected by this package being
-vulnerable-- meaning we are querying for the package's dependents. This tutorial
-assumes you know which package has some sort of vulnerability or malware
-affecting it, or which package is your concern.
+In this demo, we will utilize a GUAC CLI that will allow us to input a
+vulnerable purl (package URL) and see what else is affected by this package
+being vulnerable-- meaning we are querying for the package's dependents. This
+tutorial assumes you know which package has some sort of vulnerability or
+malware affecting it, or which package is your concern.
 
 We will get back a patch plan which includes a visual representation of the
 blast radius, meaning a link to view the subgraph of dependent packages in the
@@ -67,8 +67,8 @@ this demo to show the various paths from package to vulnerability.
 
 ## Step 5: Run the Query Patch CLI
 
-In this demo, we will query for the patch plan of the following package (at the
-name level):
+**Packge Name Node Example** In this demo, we will query for the patch plan of
+the following package (at the name level):
 
 ```bash
 pkg:golang/github.com/antlr/antlr4/runtime/go/antlr
@@ -86,9 +86,6 @@ number can be lowered or raised depending on your needs.
 
 You can also input a package name or package version node to stop at using the
 --stop-purl flag.
-
-To input a package version instead of a package name for the purl, set the
---is-pkg-version-start or --is-pkg-version-stop flag(s) to true.
 
 The expected output for the example query above is as follows:
 
@@ -131,10 +128,63 @@ Note that the node IDs can change.
 The visualizer looks like the following (once you adjust the position of the
 antlr node)
 
-![Image from visualizer](assets/images/patch-cli-image.png)
+![Image from visualizer](assets/images/patch-cli-image1.png)
 
 You can match up the outputs of the frontiers to the nodes in the subgraph in
 order to figure a viable plan of action to remediate an issue.
+
+**Package Version Node Example**
+
+To input a package version instead of a package name for the purl, set the
+--is-pkg-version-start or --is-pkg-version-stop flag(s) to true.
+
+For this example, we will use the following package (at the version level):
+
+```bash
+pkg:maven/jfr/jfr@1.8.0_342
+```
+
+To find its patch plan run the following query with the --is-pkg-version-start
+flag:
+
+```bash
+./bin/guacone query patch --start-purl "pkg:maven/jfr/jfr@1.8.0_342" --search-depth 10 --is-pkg-version-start true
+```
+
+The number after the @ symbol denotes the version.
+
+The expected output for the example query above is as follows:
+
+```bash
+---FRONTIER LEVEL 0---
+18572: pkg:maven/jfr/jfr@1.8.0_342
+18571: pkg:maven/jfr/jfr
+
+---FRONTIER LEVEL 1---
+16669: pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest
+16668: pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest
+25104: artifact: algorithm-sha1 | digest:dc323c36dcbb81f74adabe3cc38bdb88bb5dbe66
+
+---INFO NODES---
+no info nodes found
+
+---POINTS OF CONTACT---
+no POCs found
+
+
+---SUBGRAPH VISUALIZER URL---
+http://localhost:3000/?path=26193,16667,36245,18570,18572,18571,16669,16668,25104
+```
+
+The visualizer looks like the following (you may neeed to move the visualizer to
+the right to see the graph)
+
+![Image from visualizer](assets/images/patch-cli-image2.png)
+
+Notice that the output still contains the dependent package of the package name
+attached to the version we inputted. This is because if a specific package
+version is vulnerable, it implies that the name one level above it is affected
+as well.
 
 ## Cleanup
 
