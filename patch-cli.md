@@ -9,19 +9,23 @@ nav_order: 3
 
 # Query for a patch plan via CLI Demo
 
-In this demo, we will utilize a Go CLI that will allow us to input a vulnerable purl
-(package URL) and see what else is affected by this package being vulnerable-- meaning
-we are querying for the package's dependents. This tutorial assumes you know which package
-has some sort of vulnerability or malware effecting it, or which package is your concern.
+In this demo, we will utilize a Go CLI that will allow us to input a vulnerable
+purl (package URL) and see what else is affected by this package being
+vulnerable-- meaning we are querying for the package's dependents. This tutorial
+assumes you know which package has some sort of vulnerability or malware
+effecting it, or which package is your concern.
 
-We will get back a patch plan which includes a visual representation of the blast radius, 
-meaning a link to view the subgraph of dependent packages in the GUAC visualizer. 
-It will also return a list of frontiers.  These frontiers represent what can be patched to 
-resolve the vulnerability, starting from the lowest level possible, i.e. the package itself.  
-If you don't have access to fix this package directly, you could look in the next frontier and 
-so on. It will also list out and points of contact for a given node, if available in the graph.  
-This will help you know who to contact to resolve the issue.  All these outputs together can 
-be used to help figure out the best plan of action in order to resolve a security incident.
+We will get back a patch plan which includes a visual representation of the
+blast radius, meaning a link to view the subgraph of dependent packages in the
+GUAC visualizer. It will also return a list of frontiers. These frontiers
+represent what can be patched to resolve the vulnerability, starting from the
+lowest level possible, i.e. the package itself.  
+If you don't have access to fix this package directly, you could look in the
+next frontier and so on. It will also list out and points of contact for a given
+node, if available in the graph.  
+This will help you know who to contact to resolve the issue. All these outputs
+together can be used to help figure out the best plan of action in order to
+resolve a security incident.
 
 ## Step 1: Setup GUAC with Docker Compose
 
@@ -61,26 +65,30 @@ To get the GUAC visualizer up and running, follow the [GUAC visualizer
 setup]({{ site.baseurl }}{%link guac-visualizer.md %}). This will be used in
 this demo to show the various paths from package to vulnerability.
 
-
 ## Step 5: Run the Query Patch CLI
 
-In this demo, we will query for the patch plan of the following package (at the name level):
+In this demo, we will query for the patch plan of the following package (at the
+name level):
+
 ```bash
 pkg:golang/github.com/antlr/antlr4/runtime/go/antlr
 ```
 
 The query we will run is as follows:
+
 ```bash
 ./bin/guacone query patch --start-purl "pkg:golang/github.com/antlr/antlr4/runtime/go/antlr" --search-depth 10
 ```
 
-Note that we are using a search depth of ten because this example the whole graph has a depth of less than ten
-so we will get back the entire subgraph.  This number can be lowered or raised depending on your needs.
+Note that we are using a search depth of ten because this example the whole
+graph has a depth of less than ten so we will get back the entire subgraph. This
+number can be lowered or raised depending on your needs.
 
-You can also input a package name or package version node to stop at using the --stop-purl flag.
+You can also input a package name or package version node to stop at using the
+--stop-purl flag.
 
-To input a package version instead of a package name for the purl, set the --is-pkg-version-start or --is-pkg-version-stop
-flag(s) to true.
+To input a package version instead of a package name for the purl, set the
+--is-pkg-version-start or --is-pkg-version-stop flag(s) to true.
 
 The expected output for the example query above is as follows:
 
@@ -114,18 +122,19 @@ no info nodes found
 no POCs found
 
 
----SUBGRAPH VISUALIZER URL--- 
+---SUBGRAPH VISUALIZER URL---
 http://localhost:3000/?path=444,9,49041,36298,51225,130107,192,130308,129720,500,49018,51117,130044,203,130284,129937,465,353,354,193,194,51113,129824,51112,48784,205,48785,204,129945,106,105
 ```
 
 Note that the node IDs can change.
 
-The visualizer looks like the following (once you adjust the position of the antlr node)
+The visualizer looks like the following (once you adjust the position of the
+antlr node)
 
 ![Image from visualizer](assets/images/patch-cli-image.png)
 
-You can match up the outputs of the frontiers to the nodes in the subgraph in order to figure
-a viable plan of action to remediate an issue.
+You can match up the outputs of the frontiers to the nodes in the subgraph in
+order to figure a viable plan of action to remediate an issue.
 
 ## Cleanup
 
@@ -137,8 +146,8 @@ docker-compose down
 
 ## Conclusion
 
-From this demo, we learned how we can quickly analyze the GUAC data to find a patch plan
-for a specific pURL we are interested in.  The patch plan includes the blast radius,
-frontiers or level of what can be patched, and points of contact.  This information
-can provide you with the tools needed to make a swift and educated decision
-on how to best go about tackling a security incident!
+From this demo, we learned how we can quickly analyze the GUAC data to find a
+patch plan for a specific pURL we are interested in. The patch plan includes the
+blast radius, frontiers or level of what can be patched, and points of contact.
+This information can provide you with the tools needed to make a swift and
+educated decision on how to best go about tackling a security incident!
