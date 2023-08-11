@@ -147,7 +147,7 @@ docker-compose down
 ## Conclusion
 
 From this demo, we learned how we can quickly analyze the GUAC data to find a
-patch plan for a specific package we are interested in. The patch plan includes the
-blast radius, frontiers or level of what can be patched, and points of contact.
-This information can provide you with the tools needed to make a swift and
-educated decision on how to best go about tackling a security incident!
+patch plan for a specific package we are interested in. The patch plan includes
+the blast radius, frontiers or level of what can be patched, and points of
+contact. This information can provide you with the tools needed to make a swift
+and educated decision on how to best go about tackling a security incident!
