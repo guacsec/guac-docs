@@ -128,7 +128,7 @@ Note that the node IDs can change.
 The visualizer looks like the following (once you adjust the position of the
 antlr node)
 
-![Image from visualizer](assets/images/patch-cli-image1.png)
+![Image from visualizer](assets/images/patch-cli-demo1.png)
 
 You can match up the outputs of the frontiers to the nodes in the subgraph in
 order to figure a viable plan of action to remediate an issue.
@@ -179,7 +179,7 @@ http://localhost:3000/?path=26193,16667,36245,18570,18572,18571,16669,16668,2510
 The visualizer looks like the following (you may neeed to move the visualizer to
 over see the graph):
 
-![Image from visualizer](assets/images/patch-cli-image2.png)
+![Image from visualizer](assets/images/patch-cli-demo2.png)
 
 Notice that the output still contains the dependent package of the package name
 attached to the version we inputted. This is because if a specific package
