@@ -54,7 +54,7 @@ Build the GUAC binaries using the `make` command:
 make
 ```
 
-## Step 4. Run the GUAC Visualizer
+## Step 4: Run the GUAC Visualizer
 
 To get the GUAC visualizer up and running, follow the [GUAC visualizer
 setup]({{ site.baseurl }}{%link guac-visualizer.md %}). This will be used in
