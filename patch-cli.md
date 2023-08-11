@@ -177,7 +177,7 @@ http://localhost:3000/?path=26193,16667,36245,18570,18572,18571,16669,16668,2510
 ```
 
 The visualizer looks like the following (you may neeed to move the visualizer to
-the right to see the graph)
+over see the graph):
 
 ![Image from visualizer](assets/images/patch-cli-image2.png)
 
