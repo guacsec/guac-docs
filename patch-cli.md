@@ -13,7 +13,7 @@ In this demo, we will utilize a Go CLI that will allow us to input a vulnerable
 purl (package URL) and see what else is affected by this package being
 vulnerable-- meaning we are querying for the package's dependents. This tutorial
 assumes you know which package has some sort of vulnerability or malware
-effecting it, or which package is your concern.
+affecting it, or which package is your concern.
 
 We will get back a patch plan which includes a visual representation of the
 blast radius, meaning a link to view the subgraph of dependent packages in the
@@ -147,7 +147,7 @@ docker-compose down
 ## Conclusion
 
 From this demo, we learned how we can quickly analyze the GUAC data to find a
-patch plan for a specific pURL we are interested in. The patch plan includes the
+patch plan for a specific package we are interested in. The patch plan includes the
 blast radius, frontiers or level of what can be patched, and points of contact.
 This information can provide you with the tools needed to make a swift and
 educated decision on how to best go about tackling a security incident!
