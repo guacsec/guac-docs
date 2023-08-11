@@ -51,13 +51,21 @@ The rest of the demo will assume you are in the GUAC directory.
 cd guac
 ```
 
-## Step 3: Run the GUAC Visualizer
+## Step 3: Build the GUAC binaries
+
+Build the GUAC binaries using the `make` command:
+
+```bash
+make
+```
+
+## Step 4: Run the GUAC Visualizer
 
 To get the GUAC visualizer up and running, follow the [GUAC visualizer
 setup]({{ site.baseurl }}{%link guac-visualizer.md %}). This will be used in
 this demo to show the various paths from package to vulnerability.
 
-## Step 4: Run the Query Patch CLI
+## Step 5: Run the Query Patch CLI
 
 **Packge Name Node Example** In this demo, we will query for the patch plan of
 the following package (at the name level):
