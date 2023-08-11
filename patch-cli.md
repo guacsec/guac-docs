@@ -13,6 +13,7 @@ In this demo, we will utilize a Go CLI that will allow us to input a vulnerable 
 (package URL) and see what else is affected by this package being vulnerable-- meaning
 we are querying for the package's dependents. This tutorial assumes you know which package
 has some sort of vulnerability or malware effecting it, or which package is your concern.
+
 We will get back a patch plan which includes a visual representation of the blast radius, 
 meaning a link to view the subgraph of dependent packages in the GUAC visualizer. 
 It will also return a list of frontiers.  These frontiers represent what can be patched to 
