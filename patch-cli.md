@@ -67,7 +67,9 @@ this demo to show the various paths from package to vulnerability.
 
 ## Step 5: Run the Query Patch CLI
 
-**Packge Name Node Example** In this demo, we will query for the patch plan of
+**Packge Name Node Example** 
+
+In this demo, we will query for the patch plan of
 the following package (at the name level):
 
 ```bash
