@@ -4,7 +4,7 @@ title: Querying for a patch plan via CLI
 permalink: /patch-plan/
 parent: GUAC demos
 grand_parent: Getting started with GUAC
-nav_order: 3
+nav_order: 5
 ---
 
 # Query for a patch plan via CLI Demo
