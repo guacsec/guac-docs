@@ -36,9 +36,12 @@ well as a means to explore the supply chain and prototype policies.
 
 ## Step 1: Getting started
 
-1. If you haven't already, download the main GUAC version `v0.1.2` from [this link](https://github.com/guacsec/guac/releases/tag/v0.1.2).
+1. If you haven't already, download the main GUAC version `v0.1.2` from
+   [this link](https://github.com/guacsec/guac/releases/tag/v0.1.2).
    - Follow steps 2-5 in https://docs.guac.sh/setup to get it running.
-2. Download the specific GUAC visualizer version `v0.1.1` from [this link](https://github.com/guacsec/guac-visualizer/releases/tag/v0.1.1) and extract it in the same path as your GUAC repo.
+2. Download the specific GUAC visualizer version `v0.1.1` from
+   [this link](https://github.com/guacsec/guac-visualizer/releases/tag/v0.1.1)
+   and extract it in the same path as your GUAC repo.
 
 Change directories into the visualizer's repo:
 
@@ -80,7 +83,10 @@ All commands run throughout this guide should be in this working directory.
 
 ## (Optional) : Configuration
 
-By default, the GUAC Visualizer assumes that the GraphQL server is running on http://localhost:8080/query. However, you can optionally configure the visualizer to connect to a different GraphQL endpoint or to read from a `guac.yaml` config file from your curent working directory.
+By default, the GUAC Visualizer assumes that the GraphQL server is running on
+http://localhost:8080/query. However, you can optionally configure the
+visualizer to connect to a different GraphQL endpoint or to read from a
+`guac.yaml` config file from your curent working directory.
 
 ## Step 3: Running the visualizer locally:
 
