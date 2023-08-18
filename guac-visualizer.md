@@ -78,11 +78,11 @@ All commands run throughout this guide should be in this working directory.
    ✨  Done in 12.78s.
    ```
 
-## Configuration
+## (Optional) : Configuration
 
 By default, the GUAC Visualizer assumes that the GraphQL server is running on http://localhost:8080/query. However, you can optionally configure the visualizer to connect to a different GraphQL endpoint or to read from a `guac.yaml` config file from your curent working directory.
 
-## Running the visualizer locally:
+## Step 3: Running the visualizer locally:
 
 ```bash
 yarn dev
