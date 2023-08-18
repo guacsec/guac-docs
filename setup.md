@@ -71,7 +71,7 @@ GUAC components work together]({{ site.baseurl }}{%link guac-components.md %}).
 
 ## Step 2: Start the GUAC server
 
-1. In another terminal, from your GUAC directory, run:
+1. In another terminal, from the `guac-compose` directory, run:
 
    ```bash
    docker-compose up --force-recreate
