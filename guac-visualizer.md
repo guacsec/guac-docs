@@ -38,7 +38,7 @@ well as a means to explore the supply chain and prototype policies.
 
 1. If you haven't already, download the main GUAC version `v0.1.2` from
    [this link](https://github.com/guacsec/guac/releases/tag/v0.1.2).
-   - Follow steps 2-5 in https://docs.guac.sh/setup to get it running.
+   - Follow steps 2-5 in [setup]({{ site.baseurl }}{% link setup.md %}).
 2. Download the specific GUAC visualizer version `v0.1.1` from
    [this link](https://github.com/guacsec/guac-visualizer/releases/tag/v0.1.1)
    and extract it in the same path as your GUAC repo.
