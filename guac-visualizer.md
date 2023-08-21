@@ -13,8 +13,6 @@ The GUAC Visualizer is an experimental utility that can be used to interact with
 GUAC services. It acts as a way to visualize the software supply chain graph, as
 well as a means to explore the supply chain and prototype policies.
 
-#### NOTE: Since the visualizer is still in an early experimental stage, it is likely that there may be some unexpected behavior or usage problems. Due to ongoing changes, please ensure to use <a href="https://github.com/guacsec/guac-visualizer/releases/tag/v0.1.1" alt="link to visualizer's v0.1.1 release"><span style="color: green;">guac-visualizer's v0.1.1 release</span></a> with <a href="https://github.com/guacsec/guac/releases/tag/v0.1.2"><span style="color: green;">guac's v0.1.2 release</span></a>, since the latest versions of each repo may not work together. The following directions below demonstrate how to do this for a seamless setup.
-
 {: .no_toc }
 
 <details open markdown="block">
