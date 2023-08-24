@@ -41,7 +41,7 @@ that there may be some unexpected behavior or usage problems.
    cloned the main GUAC repo:
 
    ```bash
-   git clone git@github.com:guacsec/guac-visualizer.git
+   git clone https://github.com/guacsec/guac-visualizer.git
    ```
 
 2. Change directories into the repo:
