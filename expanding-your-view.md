@@ -209,8 +209,9 @@ To understand what was collected, we will utilize the GraphQL playground. The
 playground is accessible via: `http://localhost:8080/graphql`
 
 From GraphQL Playground, we can use the provided
-[GraphQL queries](https://github.com/guacsec/guac/blob/main/demo/workflow/queries.gql)
-and paste them into the left column that defines the queries.
+[GraphQL queries](https://github.com/guacsec/guac/blob/main/demo/workflow/queries.gql).
+Copy and paste the entire file into the left column of the playground. The below
+queries can be selected by name by using the "play" button in the center.
 
 ### IsDependency
 
