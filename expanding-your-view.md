@@ -213,6 +213,8 @@ From GraphQL Playground, we can use the provided
 Copy and paste the entire file into the left column of the playground. The below
 queries can be selected by name by using the "play" button in the center.
 
+![Diagram of how GUAC works](assets/images/graphql_ui.png)
+
 ### IsDependency
 
 First, we will run the `IsDependency` query by clicking the red play button and
