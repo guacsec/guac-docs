@@ -13,9 +13,6 @@ The GUAC Visualizer is an experimental utility that can be used to interact with
 GUAC services. It acts as a way to visualize the software supply chain graph, as
 well as a means to explore the supply chain and prototype policies.
 
-Since the GUAC Visualizer is still in an early experimental stage, it is likely
-that there may be some unexpected behavior or usage problems.
-
 {: .no_toc }
 
 <details open markdown="block">
@@ -35,24 +32,24 @@ that there may be some unexpected behavior or usage problems.
 - A fresh copy of the [GUAC service infrastructure through Docker
   Compose]({{ site.baseurl }}{%link setup.md %})
 
-## Step 1: Clone the GUAC visualizer repo
+## Step 1: Getting started
 
-1. We highly suggest cloning the GUAC visualizer repo in the same path as you
-   cloned the main GUAC repo:
+1. If you haven't already, download the main GUAC version `v0.1.2` from
+   [this link](https://github.com/guacsec/guac/releases/tag/v0.1.2).
+   - Follow steps 2-5 in [setup]({{ site.baseurl }}{% link setup.md %}).
+2. Download the specific GUAC visualizer version `v0.1.1` from
+   [this link](https://github.com/guacsec/guac-visualizer/releases/tag/v0.1.1)
+   and extract it in the same path as your GUAC repo.
 
-   ```bash
-   git clone git@github.com:guacsec/guac-visualizer.git
-   ```
+Change directories into the visualizer's repo:
 
-2. Change directories into the repo:
-
-   ```bash
-   cd guac-visualizer
-   ```
+```bash
+cd path/to/guac-visualizer
+```
 
 All commands run throughout this guide should be in this working directory.
 
-## Step 2: Run the guac-visualizer from source
+## Step 2: Running the visualizer from source
 
 1. Install the guac-visualizer dependencies:
 
@@ -82,96 +79,37 @@ All commands run throughout this guide should be in this working directory.
    ✨  Done in 12.78s.
    ```
 
-2. Run the server (which will run by default on `http://localhost:3000`):
+## (Optional) : Configuration
 
-   ```bash
-   npm run dev
-   ```
+By default, the GUAC Visualizer assumes that the GraphQL server is running on
+http://localhost:8080/query. However, you can optionally configure the
+visualizer to connect to a different GraphQL endpoint or to read from a
+`guac.yaml` config file from your curent working directory.
 
-   The ouput should look like:
+## Step 3: Running the visualizer locally:
 
-   ```bash
-   $ npm run dev
-
-   > guac-visualizer@0.1.0 dev
-   > next dev
-
-   ready - started server on 0.0.0.0:3000, url: http://localhost:3000
-   warn  - You have enabled experimental feature (appDir) in next.config.js.
-   warn  - Experimental features are not covered by semver, and may cause unexpected or broken application behavior. Use at your own risk.
-
-   info  - Thank you for testing `appDir` please leave your feedback at https://nextjs.link/app-feedback
-   (node:99525) ExperimentalWarning: stream/web is an experimental feature. This feature could change at any time
-   (Use `node --trace-warnings ...` to show where the warning was created)
-   event - compiled client and server successfully in 1867 ms (560 modules)
-   ```
-
-## Step 3. Access the server
-
-Access the server through a web browser and navigate to http://localhost:3000.
-The page will look like the following:
-
-![ui](assets/images/guacvisserver.png)
-
-For more information on how to use the GUAC visualizer, take a look at some of
-our [GUAC demos]({{ site.baseurl }}{%link guac-use-cases.md %}).
-
-### Change the GraphQL endpoint
-
-This should run the service by default on http://localhost:3000. However, this
-does assume that the GraphQL server is run on http://localhost:8080/query. If
-this is not the case, you may edit the `next.config.js`.
-
-The default configuration is set to http://localhost:8080/query as seen here:
-
-```
-$ cat next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  transpilePackages: ['react-cytoscapejs'],
-  typescript: {
-    ignoreBuildErrors: true
-  },
-  experimental: {
-    appDir: true,
-  },
-  rewrites: async () => {
-    return [
-      {
-        source: '/api/graphql',
-        destination: 'http://localhost:8080/query'
-      },
-    ]
-  }
-}
-
-module.exports = nextConfig
+```bash
+yarn dev
 ```
 
-To change the GraphQL endpoint you can edit the rewrites destination:
+The output should look like:
 
 ```
-$ cat next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  transpilePackages: ['react-cytoscapejs'],
-  typescript: {
-    ignoreBuildErrors: true
-  },
-  experimental: {
-    appDir: true,
-  },
-  rewrites: async () => {
-    return [
-      {
-        source: '/api/graphql',
-        destination: 'http://example.org:8080/query'
-      },
-    ]
-  }
-}
-
-module.exports = nextConfig
+$ yarn dev
+yarn run v1.22.19
+$ next dev
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
+info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/messages/webpack5
 ```
+
+You can then go to [localhost:3000](http://localhost:3000) in your browser to
+see the graph visualization.
+
+<hr />
+<br />
+
+### Using the GUAC visualizer will look something like this:
+
+<br />
+
+![image](https://github.com/guacsec/guac-visualizer/assets/68356865/0f60b7f8-c81d-424d-99a2-f3b365e388dc)
