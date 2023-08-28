@@ -26,11 +26,11 @@ well as a means to explore the supply chain and prototype policies.
 
 ## Requirements
 
-- [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [Git](https://git-scm.com/downloads)
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
-- [Docker](https://docs.docker.com/get-docker/)
-- A fresh copy of the [GUAC service infrastructure through Docker
-  Compose]({{ site.baseurl }}{%link setup.md %})
+- [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
+  site.baseurl }}{%link setup.md %}).
 
 ## Step 1: Getting started
 
