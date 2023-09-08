@@ -217,5 +217,5 @@ to create more tools such as these quickly and easily!
 To delete the all the GUAC components run:
 
 ```bash
-docker-compose down
+docker compose down
 ```
