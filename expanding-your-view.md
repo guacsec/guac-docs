@@ -680,5 +680,5 @@ vulnerability.
 To delete all the GUAC resources, run:
 
 ```bash
-docker-compose down
+docker compose down
 ```

@@ -74,13 +74,13 @@ GUAC components work together]({{ site.baseurl }}{%link guac-components.md %}).
 1. In another terminal, from the `guac-compose` directory, run:
 
    ```bash
-   docker-compose up --force-recreate
+   docker compose up --force-recreate
    ```
 
 2. Verify that GUAC is running:
 
    ```bash
-   docker-compose ls --filter "name=guac"
+   docker compose ls --filter "name=guac"
    ```
 
    You should see:
@@ -90,7 +90,7 @@ GUAC components work together]({{ site.baseurl }}{%link guac-components.md %}).
    guac                running(7)          /Users/lumb/go/src/github.com/guacsec/guac/docker-compose.yml
    ```
 
-   **If you don’t see the above,** run `docker-compose down` and try starting up
+   **If you don’t see the above,** run `docker compose down` and try starting up
    GUAC again. Because Docker Compose caches the containers used, the unclean
    state can cause issues.
 

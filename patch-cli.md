@@ -164,7 +164,7 @@ as well.
 To delete the all the GUAC components run:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ## Conclusion
