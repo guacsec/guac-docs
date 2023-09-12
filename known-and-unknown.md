@@ -43,6 +43,21 @@ determine what we know and don't know about the artifacts.
 - Completion of the [Expanding your view of the software supply chain
   demo]({{ site.baseurl }}{%link expanding-your-view.md %})
 
+## Ingest GUAC Data (if needed)
+
+If you have not already done so, ingest the GUAC data to be used by the demo.
+
+```bash
+guacone collect files guac-data-main/docs/
+```
+
+Once ingested we will see the following message (the number of documents may
+vary):
+
+```bash
+{"level":"info","ts":1681864775.1161852,"caller":"cmd/files.go:201","msg":"completed ingesting 67 documents of 67"}
+```
+
 ## Understanding the data
 
 GUAC, at the time of the beta release, can store various metadata about an
@@ -82,47 +97,31 @@ following the definition of VCS uri from the
 and a artifact (algorithm:digest).
 
 1. Look at if a package
-   ([vault](https://github.com/guacsec/guac-data/blob/main/top-dh-sboms/vault.json))
+   ([vault](https://github.com/guacsec/guac-data/blob/main/docs/cyclonedx/syft-cyclonedx-docker.io-library-vault.latest.json))
    to see if it has an SBOM associated with and where it can be found:
 
-   Ingest the vault's SBOM:
-
    ```bash
-   guacone collect files guac-data-main/top-dh-sboms/vault.json
-   ```
-
-   The output should be similar to:
-
-   ```bash
-   {"level":"info","ts":1684774157.098919,"caller":"cmd/files.go:167","msg":"[2.054952875s] completed doc {Collector:FileCollector Source:file:///../guac-data/top-dh-sboms/vault.json}"}
-   {"level":"info","ts":1684774157.098937,"caller":"cmd/files.go:174","msg":"collector ended gracefully"}
-   {"level":"info","ts":1684774157.09894,"caller":"cmd/files.go:187","msg":"completed ingesting 1 documents of 1"}
-   ```
-
-   Next Run the query command:
-
-   ```bash
-   guacone query known package "pkg:guac/spdx/docker.io/library/vault-latest"
+   guacone query known package "pkg:guac/cdx/docker.io/library/vault@sha256:d9fdd0e93cdd325b144aed2c68d53999875c907c5a37b2d1a9456c8a45886158?tag=latest"
    ```
 
    The output will look similar to this:
 
    ```bash
-   +------------------------------------------------+
-   | Package Name Nodes                             |
-   +-----------+-----------+------------------------+
-   | NODE TYPE | NODE ID   | ADDITIONAL INFORMATION |
-   +-----------+-----------+------------------------+
-   +-----------+-----------+------------------------+
-   Visualizer url: http://localhost:3000/?path=4,3,2
-   +----------------------------------------------------------------------------------------------+
-   | Package Version Nodes                                                                        |
-   +-----------+-----------+----------------------------------------------------------------------+
-   | NODE TYPE | NODE ID   | ADDITIONAL INFORMATION                                               |
-   +-----------+-----------+----------------------------------------------------------------------+
-   | hasSBOM   | 6964      | SBOM Download Location: file:///../guac-data/top-dh-sboms/vault.json |
-   +-----------+-----------+----------------------------------------------------------------------+
-   Visualizer url: http://localhost:3000/?path=5,4,3,2,6964
+    +------------------------------------------------+
+    | Package Name Nodes                             |
+    +-----------+-----------+------------------------+
+    | NODE TYPE | NODE ID # | ADDITIONAL INFORMATION |
+    +-----------+-----------+------------------------+
+    +-----------+-----------+------------------------+
+    Visualizer url: http://localhost:3000/?path=4861,30,29
+    +----------------------------------------------------------------------------------------------------------------------------------------+
+    | Package Version Nodes                                                                                                                  |
+    +-----------+-----------+----------------------------------------------------------------------------------------------------------------+
+    | NODE TYPE | NODE ID # | ADDITIONAL INFORMATION                                                                                         |
+    +-----------+-----------+----------------------------------------------------------------------------------------------------------------+
+    | hasSBOM   | 5433      | SBOM Download Location: file:///../guac-data/docs/cyclonedx/syft-cyclonedx-docker.io-library-vault.latest.json |
+    +-----------+-----------+----------------------------------------------------------------------------------------------------------------+
+    Visualizer url: http://localhost:3000/?path=4862,4861,30,29,5433
    ```
 
    The output has two separate tables: one for the “package name level” and the
