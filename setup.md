@@ -24,7 +24,10 @@ the full set of components.
 If you’re curious about the various GUAC components and what they do, see [How
 GUAC components work together]({{ site.baseurl }}{%link guac-components.md %}).
 
+## Setup video
 {: .no_toc }
+A video format of these setup instructions is available here:
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/3e-Qurgl3Sc?si=N2z7AAUOj1lM1EG-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 <details open markdown="block">
   <summary>
