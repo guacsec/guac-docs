@@ -45,9 +45,9 @@ A video format of these setup instructions is available here:
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [jq](https://stedolan.github.io/jq/download/)
 
-## Requirements
+## Optional - Verify images and binaries
 
-- Completion of the [Vertification of the GUAC images and
+- Follow [Vertification of the GUAC images and
   binaries]({{ site.baseurl }}{%link verification.md %})
 
 ## Step 1: Download GUAC
@@ -58,16 +58,16 @@ A video format of these setup instructions is available here:
    have not already done so. For example Linux x86_64 is
    [`guacone-linux-amd64'](https://github.com/guacsec/guac/releases/latest/download/guacone-linux-amd64).
 
-2. Rename the binary to `guacone`, mark it executable if necessary, and add it
+1. Rename the binary to `guacone`, mark it executable if necessary, and add it
    to your shell's path.
 
-3. Download the compose files from the
+1. Download the compose files from the
    [latest GUAC release](https://github.com/guacsec/guac/releases/latest). Look
    for an attached file `guac-compose-<release-tag>.tar.gz`. At the time of
    writing, this is:
    [`guac-compose-v0.1.1.tar.gz`](https://github.com/guacsec/guac/releases/download/v0.1.1/guac-compose-v0.1.1.tar.gz).
 
-4. Untar the compose files and change to that directory. (the rest of the steps
+1. Untar the compose files and change to that directory. (the rest of the steps
    need to be done from this directory):
 
    ```bash
@@ -75,7 +75,7 @@ A video format of these setup instructions is available here:
    cd guac-compose
    ```
 
-5. Optional: If you want test data to use,
+1. Optional: If you want test data to use,
    [download and unzip GUAC’s test data.](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
 
 ## Step 2: Start the GUAC server
@@ -86,7 +86,7 @@ A video format of these setup instructions is available here:
    docker compose up --force-recreate
    ```
 
-2. Verify that GUAC is running:
+1. Verify that GUAC is running:
 
    ```bash
    docker compose ls --filter "name=guac"

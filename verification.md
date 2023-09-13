@@ -70,13 +70,55 @@ nav_order: 1
 
 ## Step 2: Download GUAC binary and verify
 
+1. We can also verify the binaries via the checksums associated with each.
+   Download the
+   [latest GUAC release](https://github.com/guacsec/guac/releases/latest)
+   guac_checksums.txt file. This contains all the checksums for all artifacts
+   included in the release:
+
+   ```bash
+   curl -O -L "https://github.com/guacsec/guac/releases/latest/download/guac_checksums.txt"
+   ```
+
+   First we will verify signature of this file via:
+
+   ```bash
+   LATEST_VERSION=$(curl https://api.github.com/repos/guacsec/guac/releases/latest | grep tag_name | cut -d : -f2 | tr -d "v\", ")
+   cosign verify-blob --cert https://github.com/guacsec/guac/releases/download/v$LATEST_VERSION/guac_checksums.txt-keyless.pem \
+   --signature https://github.com/guacsec/guac/releases/download/v$LATEST_VERSION/guac_checksums.txt-keyless.sig \
+   ./guac_checksums.txt \
+   --certificate-identity https://github.com/guacsec/guac/.github/workflows/release.yaml@refs/tags/v$LATEST_VERSION \
+   --certificate-oidc-issuer https://token.actions.githubusercontent.com
+   ```
+
+   The output should be:
+
+   ```bash
+   Verified OK
+   ```
+
 1. Download the GUAC CLI `guacone` binary for your machine's OS and architecture
    from the
    [latest GUAC release](https://github.com/guacsec/guac/releases/latest). For
    example Linux x86_64 is
    [`guacone-linux-amd64'](https://github.com/guacsec/guac/releases/latest/download/guacone-linux-amd64).
 
-2. Verify the signature. We generate [SLSA 3 provenance](https://slsa.dev) using
+1. Calculate the checksum of the binary. For example:
+
+   ```bash
+   shasum -a 256 guacone-linux-amd64
+   ```
+
+   which will output:
+
+   ```bash
+   769040ce66e97a6398e2e697107fbdb02daa2fdeb97784ac70dc38b794c8b02b  guacone-linux-amd64
+   ```
+
+   compare this against the guac_checksums.txt downloaded above and you should
+   see that they match.
+
+1. Verify the signature. We generate [SLSA 3 provenance](https://slsa.dev) using
    the OpenSSF's
    [slsa-framework/slsa-github-generator](https://github.com/slsa-framework/slsa-github-generator).
    To verify our release, install the verification tool from
@@ -108,7 +150,7 @@ nav_order: 1
 1. Similar to the above, we can verify the
    [latest guac-visualizer release](https://github.com/guacsec/guac-visualizer/releases/latest),
    by running the following command. As the current guac-visualizer is in
-   pre-release, we cannot fetch the latest version. Replace the LATEST_VERSION
+   pre-release, we cannot fetch the latest version. Replace the `LATEST_VERSION`
    with the latest verion for the guac-visualizer:
 
    ```bash
@@ -132,23 +174,25 @@ nav_order: 1
    [{"critical":{"identity":{"docker-reference":"ghcr.io/guacsec/guac-visualizer"},"image":{"docker-manifest-digest":"sha256:d75c71a4ad5cec96d1a453d7aea7e6ae5886af178a6380dececf695fcc7f3ad1"},"type":"cosign container image signature"},"optional":{"1.3.6.1.4.1.57264.1.1":"https://token.actions.githubusercontent.com","1.3.6.1.4.1.57264.1.2":"push","1.3.6.1.4.1.57264.1.3":"59751aae96e5290cf2cab9f721a63050bf5db42e","1.3.6.1.4.1.57264.1.4":"release-guac-visualizer-image","1.3.6.1.4.1.57264.1.5":"guacsec/guac-visualizer","1.3.6.1.4.1.57264.1.6":"refs/tags/v0.1.1","Bundle":{"SignedEntryTimestamp":"MEUCIHfbwjJNVK4TPGqjf6Duw9enBO4mPANckvN2PJp2jDtjAiEAkEIpM0I34T3yW6q6SaAsAT+ZDyLc5SOdKjH5USCZZqs=","Payload":{"body":"eyJhcGlWZXJzaW9uIjoiMC4wLjEiLCJraW5kIjoiaGFzaGVkcmVrb3JkIiwic3BlYyI6eyJkYXRhIjp7Imhhc2giOnsiYWxnb3JpdGhtIjoic2hhMjU2IiwidmFsdWUiOiJmMzcwMTBlN2NhOWI1YjdiNTY3MDA2OGRmN2M3NmViNTNiMzM4ZjU1NGQ1NjRjNzZhODE2Y2Q0MDNiYTQ1ZGY2In19LCJzaWduYXR1cmUiOnsiY29udGVudCI6Ik1FVUNJUUN5UGZ4S05TaWMycSt6K3U1SEYyQS91WVFBV0pYeUZFeGZpcGd3NW5TNmRnSWdIbStYRUZxUnV3WDF3dEg0TXNpRXVWeEdueWJENTdaVkh5ZUk0SEZuZHQ4PSIsInB1YmxpY0tleSI6eyJjb250ZW50IjoiTFMwdExTMUNSVWRKVGlCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2sxSlNVYzFha05EUW0xNVowRjNTVUpCWjBsVllVZFJOelpKZVdOQ2IyWjRiWGRyU1hKQ1IxQmpaREZ1WjA5UmQwTm5XVWxMYjFwSmVtb3dSVUYzVFhjS1RucEZWazFDVFVkQk1WVkZRMmhOVFdNeWJHNWpNMUoyWTIxVmRWcEhWakpOVWpSM1NFRlpSRlpSVVVSRmVGWjZZVmRrZW1SSE9YbGFVekZ3WW01U2JBcGpiVEZzV2tkc2FHUkhWWGRJYUdOT1RXcE5kMDlFUlROTlZHdDRUbFJCZDFkb1kwNU5hazEzVDBSRk0wMVVhM2xPVkVGM1YycEJRVTFHYTNkRmQxbElDa3R2V2tsNmFqQkRRVkZaU1V0dldrbDZhakJFUVZGalJGRm5RVVV2UlVkWU5XdHlZbVJhWW1aU1JVZHFkMDVwYzNkWWJXaHhUR0Y0WTFWVmVuRjNkMjBLTVdKUlpURk9VMlJZUm1Kb1JrdFFjMk5uYjFaVVRqRXlXVTVQVkVGRmVGRXJUbmM0TUU5a01HUnNNM3BKYURKaEwwdFBRMEpaYzNkbloxZElUVUUwUndwQk1WVmtSSGRGUWk5M1VVVkJkMGxJWjBSQlZFSm5UbFpJVTFWRlJFUkJTMEpuWjNKQ1owVkdRbEZqUkVGNlFXUkNaMDVXU0ZFMFJVWm5VVlZFV0ZONUNuTmlRMGRCYms1NWNURk1TV2x1T0c1RmIyc3JjbkZuZDBoM1dVUldVakJxUWtKbmQwWnZRVlV6T1ZCd2VqRlphMFZhWWpWeFRtcHdTMFpYYVhocE5Ga0tXa1E0ZDJGQldVUldVakJTUVZGSUwwSkdOSGRZU1ZwaFlVaFNNR05JVFRaTWVUbHVZVmhTYjJSWFNYVlpNamwwVERKa01WbFhUbnBhVjAxMldqTldhQXBaZVRFeVlWaE9NVmxYZUhCbGJWWjVUSGsxYm1GWVVtOWtWMGwyWkRJNWVXRXlXbk5pTTJSNlRETktiR0pIVm1oak1sVjFaVmRHZEdKRlFubGFWMXA2Q2t3elVtaGFNMDEyWkdwQmRVMVROSGhOUkd0SFEybHpSMEZSVVVKbk56aDNRVkZGUlVzeWFEQmtTRUo2VDJrNGRtUkhPWEphVnpSMVdWZE9NR0ZYT1hVS1kzazFibUZZVW05a1Ywb3hZekpXZVZreU9YVmtSMVoxWkVNMWFtSXlNSGRGWjFsTFMzZFpRa0pCUjBSMmVrRkNRV2RSUldOSVZucGhSRUV5UW1kdmNncENaMFZGUVZsUEwwMUJSVVJDUTJjeFQxUmpNVTFYUm1oYVZHc3lXbFJWZVU5VVFtcGFha3BxV1ZkSk5WcHFZM2xOVjBVeVRYcEJNVTFIU20xT1YxSnBDazVFU214TlEzTkhRMmx6UjBGUlVVSm5OemgzUVZGUlJVaFlTbXhpUjFab1l6SlZkRm96Vm1oWmVURXlZVmhPTVZsWGVIQmxiVlo1VEZkc2RGbFhaR3dLVFVOVlIwTnBjMGRCVVZGQ1p6YzRkMEZSVlVWR01tUXhXVmRPZWxwWFRYWmFNMVpvV1hreE1tRllUakZaVjNod1pXMVdlVTFDTkVkRGFYTkhRVkZSUWdwbk56aDNRVkZaUlVWSVNteGFiazEyWkVkR2JtTjVPVEpOUXpSNFRHcEZkMDkzV1V0TGQxbENRa0ZIUkhaNlFVSkRRVkYwUkVOMGIyUklVbmRqZW05MkNrd3pVblpoTWxaMVRHMUdhbVJIYkhaaWJrMTFXakpzTUdGSVZtbGtXRTVzWTIxT2RtSnVVbXhpYmxGMVdUSTVkRTFIYjBkRGFYTkhRVkZSUW1jM09IY0tRVkZyUlZoQmVHRmhTRkl3WTBoTk5reDVPVzVoV0ZKdlpGZEpkVmt5T1hSTU1tUXhXVmRPZWxwWFRYWmFNMVpvV1hreE1tRllUakZaVjNod1pXMVdlUXBNZVRWdVlWaFNiMlJYU1haa01qbDVZVEphYzJJelpIcE1NMHBzWWtkV2FHTXlWWFZsVjBaMFlrVkNlVnBYV25wTU0xSm9Xak5OZG1ScVFYVk5VelI0Q2sxRVowZERhWE5IUVZGUlFtYzNPSGRCVVc5RlMyZDNiMDVVYXpOT1ZFWm9XVmRWTlU1dFZURk5hbXQzV1RKWmVWa3lSbWxQVjFrelRXcEdhRTVxVFhjS1RsUkNhVnBxVm10WmFsRjVXbFJCWkVKbmIzSkNaMFZGUVZsUEwwMUJSVXhDUVRoTlJGZGtjR1JIYURGWmFURnZZak5PTUZwWFVYZFBaMWxMUzNkWlFncENRVWRFZG5wQlFrUkJVWE5FUTNCdlpFaFNkMk42YjNaTU1tUndaRWRvTVZscE5XcGlNakIyV2pOV2FGa3pUbXhaZVRsdVpGZEdha3hZV25Cak0xWm9DbUpIYkRaYVdFbDNUMEZaUzB0M1dVSkNRVWRFZG5wQlFrUlJVWEZFUTJjeFQxUmpNVTFYUm1oYVZHc3lXbFJWZVU5VVFtcGFha3BxV1ZkSk5WcHFZM2tLVFZkRk1rMTZRVEZOUjBwdFRsZFNhVTVFU214TlEwRkhRMmx6UjBGUlVVSm5OemgzUVZFMFJVVm5kMUZqYlZadFkzazVNRmxYWkhwTU0xbDNUR3BGZFFwTlZFRmFRbWR2Y2tKblJVVkJXVTh2VFVGRlVFSkJjMDFEVkZsM1RXcGpkMDVFVVhkT1JFRnhRbWR2Y2tKblJVVkJXVTh2VFVGRlVVSkNkMDFIYldnd0NtUklRbnBQYVRoMldqSnNNR0ZJVm1sTWJVNTJZbE01Ym1SWFJtcGpNbFpxVFVKclIwTnBjMGRCVVZGQ1p6YzRkMEZTUlVWRGQzZEtUVlJGZUUxNmEzb0tUMFJyZUUxSGIwZERhWE5IUVZGUlFtYzNPSGRCVWtsRldFRjRZV0ZJVWpCalNFMDJUSGs1Ym1GWVVtOWtWMGwxV1RJNWRFd3laREZaVjA1NldsZE5kZ3BhTTFab1dYa3hNbUZZVGpGWlYzaHdaVzFXZVV4NU5XNWhXRkp2WkZkSmRtUXlPWGxoTWxwellqTmtla3d6U214aVIxWm9ZekpWZFdWWFJuUmlSVUo1Q2xwWFducE1NMUpvV2pOTmRtUnFRWFZOVXpSNFRVUm5SME5wYzBkQlVWRkNaemM0ZDBGU1RVVkxaM2R2VGxSck0wNVVSbWhaVjFVMVRtMVZNVTFxYTNjS1dUSlplVmt5Um1sUFYxa3pUV3BHYUU1cVRYZE9WRUpwV21wV2ExbHFVWGxhVkVGVlFtZHZja0puUlVWQldVOHZUVUZGVlVKQldVMUNTRUl4WXpKbmR3cFlVVmxMUzNkWlFrSkJSMFIyZWtGQ1JsRlNVRVJGTVc5a1NGSjNZM3B2ZGt3eVpIQmtSMmd4V1drMWFtSXlNSFphTTFab1dUTk9iRmw1T1c1a1YwWnFDa3hZV25Cak0xWm9Za2RzTmxwWVNYWlpWMDR3WVZjNWRXTjVPWGxrVnpWNlRIcFZORTlVVVRWUFJFVXpUV3BKZGxsWVVqQmFWekYzWkVoTmRrMVVRVmNLUW1kdmNrSm5SVVZCV1U4dlRVRkZWMEpCWjAxQ2JrSXhXVzE0Y0ZsNlEwSnBkMWxMUzNkWlFrSkJTRmRsVVVsRlFXZFNPVUpJYzBGbFVVSXpRVTR3T1FwTlIzSkhlSGhGZVZsNGEyVklTbXh1VG5kTGFWTnNOalF6YW5sMEx6UmxTMk52UVhaTFpUWlBRVUZCUW1sblZITktOVlZCUVVGUlJFRkZaM2RTWjBsb0NrRk1TMngwYW5vd2VGUjBUVkJwY0RBdmNXOWtkM0ZWWlc0M1NHaHdMekZVZDJ4NVJrNWFSM28zWVZNMFFXbEZRWFZYT0RsTmIyZE5VbEpaUVdSUFJWY0tSMW92VVZoMlEycE5jMWRQUVRoU1FVRnBRazV5V2psMk5HcHJkME5uV1VsTGIxcEplbW93UlVGM1RVUmhRVUYzV2xGSmVFRk9hWFpZTWxGR1NrRnFhUW8xUlV4Tk5WRkRlbkJ0ZDBoVVlWTnhhVmxwTTAxelpXMVFaMnM1VVRKdmRsVXpSMEpFYzBGUFlteG5lazE1T0doaWVrcDZlRkZKZDB0TUwzaG9RVWx6Q2tOVlJIVkNVa2xuVjBKT2VVUmpWazUzY3l0VWR5dFFXVEpZWTAxWVIxbGxTREYxUTBjek4zUXJabFpOY0hRNGJVVlNaRU5qZVUxaENpMHRMUzB0UlU1RUlFTkZVbFJKUmtsRFFWUkZMUzB0TFMwSyJ9fX19","integratedTime":1692299701,"logIndex":31716148,"logID":"c0d23d6ad406973f9559f3ba2d1ca01f84147d8ffc5b8445c224f98b9591801d"}},"Issuer":"https://token.actions.githubusercontent.com","Subject":"https://github.com/guacsec/guac-visualizer/.github/workflows/release.yaml@refs/tags/v0.1.1","git_sha":"59751aae96e5290cf2cab9f721a63050bf5db42e","githubWorkflowName":"release-guac-visualizer-image","githubWorkflowRef":"refs/tags/v0.1.1","githubWorkflowRepository":"guacsec/guac-visualizer","githubWorkflowSha":"59751aae96e5290cf2cab9f721a63050bf5db42e","githubWorkflowTrigger":"push"}}]
    ```
 
-2. We can also verify the SLSA attestation on the image via:
+2. SLSA attestation for the guac-visualizer are currently not generated for
+   v0.1.1 as it is pre-release but will be for all following releases.
+   Verification can be done the following command:
 
    ```bash
    cosign verify-attestation ghcr.io/guacsec/guac-visualizer@$GUAC_DIGEST \
-    --certificate-identity https://github.com/slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@refs/tags/v1.8.0 \
+    --certificate-identity https://github.com/slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@refs/tags/v1.9.0 \
     --certificate-oidc-issuer https://token.actions.githubusercontent.com --type 'https://slsa.dev/provenance/v0.2'
    ```
 
    you should see an output similar to this:
 
    ```bash
-   Verification for ghcr.io/guacsec/guac@sha256:de50517b5a527f031395ba11de5576462bc4db6fa0eef5073f82fab052c2b07e --
+   Verification for ghcr.io/guacsec/guac-visualizer@visualizer:d75c71a4ad5cec96d1a453d7aea7e6ae5886af178a6380dececf695fcc7f3ad1 --
    The following checks were performed on each of these signatures:
      - The cosign claims were validated
      - Existence of the claims in the transparency log was verified offline
      - The code-signing certificate was verified using trusted certificate authority certificates
-   Certificate subject: https://github.com/slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@refs/tags/v1.8.0
+   Certificate subject: https://github.com/slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@refs/tags/v1.9.0
    Certificate issuer URL: https://token.actions.githubusercontent.com
    GitHub Workflow Trigger: push
    GitHub Workflow SHA: 463b8004beebbd413ecf556e4fc5a1bf986534ab
