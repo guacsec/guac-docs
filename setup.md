@@ -47,7 +47,7 @@ A video format of these setup instructions is available here:
 
 ## Optional - Verify images and binaries
 
-- Follow [Vertification of the GUAC images and
+- Follow [Verification of the GUAC images and
   binaries]({{ site.baseurl }}{%link verification.md %})
 
 ## Step 1: Download GUAC
