@@ -45,12 +45,17 @@ A video format of these setup instructions is available here:
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [jq](https://stedolan.github.io/jq/download/)
 
+## Optional - Verify images and binaries
+
+- Follow [Verification of the GUAC images and
+  binaries]({{ site.baseurl }}{%link verification.md %})
+
 ## Step 1: Download GUAC
 
 1. Download the GUAC CLI `guacone` binary for your machine's OS and architecture
    from the
-   [latest GUAC release](https://github.com/guacsec/guac/releases/latest). For
-   example Linux x86_64 is
+   [latest GUAC release](https://github.com/guacsec/guac/releases/latest) if you
+   have not already done so. For example Linux x86_64 is
    [`guacone-linux-amd64'](https://github.com/guacsec/guac/releases/latest/download/guacone-linux-amd64).
 
 1. Rename the binary to `guacone`, mark it executable if necessary, and add it
@@ -81,7 +86,7 @@ A video format of these setup instructions is available here:
    docker compose up --force-recreate
    ```
 
-2. Verify that GUAC is running:
+1. Verify that GUAC is running:
 
    ```bash
    docker compose ls --filter "name=guac"
