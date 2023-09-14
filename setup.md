@@ -3,7 +3,7 @@ layout: page
 title: Set up GUAC with Docker Compose
 permalink: /setup/
 parent: Getting started with GUAC
-nav_order: 2
+nav_order: 1
 ---
 
 # Set up GUAC with Docker Compose
