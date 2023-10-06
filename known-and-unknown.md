@@ -78,7 +78,7 @@ have the following definitions:
 | `goodLinks`    | List of CertifyGood associated with the package, source or artifact          |
 | `pkgEquals`    | Two packages (with different purls) are equal                                |
 
-For more information on these, refer to the [grapQL documentation]({{
+For more information on these, refer to the [GraphQL documentation]({{
 site.baseurl }}{%link graphql.md %}) and [ontology definitions]({{ site.baseurl
 }}{%link guac-ontology-definition.md %}).
 
