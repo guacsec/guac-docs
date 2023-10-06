@@ -36,12 +36,16 @@ well as a means to explore the supply chain and prototype policies.
 
 To use the GUAC visualizer, you need to have the main GUAC server running.
 
-### 1. Download GUAC version `v0.2.0` from [here](https://github.com/guacsec/guac/releases/tag/v0.2.0).
+### Step 1. Have GUAC up and running
 
-- Follow these steps outlined here to get the GUAC server up and running:
-  https://docs.guac.sh/setup
+- Follow these steps outlined here to [get the GUAC server up and
+  running]({{ site.baseurl }}{% link setup.md %})
 
-### 2. Download GUAC visualizer version `v0.2.0` from [here](https://github.com/guacsec/guac-visualizer/releases/tag/v0.2.0) and extract it in the same path as your GUAC repo.
+### 2. Get GUAC visualizer version `v0.2.0`
+
+- You can get the source code for `v0.2.0` here:
+  https://github.com/guacsec/guac-visualizer/releases/tag/v0.2.0
+- Make sure to extract it in the same path you downloaded GUAC.
 
 Change directories into the visualizer's repo:
 
