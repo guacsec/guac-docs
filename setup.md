@@ -57,17 +57,20 @@ A video format of these setup instructions is available here:
    [latest GUAC release](https://github.com/guacsec/guac/releases/latest) if you
    have not already done so. For example:
 
-   * Linux x86_64 : [`guacone-linux-amd64`](https://github.com/guacsec/guac/releases/latest/download/guacone-linux-amd64)
-   * MacOS x86_64 : [`guacone-darwin-amd64`](https://github.com/guacsec/guac/releases/latest/download/guacone-darwin-amd64)
-   * Windows x86_64 : [`guacone-windows-amd64.exe`](https://github.com/guacsec/guac/releases/latest/download/guacone-windows-amd64.exe)
+   - Linux x86_64 :
+     [`guacone-linux-amd64`](https://github.com/guacsec/guac/releases/latest/download/guacone-linux-amd64)
+   - MacOS x86_64 :
+     [`guacone-darwin-amd64`](https://github.com/guacsec/guac/releases/latest/download/guacone-darwin-amd64)
+   - Windows x86_64 :
+     [`guacone-windows-amd64.exe`](https://github.com/guacsec/guac/releases/latest/download/guacone-windows-amd64.exe)
 
 1. Rename the binary to `guacone`, mark it executable if necessary, and add it
    to your shell's path.
 
-1. Download the [compose
-   files](https://github.com/guacsec/guac/releases/latest/download/guac-compose.tar.gz)
-   from the [latest GUAC
-   release](https://github.com/guacsec/guac/releases/latest).
+1. Download the
+   [compose files](https://github.com/guacsec/guac/releases/latest/download/guac-compose.tar.gz)
+   from the
+   [latest GUAC release](https://github.com/guacsec/guac/releases/latest).
 
 1. Untar the compose files and change to that directory. (the rest of the steps
    need to be done from this directory):
