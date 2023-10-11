@@ -26,51 +26,37 @@ well as a means to explore the supply chain and prototype policies.
 
 ## Requirements
 
-- [Git](https://git-scm.com/downloads)
+- [git](https://git-scm.com/downloads)
 - [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
 - [node](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-- A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
-  site.baseurl }}{%link setup.md %}).
+- [GUAC services up and running]({{
+  site.baseurl }}{%link setup.md %})
 
-# 1. Getting started
+## Step 1. Getting started
 
-To use the GUAC visualizer, you need to have the main GUAC server running.
+Get the
+[source code for guac-visualizer `v0.2.0` here:](https://github.com/guacsec/guac-visualizer/releases/latest)
 
-### Step 1. Have GUAC up and running
-
-- Follow these steps outlined here to [get the GUAC server up and
-  running]({{ site.baseurl }}{% link setup.md %})
-
-### 2. Get GUAC visualizer version `v0.2.0`
-
-- You can get the source code for `v0.2.0` here:
-  https://github.com/guacsec/guac-visualizer/releases/tag/v0.2.0
-- Make sure to extract it in the same path you downloaded GUAC.
-
-Change directories into the visualizer's repo:
+`cd` into it:
 
 ```bash
 cd guac-visualizer
 ```
 
-# 2. Install dependencies
-
-**Install the dependencies by running:**
+## Step 2. Install dependencies
 
 ```bash
 yarn install
 ```
 
-# 3. Run the visualizer locally:
-
-**Then run:**
+## Step 3. Run the visualizer locally:
 
 ```bash
 yarn dev
 ```
 
 You can then go to [localhost:3000](http://localhost:3000) in your browser to
-see the graph visualization.
+start using the visualizer.
 
 ```
 ...
@@ -83,10 +69,7 @@ info  - Using webpack 5. Reason: Enabled by default https://nextjs.org/docs/mess
 ```
 
 <hr />
-<br />
 
-### Using the GUAC visualizer will look something like this:
-
-<br />
+**Using the GUAC visualizer will look something like this:**
 
 ![image](https://github.com/guacsec/guac-visualizer/assets/68356865/420c523e-9774-4a4f-82c1-b7e1d29ba9ac)
