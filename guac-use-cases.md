@@ -4,7 +4,7 @@ title: GUAC demos
 permalink: /guac-use-cases/
 parent: Getting started with GUAC
 has_children: true
-nav_order: 2
+nav_order: 4
 ---
 
 # GUAC demos
