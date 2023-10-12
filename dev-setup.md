@@ -19,7 +19,6 @@ nav_order: 6
 - [jq](https://stedolan.github.io/jq/download/)
 - [protoc](https://grpc.io/docs/protoc-installation/)
 
-
 # Setting up your git repositories
 
 1. Clone GUAC to a local directory:
@@ -41,8 +40,7 @@ nav_order: 6
    cd guac
    ```
 
-
-# Building the binaries 
+# Building the binaries
 
 All steps assume you are in the root of the guac directory.
 
@@ -54,9 +52,9 @@ All steps assume you are in the root of the guac directory.
 
 1. Alternatively, you may also build/run the binaries directly with go:
 
-    ```bash
-    go run ./cmd/guacgql --gql-debug
-    ```
+   ```bash
+   go run ./cmd/guacgql --gql-debug
+   ```
 
 # Building containers
 
@@ -68,36 +66,34 @@ All steps assume you are in the root of the guac directory.
    make container
    ```
 
-
 # Making changes to GraphQL (optional)
 
 1. When making changes to the graphQL
    [schema](https://github.com/guacsec/guac/tree/main/pkg/assembler/graphql/schema)
-   and [client
-   operations](https://github.com/guacsec/guac/tree/main/pkg/assembler/clients/operations),
+   and
+   [client operations](https://github.com/guacsec/guac/tree/main/pkg/assembler/clients/operations),
    you will need to run the graphQL generation code:
 
-    ```bash
-    make generate
-    ```
+   ```bash
+   make generate
+   ```
 
 # Making changes to protos (optional)
 
 1. When making changes to any protocol buffers (e.g. for the [collectsub
    service]), you will need to run code generation:
 
-    ```bash
-    make proto
-    ```
+   ```bash
+   make proto
+   ```
 
 # Creating a PR
 
 Whenever you are ready to contribute, feel free to open a pull request to the
-repository! Whenever you are updating your branch, please be sure to [rebase
-instead of creating a merge
-commit](https://www.geeksforgeeks.org/rebasing-of-branches-in-git/#).
+repository! Whenever you are updating your branch, please be sure to
+[rebase instead of creating a merge commit](https://www.geeksforgeeks.org/rebasing-of-branches-in-git/#).
 
 # Next steps
 
-Check out more information about becoming a contributor in the [contributor
-guide](https://github.com/guacsec/guac/blob/main/CONTRIBUTING.md).
+Check out more information about becoming a contributor in the
+[contributor guide](https://github.com/guacsec/guac/blob/main/CONTRIBUTING.md).
