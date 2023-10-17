@@ -126,21 +126,24 @@ the scan to occur immediately, run:
 guacone certifier osv
 ```
 
-Successful output will show the following:
+Successful output will show something similar to the following:
 
 ```bash
 +-------------+-----------+---------------------------------------+
 | NODE TYPE   | NODE ID   | ADDITIONAL INFORMATION                |
 +-------------+-----------+---------------------------------------+
-| certifyVuln | 138477    | vulnerability ID: ghsa-599f-7c49-w659 |
-| certifyVuln | 138449    | vulnerability ID: ghsa-7rjr-3q55-vv33 |
-| certifyVuln | 138451    | vulnerability ID: ghsa-8489-44mv-ggj8 |
-| certifyVuln | 138453    | vulnerability ID: ghsa-fxph-q3j8-mv87 |
-| certifyVuln | 138455    | vulnerability ID: ghsa-jfh8-c2jp-5v3q |
-| certifyVuln | 138457    | vulnerability ID: ghsa-p6xc-xr62-6r2g |
-| certifyVuln | 138459    | vulnerability ID: ghsa-vwqq-5vrc-xw9h |
+| certifyVuln | 148776    | vulnerability ID: ghsa-599f-7c49-w659 |
+| certifyVuln | 147968    | vulnerability ID: dsa-5343-1          |
+| certifyVuln | 147969    | vulnerability ID: dsa-5417-1          |
+| certifyVuln | 148467    | vulnerability ID: dsa-5122-1          |
+| certifyVuln | 148766    | vulnerability ID: ghsa-7rjr-3q55-vv33 |
+| certifyVuln | 148767    | vulnerability ID: ghsa-8489-44mv-ggj8 |
+| certifyVuln | 148768    | vulnerability ID: ghsa-fxph-q3j8-mv87 |
+| certifyVuln | 148769    | vulnerability ID: ghsa-jfh8-c2jp-5v3q |
+| certifyVuln | 148770    | vulnerability ID: ghsa-p6xc-xr62-6r2g |
+| certifyVuln | 148771    | vulnerability ID: ghsa-vwqq-5vrc-xw9h |
 +-------------+-----------+---------------------------------------+
-Visualizer url: http://localhost:3000/?path=15337,15336,15335,2,15432,15431,15430,15340,2509,138477,138478,15574,15573,15572,15515,138449,138450,138451,138452,138453,138454,138455,138456,138457,138458,138459,138460
+Visualizer url: http://localhost:3000/?path=20041,20040,20039,15,26177,22175,22174,20781,2455,147738,148776,26195,21827,2158,1302,1301,147731,147968,147815,147969,26202,74224,1411,147764,148467,26206,18025,18024,18023,147803,148766,147798,148767,147799,148768,147733,148769,147774,148770,147765,148771,75955,81946,87980,94043,99976,105990,1523,2110,2230,2360,2512,2744,3474,4167
 ```
 
 From the output, you can see that there are vulnerabilities associated with the
@@ -185,15 +188,15 @@ the scan to occur immediately, run:
 guacone certifier osv
 ```
 
-Successful output will show the following:
+Successful output will show something similar to the following:
 
 ```bash
 +-----------+-----------+---------------------------------------+
 | NODE TYPE | NODE ID   | ADDITIONAL INFORMATION                |
 +-----------+-----------+---------------------------------------+
-| osv       | 138449    | vulnerability ID: ghsa-7rjr-3q55-vv33 |
+| osv       | 144250    | vulnerability ID: ghsa-7rjr-3q55-vv33 |
 +-----------+-----------+---------------------------------------+
-Visualizer url: http://localhost:3000/?path=138449,138450,15573,15572,15515,2509,15574,15337,15336,15335,2
+Visualizer url: http://localhost:3000/?path=147803,148766,18025,18024,18023,2455,26206,20041,20040,20039,15
 ```
 
 Based on the output we see that there is a path to the vulnerability and we can
