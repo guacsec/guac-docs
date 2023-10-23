@@ -27,7 +27,8 @@ well as a means to explore the supply chain and prototype policies.
 
 - [git](https://git-scm.com/downloads)
 - [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
-- [node](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) version >= 18
+- [node](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+  version >= 18
 - [GUAC services up and running]({{
   site.baseurl }}{%link setup.md %})
 
