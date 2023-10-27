@@ -33,8 +33,8 @@ well as a means to explore the supply chain and prototype policies.
 
 ## Step 1. Getting started
 
-Get the
-[source code for guac-visualizer here](https://github.com/guacsec/guac-visualizer/releases/tag/latest).
+Get the guac-visualizer
+[source code here](https://github.com/guacsec/guac-visualizer/releases/latest).
 
 `cd` into it:
 
