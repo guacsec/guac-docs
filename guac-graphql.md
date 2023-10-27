@@ -415,7 +415,7 @@ Now we will use a query on `IsDependency` to find all the packages that the
       package: { type: "oci", namespace: "docker.io/library", name: "consul" }
     }
   ) {
-    dependentPackage {
+    dependencyPackage {
       type
       namespaces {
         namespace
@@ -436,7 +436,7 @@ cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o IsDependen
 {
   "IsDependency": [
     {
-      "dependentPackage": {
+      "dependencyPackage": {
         "type": "golang",
         "namespaces": [
           {
@@ -451,7 +451,7 @@ cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o IsDependen
       }
     },
     {
-      "dependentPackage": {
+      "dependencyPackage": {
         "type": "alpine",
         "namespaces": [
           {
@@ -466,7 +466,7 @@ cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o IsDependen
       }
     },
     {
-      "dependentPackage": {
+      "dependencyPackage": {
         "type": "golang",
         "namespaces": [
           {
@@ -491,7 +491,7 @@ the full details of that link as so:
   IsDependency(
     isDependencySpec: {
       package: { type: "oci", namespace: "docker.io/library", name: "consul" }
-      dependentPackage: {
+      dependencyPackage: {
         type: "golang"
         namespace: "github.com/sirupsen"
         name: "logrus"
@@ -543,7 +543,7 @@ cat demo/graphql/queries.gql | gql-cli http://localhost:8080/query -o IsDependen
           }
         ]
       },
-      "dependentPackage": {
+      "dependencyPackage": {
         "id": "11",
         "type": "golang",
         "namespaces": [
@@ -834,7 +834,7 @@ Now find the path (your `id`s may be different):
 A path is found. The program prints the ids of the path, then the nodes. The
 `python` "PackageName" is linked to the "PackageVersion", which is a specific
 tag of the image. An `IsDependency` link has the `python` "PackageVersion" as
-the "subject" of the link, and the "object" `dependentPackage` is the
+the "subject" of the link, and the "object" `dependencyPackage` is the
 "PackageName" node of the `libsqlite3-dev` package. The last node in the path is
 the "PackageName" node of `libsqlite3-dev`.
 

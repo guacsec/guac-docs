@@ -197,7 +197,7 @@ The query:
 
 ```bash
 IsDependency(
-  isDependencySpec: {dependentPackage: {namespace: "github.com/prometheus", name: "client_golang"}}
+  isDependencySpec: {dependencyPackage: {namespace: "github.com/prometheus", name: "client_golang"}}
 )
 ```
 
@@ -237,7 +237,7 @@ This will output the following:
             }
           ]
         },
-        "dependentPackage": {
+        "dependencyPackage": {
           "id": "6",
           "type": "golang",
           "namespaces": [
@@ -285,7 +285,7 @@ This will output the following:
             }
           ]
         },
-        "dependentPackage": {
+        "dependencyPackage": {
           "id": "6",
           "type": "golang",
           "namespaces": [
@@ -333,7 +333,7 @@ This will output the following:
             }
           ]
         },
-        "dependentPackage": {
+        "dependencyPackage": {
           "id": "6",
           "type": "golang",
           "namespaces": [

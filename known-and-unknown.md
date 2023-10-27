@@ -432,7 +432,7 @@ and a artifact (algorithm:digest).
                }
              ]
            },
-           "dependentPackage": {
+           "dependencyPackage": {
              "id": "6",
              "type": "golang",
              "namespaces": [
