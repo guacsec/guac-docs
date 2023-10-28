@@ -523,7 +523,7 @@ type IsDependency {
   "Package that has the dependency"
   package: Package!
   "Package for the dependency; MUST BE PackageName, not PackageVersion"
-  dependentPackage: Package!
+  dependencyPackage: Package!
   "Version range for the dependency link"
   versionRange: String!
   "Type of dependency"
