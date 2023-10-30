@@ -88,7 +88,7 @@ A video format of these setup instructions is available here:
 1. In another terminal, from the `guac-compose` directory, run:
 
    ```bash
-   docker compose -f docker-compose.yml -f container_files/mem.yaml up --force-recreate
+   docker compose up --force-recreate
    ```
 
 1. Verify that GUAC is running:
