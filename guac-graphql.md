@@ -32,6 +32,18 @@ data.
 - [pip](https://pip.pypa.io/en/stable/cli/pip_install/) (optional)
 - [jq](https://stedolan.github.io/jq/download/) (optional)
 
+### Requirements Using Nix
+
+If you are using the nix package manager, you may enter a nix shell with all the
+prerequisites installed using the following command after cloning the GUAC
+repository and changing into it:
+
+```bash
+nix-shell shell.nix
+```
+
+and continue from Step 2 below.
+
 ## Step 1: Clone GUAC
 
 1. Clone GUAC to a local directory:
@@ -186,7 +198,7 @@ These are the top level Types of all the packages we ingested from the
 
 ### Query Namespaces
 
-Going one level deeper, let us query for all the Namespaces under the "oci"
+Going one level deeper, let us query for all the Namespaces under the "deb"
 Type. The query looks like this:
 
 ```graphql
