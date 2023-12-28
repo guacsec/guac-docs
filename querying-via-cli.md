@@ -104,10 +104,35 @@ Now that our GUAC instance is up and running with up-to-date information on the
 vulnerable image that we ingest, we will look at how we can utilize this data
 effectively.
 
-### Query pURL to determine vulnerabilities
+### Query to determine vulnerabilities
 
 In this first example, we will query if our image has any vulnerabilities
-(either directly or indirectly) by running:
+(either directly or indirectly).
+
+This can be done in two ways.
+
+1. Using the URI from the SBOM
+
+   - For CycloneDX this would be the `serialNumber`. For more details refer to
+     the CycloneDX documentation found here:
+     https://cyclonedx.org/docs/1.5/json/#serialNumber
+   - For SPDX this would be the `documentNamespace`. For more details refer to
+     the SPDX documentation found here:
+     https://spdx.github.io/spdx-spec/v2.3/document-creation-information/#65-spdx-document-namespace-field
+
+2. Using the `pURL` of the package
+
+In the `guac-data-main/docs/spdx/spdx_vuln.json` SBOM example, the URI would be
+
+`"documentNamespace": "https://anchore.com/syft/image/ghcr.io/guacsec/vul-image-latest-6fd9de7b-9bec-4ae7-99d9-4b5e5ef6b869"`
+
+This would result in the query being:
+
+```bash
+guacone query vuln "https://anchore.com/syft/image/ghcr.io/guacsec/vul-image-latest-6fd9de7b-9bec-4ae7-99d9-4b5e5ef6b869"
+```
+
+If instead the `pURL` is used, the query would be the following:
 
 ```bash
 guacone query vuln "pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest"
@@ -158,7 +183,7 @@ From the visualizer, we can determine that the image we are working with is
 vulnerable to both log4j and text4shell vulnerabilities. These packages need to
 be updated to remove these critical vulnerabilities.
 
-### Query pURL and Vulnerability ID to determine if path exists
+### Query pURL or SBOM URI and Vulnerability ID to determine if path exists
 
 In this example, we will query our image to determine if it is affected by a
 particular vulnerability. If it is, return a path to said vulnerability such
@@ -168,7 +193,13 @@ that we can remediate the culprit.
 return a certain number, you can use the `--num-path` flag to specify the
 number.
 
-Run:
+If using the SBOM URI:
+
+```bash
+guacone query vuln "https://anchore.com/syft/image/ghcr.io/guacsec/vul-image-latest-6fd9de7b-9bec-4ae7-99d9-4b5e5ef6b869" --vuln-id "ghsa-7rjr-3q55-vv33"
+```
+
+If using the `pURL`:
 
 ```bash
 guacone query vuln "pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest" --vuln-id "ghsa-7rjr-3q55-vv33"
@@ -191,12 +222,12 @@ guacone certifier osv
 Successful output will show something similar to the following:
 
 ```bash
-+-----------+-----------+---------------------------------------+
-| NODE TYPE | NODE ID   | ADDITIONAL INFORMATION                |
-+-----------+-----------+---------------------------------------+
-| osv       | 144250    | vulnerability ID: ghsa-7rjr-3q55-vv33 |
-+-----------+-----------+---------------------------------------+
-Visualizer url: http://localhost:3000/?path=147803,148766,18025,18024,18023,2455,26206,20041,20040,20039,15
++-------------+-----------+---------------------------------------+
+| NODE TYPE   | NODE ID   | ADDITIONAL INFORMATION                |
++-------------+-----------+---------------------------------------+
+| certifyVuln | 137535    | vulnerability ID: ghsa-7rjr-3q55-vv33 |
++-------------+-----------+---------------------------------------+
+Visualizer url: http://localhost:3000/?path=134994,136775,137535,20677,20676,20675,2417,26288,19815,19814,19813,27
 ```
 
 Based on the output we see that there is a path to the vulnerability and we can
