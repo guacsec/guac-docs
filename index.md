@@ -21,11 +21,11 @@ audit, policy, risk management, and even developer assistance.
 
 ### Visualize your supply chain
 
-![Guac Diagram](assets/images/supplychain_dependencies_graph.png)
+![GUAC Visualizer](assets/images/supplychain_dependencies_graph.png)
 
 The [GUAC Visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) explores
 the various nodes and relationships of GUAC. A particular node can be searched
-for, or you can click through each node to discover its realtionships. Most cli
+for, or you can click through each node to discover its relationships. Most CLI
 commands below also provide a visualizer link to load the results of the command
 into the visualizer.
 
@@ -88,13 +88,13 @@ In the [Expanding your view of the software supply chain]({{ site.baseurl
 graph-based nodes and relationships. Explore additional information gathered, and
 see how those are connected to the package nodes in the graph schema.
 
-- Source location from Deps.dev
-- OpenSSF Scorecard results
-- Vulnerability data from OSV.dev
+- Source location from [Deps.dev](https://deps.dev/)
+- [OpenSSF Scorecard](https://securityscorecards.dev/) results
+- Vulnerability data from [OSV.dev](https://osv.dev/)
 
 ## How GUAC works
 
-![Guac Diagram](assets/images/howguacworks.png)
+![GUAC Diagram](assets/images/howguacworks.png)
 
 ## Get more information on GUAC
 
