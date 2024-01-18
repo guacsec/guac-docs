@@ -160,7 +160,6 @@ Successful output will show something similar to the following:
 | certifyVuln | 148776    | vulnerability ID: ghsa-599f-7c49-w659 |
 | certifyVuln | 147968    | vulnerability ID: dsa-5343-1          |
 | certifyVuln | 147969    | vulnerability ID: dsa-5417-1          |
-| certifyVuln | 148467    | vulnerability ID: dsa-5122-1          |
 | certifyVuln | 148766    | vulnerability ID: ghsa-7rjr-3q55-vv33 |
 | certifyVuln | 148767    | vulnerability ID: ghsa-8489-44mv-ggj8 |
 | certifyVuln | 148768    | vulnerability ID: ghsa-fxph-q3j8-mv87 |
