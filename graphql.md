@@ -657,6 +657,7 @@ versions of GUAC. Treat this interface as experimental.
 First, we define a union of all nodes in the GUAC ontology and an enum for all
 the possible edges between them.
 
+<!-- prettier-ignore -->
 ```graphql
 union Node =
     Package
