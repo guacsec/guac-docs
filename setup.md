@@ -15,12 +15,9 @@ If you’d prefer, you can set up GUAC with Kubernetes with the experimental
 Note that these helm charts are still experimental and are hosted in a
 third-party repo and may not be synchronized with the GUAC repo.
 
-GUAC consists of multiple components. This tutorial will walk you through how to
-deploy a demo-level GUAC, using Docker Compose, so that you get enough
-components to complete all the [GUAC demos]({{ site.baseurl }}{% link
-guac-use-cases.md %}). If you’re curious about the various GUAC components and what
-they do, see [How GUAC components work together]({{ site.baseurl }}{%link
-guac-components.md %}).
+This tutorial will walk you through how to deploy a demo-level GUAC, using
+Docker Compose, so that you get just enough components to complete all the [GUAC
+demos]({{ site.baseurl }}{% link guac-use-cases.md %}).
 
 ## Setup video
 
@@ -164,4 +161,6 @@ discovery, analysis, and evaluation. Keep in mind that the in-memory backend is
 not persistent. Explore the types of collectors available under the
 `guacone collect` command and see what will work for your build, ingestion, and
 SBOM workflow. These collectors can be run as another service that watches a
-location for new documents to ingest.
+location for new documents to ingest. If you’re curious about the various GUAC
+components and what they do, see [How GUAC components work together]({{
+site.baseurl }}{%link guac-components.md %}).
