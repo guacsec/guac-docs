@@ -1,12 +1,12 @@
 ---
 layout: page
-title: Set up GUAC with Docker Compose
+title: Start a demo GUAC with Docker Compose
 permalink: /setup/
 parent: Getting started with GUAC
 nav_order: 1
 ---
 
-# Set up GUAC with Docker Compose
+# Start a demo GUAC with Docker Compose
 
 {: .note }
 
@@ -15,14 +15,9 @@ If you’d prefer, you can set up GUAC with Kubernetes with the experimental
 Note that these helm charts are still experimental and are hosted in a
 third-party repo and may not be synchronized with the GUAC repo.
 
-GUAC consists of multiple components. You may have seen a subset of these used
-in various [GUAC demos]({{ site.baseurl }}{% link guac-use-cases.md %}). To get
-the most value out of GUAC, you’ll need to set up all components. This tutorial
-will walk you through how to deploy GUAC, using Docker Compose, so that you get
-the full set of components.
-
-If you’re curious about the various GUAC components and what they do, see [How
-GUAC components work together]({{ site.baseurl }}{%link guac-components.md %}).
+This tutorial will walk you through how to deploy a demo-level GUAC, using
+Docker Compose, so that you get just enough components to complete all the [GUAC
+demos]({{ site.baseurl }}{% link guac-use-cases.md %}).
 
 ## Setup video
 
@@ -68,27 +63,19 @@ A video format of these setup instructions is available here:
    to your shell's path.
 
 1. Download the
-   [compose files](https://github.com/guacsec/guac/releases/latest/download/guac-compose.tar.gz)
+   [compose yaml](https://github.com/guacsec/guac/releases/latest/download/guac-demo-compose.yaml)
    from the
    [latest GUAC release](https://github.com/guacsec/guac/releases/latest).
-
-1. Untar the compose files and change to that directory. (the rest of the steps
-   need to be done from this directory):
-
-   ```bash
-   tar zxvf guac-compose.tar.gz
-   cd guac-compose
-   ```
 
 1. Optional: If you want test data to use,
    [download and unzip GUAC’s test data.](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
 
 ## Step 2: Start the GUAC server
 
-1. In another terminal, from the `guac-compose` directory, run:
+1. From the directory you downloaded the `guac-demo-compose.yaml`, run:
 
    ```bash
-   docker compose -f docker-compose.yml -f container_files/mem.yaml up --force-recreate
+   docker compose -f guac-demo-compose.yaml up --force-recreate
    ```
 
 1. Verify that GUAC is running:
@@ -110,10 +97,10 @@ A video format of these setup instructions is available here:
 
 ### GUAC Ports
 
-| Port Number | GUAC Component | Note                                                                                                                                                                                                            |
-| ----------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 8080        | GraphQL server | To see the GraphQL playground, visit [http://localhost:8080](http://localhost:8080)                                                                                                                             |
-| 4222        | Nats           | This is where any collectors that you run will need to connect to push any docs they find. The GUAC collector command defaults to `nats://127.0.0.1:4222` for the Nats address, so this will work automatically |
+| Port Number | GUAC Component       | Note                                                                                                                                                           |
+| ----------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 8080        | GraphQL server       | To see the GraphQL playground, visit [http://localhost:8080](http://localhost:8080)                                                                            |
+| 2782        | Collector Subscriber | This service is notified whenever you run a collector, such as `guacone collect files` below. Then subscribers can collect more data on any packages ingested. |
 
 ## Step 3: Start Ingesting Data
 
@@ -157,16 +144,10 @@ You should see the types of all the packages ingested
 Congratulations, you are now running a full GUAC deployment! Taking a look at
 the `docker-compose.yaml` we can see what is actually running:
 
-- **Nats**: Used for communication between the GUAC components. It is available
-  on port `4222`.
 - **Collector-Subscriber**: Helps communicate to the collectors when additional
   information is needed.
 - **GraphQL Server**: Serves GUAC GraphQL queries and stores the data. As the
   in-memory backend is used, no separate backend is needed behind the server.
-- **Ingestor**: Listens for things to ingest through Nats, then pushes to the
-  GraphQL Server. The ingestor also runs the assembler and parser internally.
-- **Image Collector**: Can pull OCI image metadata (SBOMs and attestations) from
-  registries for further inspection.
 - **Deps.dev Collector**: Gathers further information from
   [Deps.dev](https://deps.dev/) for supported packages.
 - **OSV Certifier**: Gathers OSV vulnerability information from
@@ -174,9 +155,12 @@ the `docker-compose.yaml` we can see what is actually running:
 
 ## Next steps
 
-The compose configuration is suitable to leave running in an environment that is
-accessible to your environment for further GUAC ingestion, discovery, analysis,
-and evaluation. Keep in mind that the in-memory backend is not persistent.
-Explore the types of collectors available in the `collector` binary and see what
-will work for your build, ingestion, and SBOM workflow. These collectors can be
-run as another service that watches a location for new documents to ingest.
+This compose configuration is suitable to leave running in an environment that
+is accessible to your environment for the GUAC demos and further GUAC ingestion,
+discovery, analysis, and evaluation. Keep in mind that the in-memory backend is
+not persistent. Explore the types of collectors available under the
+`guacone collect` command and see what will work for your build, ingestion, and
+SBOM workflow. These collectors can be run as another service that watches a
+location for new documents to ingest. If you’re curious about the various GUAC
+components and what they do, see [How GUAC components work together]({{
+site.baseurl }}{%link guac-components.md %}).
