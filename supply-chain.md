@@ -4,7 +4,7 @@ title: Reacting to a supply chain incident
 permalink: /supply-chain/
 parent: GUAC demos
 grand_parent: Getting started with GUAC
-nav_order: 4
+nav_order: 5
 ---
 
 # Reacting to a supply chain incident
