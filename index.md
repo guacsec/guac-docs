@@ -94,7 +94,7 @@ see how those are connected to the package nodes in the graph schema.
 
 ## How GUAC works
 
-![GUAC Diagram](assets/images/howguacworks.png)
+![GUAC Diagram](assets/images/guac_api.png)
 
 ## Get more information on GUAC
 
