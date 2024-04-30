@@ -3,7 +3,7 @@ layout: page
 title: Verify and validate via cosign and slsa-verifier
 permalink: /verification/
 parent: Getting started with GUAC
-nav_order: 3
+nav_order: 2
 ---
 
 # Verify and validate via cosign and slsa-verifier
