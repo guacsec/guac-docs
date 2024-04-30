@@ -3,7 +3,7 @@ layout: page
 title: Set up the GUAC Visualizer
 permalink: /guac-visualizer/
 parent: Getting started with GUAC
-nav_order: 2
+nav_order: 5
 ---
 
 # Set up the GUAC Visualizer
