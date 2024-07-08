@@ -88,7 +88,9 @@ A video format of these setup instructions is available here:
 
    ```bash
    NAME                STATUS              CONFIG FILES
-   guac                running(7)          /Users/lumb/go/src/github.com/guacsec/guac/docker-compose.yml
+   NAME                STATUS              CONFIG FILES
+   guac                running(2)          /Users/lumb/go/src/github.com/guacsec/guac/docker-compose.yml,/Users/lumb/go/src/github.com/guacsec/guac/guac/container_files/mem.yaml
+   guac-demo           running(5)          /Users/lumb/go/src/github.com/guacsec/guac-demo/guac-demo-compose.yaml
    ```
 
    **If you don’t see the above,** run `docker compose down` and try starting up
