@@ -23,18 +23,18 @@ audit, policy, risk management, and even developer assistance.
 
 ![GUAC Visualizer](assets/images/supplychain_dependencies_graph.png)
 
-The [GUAC Visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) explores
-the various nodes and relationships of GUAC. A particular node can be searched
-for, or you can click through each node to discover its relationships. Most CLI
-commands below also provide a visualizer link to load the results of the command
-into the visualizer.
+The [GUAC Visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) explores the
+various nodes and relationships of GUAC. A particular node can be searched for, or
+you can click through each node to discover its relationships. Most CLI commands
+below also provide a visualizer link to load the results of the command into the
+visualizer.
 
 ### Search for vulnerabilities via transitive dependencies in the GUAC graph
 
 The [Query Vulnerability via CLI Demo]({{ site.baseurl }}{%link
-querying-via-cli.md %}) covers the `guacone query vuln` command. Given a Package-URL,
-this command searches the GUAC graph for any paths leading to any known vulnerabilities
-and produces a report. Example:
+querying-via-cli.md %}) covers the `guacone query vuln` command. Given a
+Package-URL, this command searches the GUAC graph for any paths leading to any
+known vulnerabilities and produces a report. Example:
 
 ```bash
 +-------------+-----------+---------------------------------------+

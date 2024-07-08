@@ -33,8 +33,7 @@ resolve a security incident.
   and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
   ingested.
 
-- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and
-  running.
+- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and running.
 
 ## Step 1: Ingest GUAC Data (if needed)
 

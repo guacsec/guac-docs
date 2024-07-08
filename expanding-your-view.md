@@ -660,9 +660,9 @@ This information came from the OSV certifier service that is constantly running
 within GUAC. From this, we can see that two versions of
 `github.com/prometheus/client_golang` contain the same `ghsa-cg3q-j54f-5p7p`. In
 the [vulnerability CLI demo]({{ site.baseurl }}{%link
-querying-via-cli.md %}), we can use this information to determine if there is a path
-between this and the version of Vault we are using. Here is a quick look at what
-the visualization would look like for that:
+querying-via-cli.md %}), we can use this information to determine if there is a
+path between this and the version of Vault we are using. Here is a quick look at
+what the visualization would look like for that:
 
 ![Visualization of data](assets/images/expandviewvisualization.png)
 
