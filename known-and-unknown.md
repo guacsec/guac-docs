@@ -31,8 +31,8 @@ picture of your software supply chain. With GUAC you can easily determine your:
 In the ["Expanding your view of the software supply chain" demo]({{
 site.baseurl }}{%link expanding-your-view.md %}), we went through the process of
 ingesting an SBOM and letting GUAC expand our horizons on what we know about our
-environment autonomously. In this demo, we'll take that information and use it to
-determine what we know and don't know about the artifacts.
+environment autonomously. In this demo, we'll take that information and use it
+to determine what we know and don't know about the artifacts.
 
 ## Requirements
 
@@ -40,8 +40,8 @@ determine what we know and don't know about the artifacts.
   site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
   and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
   extracted to `guac-data-main`.
-- Completion of the [Expanding your view of the software supply chain
-  demo]({{ site.baseurl }}{%link expanding-your-view.md %})
+- Completion of the [Expanding your view of the software supply
+  chain demo]({{ site.baseurl }}{%link expanding-your-view.md %})
 
 ## Ingest GUAC Data (if needed)
 
@@ -355,8 +355,8 @@ and a artifact (algorithm:digest).
 
    **NOTE**: This is just the vulnerability associated with this specific
    package (not taking into account dependencies). For a full in-depth
-   vulnerability search please follow the [Query Vulnerability
-   demo]({{ site.baseurl }}{%link querying-via-cli.md %}).
+   vulnerability search please follow the [Query
+   Vulnerability demo]({{ site.baseurl }}{%link querying-via-cli.md %}).
 
    We also see that in this case, we did not get a `hasSBOM` associated with it.
    Meaning that we do not have any SBOM information related to this package. We

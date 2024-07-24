@@ -27,8 +27,7 @@ vulnerability.
   and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
   extracted to `guac-data-main`.
 
-- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and
-  running.
+- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and running.
 
 ## Step 1. Ingest a vulnerability SPDX SBOM
 

@@ -16,8 +16,7 @@ Note that these helm charts are still experimental and are hosted in a
 third-party repo and may not be synchronized with the GUAC repo.
 
 This tutorial will walk you through how to deploy a demo-level GUAC, using
-Docker Compose, so that you get just enough components to complete all the [GUAC
-demos]({{ site.baseurl }}{% link guac-use-cases.md %}).
+Docker Compose, so that you get just enough components to complete all the [GUAC demos]({{ site.baseurl }}{% link guac-use-cases.md %}).
 
 ## Setup video
 
@@ -42,8 +41,8 @@ A video format of these setup instructions is available here:
 
 ## Optional - Verify images and binaries
 
-- Follow [Verification of the GUAC images and
-  binaries]({{ site.baseurl }}{%link verification.md %})
+- Follow [Verification of the GUAC images
+  and binaries]({{ site.baseurl }}{%link verification.md %})
 
 ## Step 1: Download GUAC
 
@@ -88,7 +87,8 @@ A video format of these setup instructions is available here:
 
    ```bash
    NAME                STATUS              CONFIG FILES
-   guac                running(7)          /Users/lumb/go/src/github.com/guacsec/guac/docker-compose.yml
+   guac                running(2)          /Users/lumb/go/src/github.com/guacsec/guac/docker-compose.yml,/Users/lumb/go/src/github.com/guacsec/guac/guac/container_files/mem.yaml
+   guac-demo           running(5)          /Users/lumb/go/src/github.com/guacsec/guac-demo/guac-demo-compose.yaml
    ```
 
    **If you don’t see the above,** run `docker compose down` and try starting up
