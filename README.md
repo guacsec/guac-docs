@@ -17,7 +17,11 @@ formatting with `npx --yes prettier --write --prose-wrap always *.md`
 
 ## Contributing
 
-Contributions are welcome.
+Text and visual content is under the
+[Creative Commons Attribution (CC BY) 4.0 International license](https://creativecommons.org/licenses/by/4.0/).
+Code is under the [MIT license](https://opensource.org/license/mit), except
+where otherwise noted. Contributions are welcome under the corresponding
+license.
 
 This project follows the
 [OpenSSF Code of Conduct](https://openssf.org/community/code-of-conduct). See
