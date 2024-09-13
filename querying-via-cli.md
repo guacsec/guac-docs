@@ -24,12 +24,11 @@ vulnerability.
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
   site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
-  and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
-  extracted to `guac-data-main`.
-
+  and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %}) extracted to
+  `guac-data-main`.
 - The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and running.
 
-## Step 1. Ingest a vulnerability SPDX SBOM
+## Ingest a vulnerability SPDX SBOM
 
 For demo purposes, let's ingest a known bad SPDX SBOM that contains several
 vulnerabilities. To do this, we will use the `guacone` command, which is an
@@ -53,7 +52,7 @@ Once ingested you will see the following message:
 {"level":"info","ts":1681821120.1626382,"caller":"cmd/files.go:201","msg":"completed ingesting 1 documents of 1"}
 ```
 
-## Step 2: Draw further insight from OSV.dev
+## Draw further insight from OSV.dev
 
 One of the benefits of GUAC is that it’s not a static database; it is constantly
 evolving and trying to find more information on the artifacts ingested. To
@@ -97,7 +96,7 @@ GUAC. After a set period of time (set by the user), it will re-query the
 information to ensure that it's always up-to-date. For demo purposes, we ran it
 just once.
 
-## Step 3: Run the Query Vulnerability CLI
+## Run the Query Vulnerability CLI
 
 Now that our GUAC instance is up and running with up-to-date information on the
 vulnerable image that we ingest, we will look at how we can utilize this data
@@ -244,10 +243,5 @@ specific pURL we are interested in contains a direct or in-direct vulnerability.
 We also learned that this is just one of many utilizations of GUAC’s GraphQL API
 to create more tools such as these quickly and easily!
 
-## Cleanup
-
-To delete the all the GUAC components run:
-
-```bash
-docker compose down
-```
+Now that you've indentified a vulnerability, how do you react to it? The next
+step in the demo covers [reacting to a supply chain incident]({{ site.baseurl}}{%link supply-chain.md %}).
