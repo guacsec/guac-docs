@@ -20,7 +20,7 @@ nav_order: 1
 </details>
 
 The full GUAC component deployment is a set of asynchronous services that
-combine to form a robust and scaleable pipeline. In some of our [demos]({{
+combine to form a robust and scalable pipeline. In some of our [demos]({{
 site.baseurl }}{%link guac-use-cases.md %}), you may have seen these components
 work in concert. Read on to learn more of what goes on behind the hood!
 
@@ -50,11 +50,11 @@ will not affect the GraphQL interface that the server provides.
 Collectors gather data from various sources. These sources can be internal to
 the organization, public (like open source), or third-party vendors. There are
 different collectors for the different types of locations that GUAC can watch
-(files, storage buckets, git repositories, etc.).
+(files, storage buckets, Git repositories, etc.).
 
 Collectors can be configured to use a CollectSub service to know which data
-sources are of interest. For example, a git collector may subscribe to the
-CollectSub service to know which git repositories it should get its data from.
+sources are of interest. For example, a Git collector may subscribe to the
+CollectSub service to know which Git repositories it should get its data from.
 This is a way to get an idea of what data sources the instance of GUAC is
 looking at, at a glance.
 
@@ -83,7 +83,7 @@ model (GUAC ontology). In the process, it also finds identifiers of interest
 that it passes to the CollectSub service to request additional information for.
 
 Today, GUAC can understand multiple data formats like SPDX, CycloneDX, and SLSA.
-The ingestor listens for documents to parse via [Nats](https://nats.io/), and
+The ingestor listens for documents to parse via [NATS](https://nats.io/), and
 talks to the assembler via a GraphQL API.
 
 #### Assembler
@@ -97,7 +97,7 @@ physically part of the GraphQL server, but logically part of ingestion.
 
 #### CollectSub
 
-The collect subcriber service provides a way to ask for a datasource to be used
+The collect subscriber service provides a way to ask for a datasource to be used
 or indicate that more data about a software identifier is desired. For example,
 in parsing an SBOM, if it sees the use of a package with a pURL, the ingestor
 creates an entry to the CollectSub service to indicate more information about
