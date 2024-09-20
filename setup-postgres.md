@@ -177,7 +177,7 @@ the `docker-compose.yaml` we can see what is actually running:
 - **OCI Collector**: Collects additional metadata from OCI registries about any
   container references found in documents.
 
-- **GUAC REST Sercer**: Serves simplified query endpoints.
+- **GUAC REST Server**: Serves simplified query endpoints.
 
 ## Next steps
 
