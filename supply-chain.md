@@ -34,32 +34,19 @@ of the size of the problem and helps when developing prototype utilities and que
 with GUAC (very much like the [vulnerability CLI]({{
 site.baseurl }}{%link querying-via-cli.md %})).
 
+For this demo, we will simulate ingesting an organization's software catalog.
+The [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %}) you ingested into
+GUAC at the beginning includes a collection of SBOMs and SLSA attestations.
+
 ## Requirements
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
   site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
-  and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
-  extracted to `guac-data-main`.
-
+  and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %}) extracted to
+  `guac-data-main`.
 - The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and running.
 
-## Step 1: Set up your organization's software catalog
-
-For this demo, we will simulate ingesting an organization's software catalog. To
-do this, we will ingest a collection of SBOMs and SLSA attestations into GUAC:
-
-```bash
-guacone collect files guac-data-main/docs/
-```
-
-Once ingested we will see the following message (the number of documents may
-vary):
-
-```bash
-{"level":"info","ts":1681864775.1161852,"caller":"cmd/files.go:201","msg":"completed ingesting 67 documents of 67"}
-```
-
-## Step 2: Mark packages as bad when a security incident occurs
+## Mark packages as bad when a security incident occurs
 
 A new security incident has occurred and various communities have pointed out
 that a particular package is affected. In this scenario, the debian package
@@ -82,7 +69,7 @@ If we successfully added "CertifyBad", the output will show:
 {"level":"info","ts":1683130083.9894989,"caller":"helpers/assembler.go:69","msg":"assembling CertifyBad: 1"}
 ```
 
-## Step 3: Explore bad packages
+## Explore bad packages
 
 1. To explore all the "certifyBad" items (packages, sources, or artifacts), run
    the "query Bad" CLI:
@@ -133,7 +120,7 @@ If we successfully added "CertifyBad", the output will show:
    updated, so that we are not scrambling to first scan and determine where
    `tzdata` might be used.
 
-## Exploring a known bad source repo
+### Exploring a known bad source repo
 
 In the above example, we looked at a specific package. For this demo, we'll use
 a git repo that we know is producing a bunch of bad packages. We want to mark
@@ -199,13 +186,5 @@ packages, specifically:
 | pkg:golang/cloud.google.com/go/longrunning      |
 
 With this data, we can investigate further and determine which packages are
-dependent on these compromised packages and remediate them quickly.
-
-## Building more advanced patch planning capability
-
-One of the potential next areas of work for the project is to create a CLI to do
-patch planning for the organization. Patch planning will allow an organization
-to determine which packages to update first.
-
-In order to build more robust patch planning, you can leverage the [GraphQL
-Query API]({{ site.baseurl }}{%link guac-graphql.md %}) that GUAC provides.
+dependent on these compromised packages and remediate them quickly. The next
+step in the demo covers [creating a patch plan]({{ site.baseurl}}{%link patch-cli.md %})

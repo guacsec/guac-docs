@@ -38,25 +38,10 @@ to determine what we know and don't know about the artifacts.
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
   site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
-  and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
-  extracted to `guac-data-main`.
+  and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %}) extracted to
+  `guac-data-main`.
 - Completion of the [Expanding your view of the software supply
   chain demo]({{ site.baseurl }}{%link expanding-your-view.md %})
-
-## Ingest GUAC Data (if needed)
-
-If you have not already done so, ingest the GUAC data to be used by the demo.
-
-```bash
-guacone collect files guac-data-main/docs/
-```
-
-Once ingested we will see the following message (the number of documents may
-vary):
-
-```bash
-{"level":"info","ts":1681864775.1161852,"caller":"cmd/files.go:201","msg":"completed ingesting 67 documents of 67"}
-```
 
 ## Understanding the data
 
@@ -525,3 +510,7 @@ Based on the information gathered above:
   immediately. Knowing the unknown is the first key step in securing the supply
   chain. If the security teams and developers have no knowledge of these, how
   can we keep shifting left effectively?
+
+Now that you know something about your software supply chain, let's look at what
+you probably want to know about right away:
+[vulnerabilties]({{ site.baseurl}}{% link querying-via-cli.md %}).

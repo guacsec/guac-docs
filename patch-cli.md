@@ -30,27 +30,11 @@ resolve a security incident.
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
   site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
-  and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
-  ingested.
-
+  and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %}) extracted to
+  `guac-data-main`.
 - The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and running.
 
-## Step 1: Ingest GUAC Data (if needed)
-
-If you have not already done so, ingest the GUAC data to be used by the demo.
-
-```bash
-guacone collect files guac-data-main/docs/
-```
-
-Once ingested we will see the following message (the number of documents may
-vary):
-
-```bash
-{"level":"info","ts":1681864775.1161852,"caller":"cmd/files.go:201","msg":"completed ingesting 67 documents of 67"}
-```
-
-## Step 2: Run the Query Patch CLI
+## Run the Query Patch CLI
 
 **Packge Name Node Example**
 
@@ -172,14 +156,6 @@ Notice that the output still contains the dependent package of the package name
 attached to the version we inputted. This is because if a specific package
 version is vulnerable, it implies that the name one level above it is affected
 as well.
-
-## Cleanup
-
-To delete the all the GUAC components run:
-
-```bash
-docker compose down
-```
 
 ## Conclusion
 
