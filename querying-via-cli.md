@@ -127,13 +127,13 @@ In the `guac-data-main/docs/spdx/spdx_vuln.json` SBOM example, the URI would be
 This would result in the query being:
 
 ```bash
-guacone query vuln "https://anchore.com/syft/image/ghcr.io/guacsec/vul-image-latest-6fd9de7b-9bec-4ae7-99d9-4b5e5ef6b869"
+guacone query vuln "https://anchore.com/syft/image/ghcr.io/guacsec/vul-image-latest-6fd9de7b-9bec-4ae7-99d9-4b5e5ef6b869" uri
 ```
 
 If instead the `pURL` is used, the query would be the following:
 
 ```bash
-guacone query vuln "pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest"
+guacone query vuln "pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest" purl
 ```
 
 **If you get this error:**
@@ -193,13 +193,13 @@ number.
 If using the SBOM URI:
 
 ```bash
-guacone query vuln "https://anchore.com/syft/image/ghcr.io/guacsec/vul-image-latest-6fd9de7b-9bec-4ae7-99d9-4b5e5ef6b869" --vuln-id "ghsa-7rjr-3q55-vv33"
+guacone query vuln "https://anchore.com/syft/image/ghcr.io/guacsec/vul-image-latest-6fd9de7b-9bec-4ae7-99d9-4b5e5ef6b869" --vuln-id "ghsa-7rjr-3q55-vv33" uri
 ```
 
 If using the `pURL`:
 
 ```bash
-guacone query vuln "pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest" --vuln-id "ghsa-7rjr-3q55-vv33"
+guacone query vuln "pkg:guac/spdx/ghcr.io/guacsec/vul-image-latest" --vuln-id "ghsa-7rjr-3q55-vv33" purl
 ```
 
 **If you get this error:**
