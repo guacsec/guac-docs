@@ -50,7 +50,7 @@ nav_order: 1
 1. From the directory you downloaded the `guac-demo-compose.yaml`, run:
 
    ```bash
-   docker compose -f guac-demo-compose.yaml up --force-recreate
+   docker compose -f guac-demo-compose.yaml -p guac up --force-recreate
    ```
 
 1. Verify that GUAC is running:
