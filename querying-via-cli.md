@@ -98,6 +98,10 @@ just once.
 
 ## Run the Query Vulnerability CLI
 
+{: .important } This section requires GUAC v0.8.9 or later. If you are using an
+older version of GUAC, please update. If you cannot, then use
+`guacone query vuln` instead of `guacone query vuln (purl|uri)`.
+
 Now that our GUAC instance is up and running with up-to-date information on the
 vulnerable image that we ingest, we will look at how we can utilize this data
 effectively.
