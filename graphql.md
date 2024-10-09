@@ -17,7 +17,8 @@ of API changes. To get started, consult
 [the official documentation](https://graphql.org/learn/).
 
 This documents provides some insight into how the GraphQL API matches the [GUAC
-ontology]({{ site.baseurl }}{%link guac-ontology.md %}) and its [definition]({{ site.baseurl }}{%link guac-ontology-definition.md %}).
+ontology](https://github.com/guacsec/guac-docs/blob/main/guac-ontology.md) and its [definition](https://github.com/guacsec/guac-docs/blob/main/guac-ontology-definition.md).
+
 
 Note: the GraphQL definitions are not yet stable, they might change in future
 code changes. To get an up to date view of the definitions, you can use one of
