@@ -12,7 +12,20 @@ This document provides an overview of the `guac.yaml` configuration file used in
 
 ## Database Configuration
 
-### ArangoDB
+### Ent config
+- **db-driver**: `postgres`
+  - **Description**: The driver used for the database connection.
+  - **When to Change**: Modify if you need to switch to a different database driver.
+
+- **db-address**: `postgres://guac:guac@postgres:5432/guac?sslmode=disable`
+  - **Description**: The address for connecting to the PostgreSQL database.
+  - **When to Change**: Update if your database address changes or if you need to enable/disable SSL.
+
+- **db-migrate**: `true`
+  - **Description**: Indicates whether database migration is enabled.
+  - **When to Change**: Set to `false` if you do not want automatic database migration.
+
+<!-- ### ArangoDB
 - **arango-user**: `root`
   - **Description**: The username for connecting to the ArangoDB instance.
   - **When to Change**: Change this if you have a different user set up for security reasons or if using a managed ArangoDB service.
@@ -61,7 +74,7 @@ This document provides an overview of the `guac.yaml` configuration file used in
 
 - **neptune-realm**: `neptune`
   - **Description**: The realm for the Neptune database.
-  - **When to Change**: Adjust if your setup uses a different realm.
+  - **When to Change**: Adjust if your setup uses a different realm. -->
 
 ## Pub/Sub Configuration
 
@@ -97,9 +110,9 @@ This document provides an overview of the `guac.yaml` configuration file used in
   - **Description**: Artificial latency to throttle the certifier.
   - **When to Change**: Use to introduce delays if needed to manage load.
 
-## Deps.dev Configuration
+- #### Deps.dev Configuration
 
-- **deps-dev-latency**: `""`
+  - **deps-dev-latency**: `""`
   - **Description**: Artificial latency to throttle deps.dev.
   - **When to Change**: Adjust if you need to manage load on deps.dev queries.
 
@@ -113,15 +126,15 @@ This document provides an overview of the `guac.yaml` configuration file used in
   - **Description**: Whether to query licenses during ingestion.
   - **When to Change**: Set to `true` if you want to automatically check for licenses during data ingestion.
 
-## CSub Configuration
+## Collector-Subscriber Configuration
 
 - **csub-addr**: `localhost:2782`
-  - **Description**: The address for the CSub service.
-  - **When to Change**: Update if your CSub service is hosted on a different address.
+  - **Description**: The address for the Collector-Subscriber service.
+  - **When to Change**: Update if your Collector-Subscriber service is hosted on a different address.
 
 - **csub-listen-port**: `2782`
-  - **Description**: The port on which the CSub service listens.
-  - **When to Change**: Change if your CSub service uses a different port.
+  - **Description**: The port on which the Collector-Subscriber service listens.
+  - **When to Change**: Change if your Collector-Subscriber service uses a different port.
 
 ## GraphQL Configuration
 
@@ -154,8 +167,8 @@ This document provides an overview of the `guac.yaml` configuration file used in
   - **When to Change**: Set to `false` if polling is not required.
 
 - **use-csub**: `true`
-  - **Description**: Whether to use the CSub service.
-  - **When to Change**: Set to `false` if not using CSub.
+  - **Description**: Whether to use the Collector-Subscriber service.
+  - **When to Change**: Set to `false` if not using Collector-Subscriber.
 
 ## Logging Configuration
 
