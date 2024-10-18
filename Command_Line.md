@@ -245,7 +245,7 @@ Configuration file for the **guacone** tool. This file stores default settings s
 Directory where all the recipe data files are stored.
 
 ---
-
+These are the Files that are Essentail.
 
 ## EXIT STATUS
 
@@ -257,7 +257,6 @@ Directory where all the recipe data files are stored.
 - **3**: Export or file-related error.
 
 ---
-
 ## AUTHOR
 Written by Jatin Vishwakarma 
 Signed-off-by: Jatin Vishwakarma <Jatinvish361@gmail.com>
