@@ -197,6 +197,7 @@ Automatically answers "yes" to any confirmation prompts.
 guacone delete "Old Guacamole" --yes
 ```
 
+
 ---
 
 ## ENVIRONMENT VARIABLES
