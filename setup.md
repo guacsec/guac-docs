@@ -24,4 +24,4 @@ To get started, [install and start GUAC]({{ site.baseurl }}{% link setup-install
 
 A video format of these setup instructions is available here:
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/3e-Qurgl3Sc?si=N2z7AAUOj1lM1EG-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" style="max-width: 100%" src="https://www.youtube-nocookie.com/embed/3e-Qurgl3Sc?si=N2z7AAUOj1lM1EG-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
