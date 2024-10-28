@@ -15,7 +15,7 @@ audit, policy, risk management, and even developer assistance.
 
 ## Introduction video
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/U7jRTZUDHYM?si=zTeaZXIBEPd1ZV0y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" style="max-width: 100%" src="https://www.youtube-nocookie.com/embed/U7jRTZUDHYM?si=zTeaZXIBEPd1ZV0y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## What can GUAC do
 
