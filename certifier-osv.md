@@ -81,29 +81,33 @@ The OSV Certifier supports vulnerability detection across these verified ecosyst
 - Binary vulnerability scanning
 - Custom vulnerability feeds
 
-### Usage
+## Available Options
 
+### Usage
 Basic command syntax:
 ```bash
-guac osv-certify --sbom <path> [options]
+guacone certifier osv --sbom <path> [options]
 ```
 
-Available options:
+### Flags
 ```bash
-Options:
-  --sbom PATH        Path to SBOM file (required)
-  --format FORMAT    SBOM format: cyclonedx|spdx (default: auto-detect)
-  --output PATH     Output file path (default: stdout)
-  --severity LEVEL  Minimum severity: critical|high|medium|low (default: low)
+Flags:
+      --certifier-batch-size int   sets the batch size for pagination query for the certifier (default 60000)
+      --certifier-latency string   sets artificial latency on the certifier. Defaults to empty string (not enabled) but can set m, h, s...etc
+  -h, --help                       help for osv
+  -l, --last-scan int              hours since the last scan was run. If not set, run on all packages/sources (default 4)
 ```
-
-Example usage:
+### Global Flags:
 ```bash
-# Basic scan
-guac osv-certify --sbom ./sboms/my_project_sbom.json
-
-# Specify format and severity
-guac osv-certify --sbom ./sbom.xml --format cyclonedx --severity high
+      --add-license-on-ingest   if enabled, the ingestor will query and ingest clearly defined for licenses. Warning: This will increase ingestion times
+      --add-vuln-on-ingest      if enabled, the ingestor will query and ingest OSV for vulnerabilities. Warning: This will increase ingestion times
+      --csub-addr string        address to connect to collect-sub service (default "localhost:2782")
+      --csub-tls                enable tls connection to the server
+      --csub-tls-skip-verify    skip verifying server certificate (for self-signed certificates for example)
+      --gql-addr string         endpoint used to connect to graphQL server (default "http://localhost:8080/query")
+      --header-file string      a text file containing HTTP headers to send to the GQL server, in RFC 822 format
+  -i, --interval string         if polling set interval, m, h, s, etc. (default "5m")
+  -p, --poll                    sets the collector or certifier to polling mode
 ```
 
 ## Output Format
@@ -122,24 +126,30 @@ guac osv-certify --sbom ./sbom.xml --format cyclonedx --severity high
 
 ```json
 {
-  "vulnerabilities": [
+  "_type": "https://in-toto.io/Statement/v0.1",
+  "subject": [
     {
-      "id": "OSV-2023-001",
-      "package": "example-library",
-      "version": "1.2.3",
-      "severity": "High",
-      "remediation": "Update to version 1.2.4 or later"
+      "uri": "pkg:npm/example-library@1.2.3"
     }
   ],
-  "summary": {
-    "total_vulnerabilities": 1,
-    "severity_counts": {
-      "critical": 0,
-      "high": 1,
-      "medium": 0,
-      "low": 0
+  "predicateType": "https://in-toto.io/attestation/vulns/v0.1",
+  "predicate": {
+    "scanner": {
+      "uri": "osv.dev",
+      "version": "0.0.14",
+      "result": [
+        {
+          "id": "GHSA-rc38-5r82-hr3j"
+        },
+        {
+          "id": "CVE-2023-12345"
+        }
+      ]
     },
-    "scan_time": "2024-04-15T10:30:00Z"
+    "metadata": {
+      "scanStartedOn": "2023-06-06T06:15:28Z",
+      "scanFinishedOn": "2023-06-06T06:15:28Z"
+    }
   }
 }
 ```
