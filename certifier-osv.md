@@ -61,31 +61,26 @@ The OSV Certifier enables vulnerability detection across several verified packag
 ### Usage
 Basic command syntax:
 ```bash
-guacone certifier osv [options]
+guac osv-certify --sbom <path> [options]
 ```
 
-### Flags
+Available options:
+```bash
+Options:
+  --sbom PATH        Path to SBOM file (required)
+  --format FORMAT    SBOM format: cyclonedx|spdx (default: auto-detect)
+  --output PATH     Output file path (default: stdout)
+  --severity LEVEL  Minimum severity: critical|high|medium|low (default: low)
+```
 
-| Flag                          | Description                                                                                         | Default               |
-|-------------------------------|-----------------------------------------------------------------------------------------------------|-----------------------|
-| `--certifier-batch-size int`  | Sets the batch size for pagination query for the certifier.                                       | 60000                 |
-| `--certifier-latency string`  | Sets artificial latency on the certifier (e.g., m, h, s, etc.).                                  | Not enabled (empty)   |
-| `-h, --help`                  | Help for osv                                                                                      |                       |
-| `-l, --last-scan int`         | Hours since the last scan was run; if not set, runs on all packages/sources.                     | 4                     |
+Example usage:
+```bash
+# Basic scan
+guac osv-certify --sbom ./sboms/my_project_sbom.json
 
-### Global Flags
-
-| Flag                           | Description                                                                                         | Default                          |
-|--------------------------------|-----------------------------------------------------------------------------------------------------|----------------------------------|
-| `--add-license-on-ingest`      | If enabled, the ingestor will query and ingest clearly defined licenses.                          | Warning: Increases ingestion time |
-| `--add-vuln-on-ingest`         | If enabled, the ingestor will query and ingest OSV for vulnerabilities.                           | Warning: Increases ingestion time |
-| `--csub-addr string`           | Address to connect to collect-sub service.                                                         | "localhost:2782"                |
-| `--csub-tls`                   | Enable TLS connection to the server.                                                               |                                  |
-| `--csub-tls-skip-verify`      | Skip verifying server certificate (for self-signed certificates).                                  |                                  |
-| `--gql-addr string`            | Endpoint used to connect to GraphQL server.                                                       | "http://localhost:8080/query"   |
-| `--header-file string`         | A text file containing HTTP headers to send to the GQL server, in RFC 822 format.                 |                                  |
-| `-i, --interval string`        | If polling, set interval (e.g., m, h, s, etc.).                                                  | "5m"                             |
-| `-p, --poll`                   | Sets the collector or certifier to polling mode.                                                  |                                  |
+# Specify format and severity
+guac osv-certify --sbom ./sbom.xml --format cyclonedx --severity high
+```
 
 ## Output Format
 
