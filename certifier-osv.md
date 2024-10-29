@@ -39,7 +39,16 @@ The OSV Certifier component of [GUAC](https://guac.sh) (Graph for Understanding 
 
 ### Covered Ecosystems
 
-The OSV Certifier enables vulnerability detection across several verified package ecosystems, including npm, PyPI, Maven, Go, Cargo, and NuGet. Additionally, it covers a wide range of ecosystems: AlmaLinux, Alpine, Android, Bitnami, crates.io, Curl, Debian GNU/Linux, Git (for C/C++), GitHub Actions, Haskell, Hex, the Linux kernel, OSS-Fuzz, Packagist, Pub, Python (CRAN and Bioconductor), Rocky Linux, RubyGems, SwiftURL, and Ubuntu OS.
+The OSV Certifier supports vulnerability detection across these verified ecosystems:
+
+| Ecosystem | Identifier Format | Example |
+|-----------|------------------|---------|
+| npm | `pkg:npm/{name}@{version}` | `pkg:npm/lodash@4.17.21` |
+| PyPI | `pkg:pypi/{name}@{version}` | `pkg:pypi/requests@2.28.1` |
+| Maven | `pkg:maven/{group}/{artifact}@{version}` | `pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1` |
+| Go | `pkg:golang/{path}@{version}` | `pkg:golang/golang.org/x/text@v0.3.7` |
+| Cargo | `pkg:cargo/{name}@{version}` | `pkg:cargo/serde@1.0.152` |
+| NuGet | `pkg:nuget/{name}@{version}` | `pkg:nuget/Newtonsoft.Json@13.0.1` |
 
 ### Feature Support
 
@@ -64,22 +73,25 @@ Basic command syntax:
 guac osv-certify --sbom <path> [options]
 ```
 
-Available options:
+### Flags
 ```bash
-Options:
-  --sbom PATH        Path to SBOM file (required)
-  --format FORMAT    SBOM format: cyclonedx|spdx (default: auto-detect)
-  --output PATH     Output file path (default: stdout)
-  --severity LEVEL  Minimum severity: critical|high|medium|low (default: low)
+Flags:
+      --certifier-batch-size int   sets the batch size for pagination query for the certifier (default 60000)
+      --certifier-latency string   sets artificial latency on the certifier. Defaults to empty string (not enabled) but can set m, h, s...etc
+  -h, --help                       help for osv
+  -l, --last-scan int              hours since the last scan was run. If not set, run on all packages/sources (default 4)
 ```
-
-Example usage:
+### Global Flags:
 ```bash
-# Basic scan
-guac osv-certify --sbom ./sboms/my_project_sbom.json
-
-# Specify format and severity
-guac osv-certify --sbom ./sbom.xml --format cyclonedx --severity high
+      --add-license-on-ingest   if enabled, the ingestor will query and ingest clearly defined for licenses. Warning: This will increase ingestion times
+      --add-vuln-on-ingest      if enabled, the ingestor will query and ingest OSV for vulnerabilities. Warning: This will increase ingestion times
+      --csub-addr string        address to connect to collect-sub service (default "localhost:2782")
+      --csub-tls                enable tls connection to the server
+      --csub-tls-skip-verify    skip verifying server certificate (for self-signed certificates for example)
+      --gql-addr string         endpoint used to connect to graphQL server (default "http://localhost:8080/query")
+      --header-file string      a text file containing HTTP headers to send to the GQL server, in RFC 822 format
+  -i, --interval string         if polling set interval, m, h, s, etc. (default "5m")
+  -p, --poll                    sets the collector or certifier to polling mode
 ```
 
 ## Output Format
