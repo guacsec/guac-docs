@@ -12,27 +12,11 @@ tags: [OSV, GUAC, software-supply-chain, security, SBOM]
 
 The OSV Certifier component of [GUAC](https://guac.sh) (Graph for Understanding Artifact Composition) integrates with the [OSV (Open Source Vulnerability) database](https://osv.dev) to provide vulnerability insights for open-source dependencies. It enables security risk assessment through vulnerability identification in software dependencies.
 
-## Architecture
-
-```
-┌──────────────┐     ┌───────────────┐     ┌────────────┐
-│  SBOM Input  │────>│  OSV Certifier│────>│  OSV API   │
-└──────────────┘     └───────────────┘     └────────────┘
-                            │
-                            ▼
-                    ┌───────────────┐
-                    │  GUAC Graph   │
-                    └───────────────┘
-```
-
 ## Key Features
 
 - **Vulnerability Detection**: Scans dependencies using SBOMs and cross-references with OSV's vulnerability catalog
 - **Automated Updates**: Regular synchronization with OSV for current vulnerability data
 - **Comprehensive Reporting**: Structured reports showing vulnerabilities by dependency and severity
-- **SBOM Format Support**: 
-  - [CycloneDX](https://cyclonedx.org) (JSON, XML)
-  - [SPDX](https://spdx.dev) (JSON, YAML)
 
 ## Integration Details
 
@@ -55,29 +39,33 @@ The OSV Certifier component of [GUAC](https://guac.sh) (Graph for Understanding 
 
 ### Supported Package Ecosystems
 
-The OSV Certifier supports vulnerability detection across these verified ecosystems:
+The OSV Certifier enables vulnerability detection across several verified package ecosystems, including:
 
-| Ecosystem | Identifier Format | Example |
-|-----------|------------------|---------|
-| npm | `pkg:npm/{name}@{version}` | `pkg:npm/lodash@4.17.21` |
-| PyPI | `pkg:pypi/{name}@{version}` | `pkg:pypi/requests@2.28.1` |
-| Maven | `pkg:maven/{group}/{artifact}@{version}` | `pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1` |
-| Go | `pkg:golang/{path}@{version}` | `pkg:golang/golang.org/x/text@v0.3.7` |
-| Cargo | `pkg:cargo/{name}@{version}` | `pkg:cargo/serde@1.0.152` |
-| NuGet | `pkg:nuget/{name}@{version}` | `pkg:nuget/Newtonsoft.Json@13.0.1` |
+| Ecosystem       | Identifier Format                           | Example                                         |
+|------------------|--------------------------------------------|-------------------------------------------------|
+| npm              | `pkg:npm/{name}@{version}`                | `pkg:npm/lodash@4.17.21`                       |
+| PyPI             | `pkg:pypi/{name}@{version}`               | `pkg:pypi/requests@2.28.1`                     |
+| Maven            | `pkg:maven/{group}/{artifact}@{version}` | `pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1` |
+| Go               | `pkg:golang/{path}@{version}`             | `pkg:golang/golang.org/x/text@v0.3.7`         |
+| Cargo            | `pkg:cargo/{name}@{version}`              | `pkg:cargo/serde@1.0.152`                      |
+| NuGet            | `pkg:nuget/{name}@{version}`              | `pkg:nuget/Newtonsoft.Json@13.0.1`            |
+
+### Additional Covered Ecosystems
+
+Alongside primary ecosystems, the OSV Certifier extends coverage to AlmaLinux, Alpine, Android, Bitnami, crates.io, Curl, Debian GNU/Linux, Git (with C/C++), GitHub Actions, Haskell, Hex, the Linux kernel, OSS-Fuzz, Packagist, Pub, Python (CRAN and Bioconductor), Rocky Linux, RubyGems, SwiftURL, and Ubuntu OS.
 
 ### Feature Support
 
-#### Supported
-- Public vulnerabilities from OSV's database
-- Dependency version mapping with known vulnerabilities
-- Version range analysis
-- [PURL](https://github.com/package-url/purl-spec) package identification
-- Severity classification using [CVSS](https://www.first.org/cvss/) scores
+**Supported Features:**
+- Public vulnerability data from OSV’s database
+- Dependency version mapping against known vulnerabilities
+- Analysis of version ranges
+- Package identification through [PURL](https://github.com/package-url/purl-spec)
+- Severity classification using [CVSS](https://www.first.org/cvss/)
 
-#### Unsupported
-- Private vulnerability detection
-- Ecosystems not covered by OSV
+**Unsupported Features:**
+- Detection of private vulnerabilities
+- Non-OSV-covered ecosystems
 - Binary vulnerability scanning
 - Custom vulnerability feeds
 
@@ -90,25 +78,27 @@ guacone certifier osv --sbom <path> [options]
 ```
 
 ### Flags
-```bash
-Flags:
-      --certifier-batch-size int   sets the batch size for pagination query for the certifier (default 60000)
-      --certifier-latency string   sets artificial latency on the certifier. Defaults to empty string (not enabled) but can set m, h, s...etc
-  -h, --help                       help for osv
-  -l, --last-scan int              hours since the last scan was run. If not set, run on all packages/sources (default 4)
-```
-### Global Flags:
-```bash
-      --add-license-on-ingest   if enabled, the ingestor will query and ingest clearly defined for licenses. Warning: This will increase ingestion times
-      --add-vuln-on-ingest      if enabled, the ingestor will query and ingest OSV for vulnerabilities. Warning: This will increase ingestion times
-      --csub-addr string        address to connect to collect-sub service (default "localhost:2782")
-      --csub-tls                enable tls connection to the server
-      --csub-tls-skip-verify    skip verifying server certificate (for self-signed certificates for example)
-      --gql-addr string         endpoint used to connect to graphQL server (default "http://localhost:8080/query")
-      --header-file string      a text file containing HTTP headers to send to the GQL server, in RFC 822 format
-  -i, --interval string         if polling set interval, m, h, s, etc. (default "5m")
-  -p, --poll                    sets the collector or certifier to polling mode
-```
+
+| Flag                          | Description                                                                                         | Default               |
+|-------------------------------|-----------------------------------------------------------------------------------------------------|-----------------------|
+| `--certifier-batch-size int`  | Sets the batch size for pagination query for the certifier.                                       | 60000                 |
+| `--certifier-latency string`  | Sets artificial latency on the certifier (e.g., m, h, s, etc.).                                  | Not enabled (empty)   |
+| `-h, --help`                  | Help for osv                                                                                      |                       |
+| `-l, --last-scan int`         | Hours since the last scan was run; if not set, runs on all packages/sources.                     | 4                     |
+
+### Global Flags
+
+| Flag                           | Description                                                                                         | Default                          |
+|--------------------------------|-----------------------------------------------------------------------------------------------------|----------------------------------|
+| `--add-license-on-ingest`      | If enabled, the ingestor will query and ingest clearly defined licenses.                          | Warning: Increases ingestion time |
+| `--add-vuln-on-ingest`         | If enabled, the ingestor will query and ingest OSV for vulnerabilities.                           | Warning: Increases ingestion time |
+| `--csub-addr string`           | Address to connect to collect-sub service.                                                         | "localhost:2782"                |
+| `--csub-tls`                   | Enable TLS connection to the server.                                                               |                                  |
+| `--csub-tls-skip-verify`      | Skip verifying server certificate (for self-signed certificates).                                  |                                  |
+| `--gql-addr string`            | Endpoint used to connect to GraphQL server.                                                       | "http://localhost:8080/query"   |
+| `--header-file string`         | A text file containing HTTP headers to send to the GQL server, in RFC 822 format.                 |                                  |
+| `-i, --interval string`        | If polling, set interval (e.g., m, h, s, etc.).                                                  | "5m"                             |
+| `-p, --poll`                   | Sets the collector or certifier to polling mode.                                                  |                                  |
 
 ## Output Format
 
@@ -154,34 +144,6 @@ Flags:
 }
 ```
 
-### Remediation Process
-
-1. **Prioritize**: 
-   - Review vulnerability severity
-   - Assess impact on application
-   - Consider dependency update complexity
-
-2. **Update**: 
-   - Follow remediation guidance
-   - Test compatibility of new versions
-   - Update dependency declarations
-
-3. **Verify**: 
-   - Rescan with OSV Certifier
-   - Confirm vulnerability resolution
-   - Update SBOM documentation
-
-## Error Handling
-
-Common error scenarios and resolutions:
-
-| Error | Cause | Resolution |
-|-------|-------|------------|
-| Invalid SBOM | Malformed SBOM file | Validate SBOM against schema |
-| API Timeout | OSV API unresponsive | Retry with backoff |
-| Unknown Format | Unsupported SBOM format | Use supported format |
-| Invalid Package | Malformed package URL | Check PURL syntax |
-
 ## Limitations
 
 - Limited to vulnerabilities published in OSV
@@ -195,8 +157,6 @@ Common error scenarios and resolutions:
 - [GUAC Documentation](https://guac.sh)
 - [OSV Database](https://osv.dev)
 - [OSV API Documentation](https://osv.dev/docs)
-- [CycloneDX Specification](https://cyclonedx.org/specification/overview/)
-- [SPDX Specification](https://spdx.dev/specifications/)
 - [PURL Specification](https://github.com/package-url/purl-spec)
 - [CVSS Documentation](https://www.first.org/cvss/specification-document)
 
