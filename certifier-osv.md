@@ -1,9 +1,9 @@
-layout: doc
+---
+layout: page
 permalink: /osv-certifier/
 title: "OSV Certifier Documentation"
 description: "Guide to using the OSV Certifier in GUAC for vulnerability management"
-categories: [certification, vulnerability-management, GUAC]
-tags: [OSV, GUAC, software-supply-chain, security, SBOM]
+
 ---
 
 # OSV Certifier Documentation 
@@ -61,7 +61,7 @@ The OSV Certifier enables vulnerability detection across several verified packag
 ### Usage
 Basic command syntax:
 ```bash
-guacone certifier osv --sbom <path> [options]
+guacone certifier osv [options]
 ```
 
 ### Flags
