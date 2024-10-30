@@ -40,6 +40,7 @@ The OSV Certifier component of [GUAC](https://guac.sh) (Graph for Understanding 
 ### Covered Ecosystems
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 The OSV Certifier supports vulnerability detection across these verified ecosystems:
 
 | Ecosystem | Identifier Format | Example |
@@ -53,6 +54,9 @@ The OSV Certifier supports vulnerability detection across these verified ecosyst
 =======
 The OSV Certifier enables vulnerability detection across several verified package ecosystems, including npm, PyPI, Maven, Go, Cargo, and NuGet. Additionally, it covers a wide range of ecosystems: AlmaLinux, Alpine, Android, Bitnami, crates.io, Curl, Debian GNU/Linux, Git (for C/C++), GitHub Actions, Haskell, Hex, the Linux kernel, OSS-Fuzz, Packagist, Pub, Python (CRAN and Bioconductor), Rocky Linux, RubyGems, SwiftURL, and Ubuntu OS.
 >>>>>>> 2ba6ea7 (Removed unnecessary tables under Covered Ecosystem)
+=======
+The OSV Certifier enables vulnerability detection across several verified package ecosystems, including npm, PyPI, Maven, Go, Cargo, and NuGet. Additionally, it covers a wide range of ecosystems: AlmaLinux, Alpine, Android, Bitnami, crates.io, Curl, Debian GNU/Linux, Git (for C/C++), GitHub Actions, Haskell, Hex, the Linux kernel, OSS-Fuzz, Packagist, Pub, Python (CRAN and Bioconductor), Rocky Linux, RubyGems, SwiftURL, and Ubuntu OS.
+>>>>>>> 8ecf9c655578d2eb0f8cac2c5e8c247f82f8824e
 
 ### Feature Support
 
@@ -74,6 +78,7 @@ The OSV Certifier enables vulnerability detection across several verified packag
 ### Usage
 Basic command syntax:
 ```bash
+<<<<<<< HEAD
 <<<<<<< HEAD
 guac osv-certify --sbom <path> [options]
 =======
@@ -101,6 +106,33 @@ Flags:
   -i, --interval string         if polling set interval, m, h, s, etc. (default "5m")
   -p, --poll                    sets the collector or certifier to polling mode
 ```
+=======
+guacone certifier osv [options]
+```
+
+### Flags
+
+| Flag                          | Description                                                                                         | Default               |
+|-------------------------------|-----------------------------------------------------------------------------------------------------|-----------------------|
+| `--certifier-batch-size int`  | Sets the batch size for pagination query for the certifier.                                       | 60000                 |
+| `--certifier-latency string`  | Sets artificial latency on the certifier (e.g., m, h, s, etc.).                                  | Not enabled (empty)   |
+| `-h, --help`                  | Help for osv                                                                                      |                       |
+| `-l, --last-scan int`         | Hours since the last scan was run; if not set, runs on all packages/sources.                     | 4                     |
+
+### Global Flags
+
+| Flag                           | Description                                                                                         | Default                          |
+|--------------------------------|-----------------------------------------------------------------------------------------------------|----------------------------------|
+| `--add-license-on-ingest`      | If enabled, the ingestor will query and ingest clearly defined licenses.                          | Warning: Increases ingestion time |
+| `--add-vuln-on-ingest`         | If enabled, the ingestor will query and ingest OSV for vulnerabilities.                           | Warning: Increases ingestion time |
+| `--csub-addr string`           | Address to connect to collect-sub service.                                                         | "localhost:2782"                |
+| `--csub-tls`                   | Enable TLS connection to the server.                                                               |                                  |
+| `--csub-tls-skip-verify`      | Skip verifying server certificate (for self-signed certificates).                                  |                                  |
+| `--gql-addr string`            | Endpoint used to connect to GraphQL server.                                                       | "http://localhost:8080/query"   |
+| `--header-file string`         | A text file containing HTTP headers to send to the GQL server, in RFC 822 format.                 |                                  |
+| `-i, --interval string`        | If polling, set interval (e.g., m, h, s, etc.).                                                  | "5m"                             |
+| `-p, --poll`                   | Sets the collector or certifier to polling mode.                                                  |                                  |
+>>>>>>> 8ecf9c655578d2eb0f8cac2c5e8c247f82f8824e
 
 ## Output Format
 
