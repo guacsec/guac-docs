@@ -74,7 +74,11 @@ The OSV Certifier enables vulnerability detection across several verified packag
 ### Usage
 Basic command syntax:
 ```bash
+<<<<<<< HEAD
 guac osv-certify --sbom <path> [options]
+=======
+guacone certifier osv [options]
+>>>>>>> 6616b8f (Update certifier-osv.md with proposed changes)
 ```
 
 ### Flags
