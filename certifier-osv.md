@@ -37,22 +37,9 @@ The OSV Certifier component of [GUAC](https://guac.sh) (Graph for Understanding 
    - Associates vulnerability data with package versions
    - Maintains relationship between dependencies
 
-### Supported Package Ecosystems
+### Covered Ecosystems
 
-The OSV Certifier enables vulnerability detection across several verified package ecosystems, including:
-
-| Ecosystem       | Identifier Format                           | Example                                         |
-|------------------|--------------------------------------------|-------------------------------------------------|
-| npm              | `pkg:npm/{name}@{version}`                | `pkg:npm/lodash@4.17.21`                       |
-| PyPI             | `pkg:pypi/{name}@{version}`               | `pkg:pypi/requests@2.28.1`                     |
-| Maven            | `pkg:maven/{group}/{artifact}@{version}` | `pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1` |
-| Go               | `pkg:golang/{path}@{version}`             | `pkg:golang/golang.org/x/text@v0.3.7`         |
-| Cargo            | `pkg:cargo/{name}@{version}`              | `pkg:cargo/serde@1.0.152`                      |
-| NuGet            | `pkg:nuget/{name}@{version}`              | `pkg:nuget/Newtonsoft.Json@13.0.1`            |
-
-### Additional Covered Ecosystems
-
-Alongside primary ecosystems, the OSV Certifier extends coverage to AlmaLinux, Alpine, Android, Bitnami, crates.io, Curl, Debian GNU/Linux, Git (with C/C++), GitHub Actions, Haskell, Hex, the Linux kernel, OSS-Fuzz, Packagist, Pub, Python (CRAN and Bioconductor), Rocky Linux, RubyGems, SwiftURL, and Ubuntu OS.
+The OSV Certifier enables vulnerability detection across several verified package ecosystems, including npm, PyPI, Maven, Go, Cargo, and NuGet. Additionally, it covers a wide range of ecosystems: AlmaLinux, Alpine, Android, Bitnami, crates.io, Curl, Debian GNU/Linux, Git (for C/C++), GitHub Actions, Haskell, Hex, the Linux kernel, OSS-Fuzz, Packagist, Pub, Python (CRAN and Bioconductor), Rocky Linux, RubyGems, SwiftURL, and Ubuntu OS.
 
 ### Feature Support
 
