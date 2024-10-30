@@ -39,6 +39,7 @@ The OSV Certifier component of [GUAC](https://guac.sh) (Graph for Understanding 
 
 ### Covered Ecosystems
 
+<<<<<<< HEAD
 The OSV Certifier supports vulnerability detection across these verified ecosystems:
 
 | Ecosystem | Identifier Format | Example |
@@ -49,6 +50,9 @@ The OSV Certifier supports vulnerability detection across these verified ecosyst
 | Go | `pkg:golang/{path}@{version}` | `pkg:golang/golang.org/x/text@v0.3.7` |
 | Cargo | `pkg:cargo/{name}@{version}` | `pkg:cargo/serde@1.0.152` |
 | NuGet | `pkg:nuget/{name}@{version}` | `pkg:nuget/Newtonsoft.Json@13.0.1` |
+=======
+The OSV Certifier enables vulnerability detection across several verified package ecosystems, including npm, PyPI, Maven, Go, Cargo, and NuGet. Additionally, it covers a wide range of ecosystems: AlmaLinux, Alpine, Android, Bitnami, crates.io, Curl, Debian GNU/Linux, Git (for C/C++), GitHub Actions, Haskell, Hex, the Linux kernel, OSS-Fuzz, Packagist, Pub, Python (CRAN and Bioconductor), Rocky Linux, RubyGems, SwiftURL, and Ubuntu OS.
+>>>>>>> 2ba6ea7 (Removed unnecessary tables under Covered Ecosystem)
 
 ### Feature Support
 
