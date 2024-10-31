@@ -1,29 +1,34 @@
 ---
-
 layout: page
 
 permalink: /osv-certifier/
 
 title: "OSV Certifier Documentation"
 
-description: "Guide to using the OSV Certifier in GUAC for vulnerability management"
-
+description:
+  "Guide to using the OSV Certifier in GUAC for vulnerability management"
 ---
 
 # OSV Certifier Documentation
 
 ## Overview
 
-The OSV Certifier component of [GUAC](https://guac.sh) (Graph for Understanding Artifact Composition) integrates with the [OSV (Open Source Vulnerability) database](https://osv.dev) to provide vulnerability insights for open-source dependencies. It enables security risk assessment through vulnerability identification in software dependencies.
+The OSV Certifier component of [GUAC](https://guac.sh) (Graph for Understanding
+Artifact Composition) integrates with the
+[OSV (Open Source Vulnerability) database](https://osv.dev) to provide
+vulnerability insights for open-source dependencies. It enables security risk
+assessment through vulnerability identification in software dependencies.
 
 ## Key Features
 
--  **Vulnerability Detection**: Scans dependencies using SBOMs and cross-references with OSV's vulnerability catalog
+- **Vulnerability Detection**: Scans dependencies using SBOMs and
+  cross-references with OSV's vulnerability catalog
 
--  **Automated Updates**: Regular synchronization with OSV for current vulnerability data
+- **Automated Updates**: Regular synchronization with OSV for current
+  vulnerability data
 
--  **Comprehensive Reporting**: Structured reports showing vulnerabilities by dependency and severity
-
+- **Comprehensive Reporting**: Structured reports showing vulnerabilities by
+  dependency and severity
 
 ## Integration Details
 
@@ -55,7 +60,12 @@ The OSV Certifier component of [GUAC](https://guac.sh) (Graph for Understanding 
 
 ### Covered Ecosystems
 
-The OSV Certifier enables vulnerability detection across several verified package ecosystems, including npm, PyPI, Maven, Go, Cargo, and NuGet. Additionally, it covers a wide range of ecosystems: AlmaLinux, Alpine, Android, Bitnami, crates.io, Curl, Debian GNU/Linux, Git (for C/C++), GitHub Actions, Haskell, Hex, the Linux kernel, OSS-Fuzz, Packagist, Pub, Python (CRAN and Bioconductor), Rocky Linux, RubyGems, SwiftURL, and Ubuntu OS.
+The OSV Certifier enables vulnerability detection across several verified
+package ecosystems, including npm, PyPI, Maven, Go, Cargo, and NuGet.
+Additionally, it covers a wide range of ecosystems: AlmaLinux, Alpine, Android,
+Bitnami, crates.io, Curl, Debian GNU/Linux, Git (for C/C++), GitHub Actions,
+Haskell, Hex, the Linux kernel, OSS-Fuzz, Packagist, Pub, Python (CRAN and
+Bioconductor), Rocky Linux, RubyGems, SwiftURL, and Ubuntu OS.
 
 ### Feature Support
 
@@ -67,7 +77,8 @@ The OSV Certifier enables vulnerability detection across several verified packag
 
 - Analysis of version ranges
 
-- Package identification through [PURL](https://github.com/package-url/purl-spec)
+- Package identification through
+  [PURL](https://github.com/package-url/purl-spec)
 
 - Severity classification using [CVSS](https://www.first.org/cvss/)
 
@@ -86,55 +97,48 @@ The OSV Certifier enables vulnerability detection across several verified packag
 ### Usage
 
 Basic command syntax:
+
 ```bash
 guacone  certifier  osv [options]
 ```
 
-
 ### Flags
 
-| Flag | Description | Default |
-|--------------------------------|---------------------------------------------------------------------------------------------|----------------------------------|
-|  `--certifier-batch-size int`  | Sets the batch size for pagination query for the certifier. | 60000 |
-|  `--certifier-latency string`  | Sets artificial latency on the certifier (e.g., m, h, s, etc.). | Not enabled (empty) |
-|  `-h, --help`  | Help for osv |  |
-|  `-l, --last-scan int`  | Hours since the last scan was run; if not set, runs on all packages/sources. | 4 |
-
-  
+| Flag                         | Description                                                                  | Default             |
+| ---------------------------- | ---------------------------------------------------------------------------- | ------------------- |
+| `--certifier-batch-size int` | Sets the batch size for pagination query for the certifier.                  | 60000               |
+| `--certifier-latency string` | Sets artificial latency on the certifier (e.g., m, h, s, etc.).              | Not enabled (empty) |
+| `-h, --help`                 | Help for osv                                                                 |                     |
+| `-l, --last-scan int`        | Hours since the last scan was run; if not set, runs on all packages/sources. | 4                   |
 
 ### Global Flags
 
-| Flag | Description | Default |
-|--------------------------------|---------------------------------------------------------------------------------------------|----------------------------------|
-|  `--add-license-on-ingest`  | If enabled, the ingestor will query and ingest clearly defined licenses. | Warning: Increases ingestion time |
-|  `--add-vuln-on-ingest`  | If enabled, the ingestor will query and ingest OSV for vulnerabilities. | Warning: Increases ingestion time |
-|  `--csub-addr string`  | Address to connect to collect-sub service. | "localhost:2782" |
-|  `--csub-tls`  | Enable TLS connection to the server. |  |
-|  `--csub-tls-skip-verify`  | Skip verifying server certificate (for self-signed certificates). |  |
-|  `--gql-addr string`  | Endpoint used to connect to GraphQL server. | "http://localhost:8080/query" |
-|  `--header-file string`  | A text file containing HTTP headers to send to the GQL server, in RFC 822 format. |  |
-|  `-i, --interval string`  | If polling, set interval (e.g., m, h, s, etc.). | "5m" |
-|  `-p, --poll`  | Sets the collector or certifier to polling mode. |  |
-
-  
+| Flag                      | Description                                                                       | Default                           |
+| ------------------------- | --------------------------------------------------------------------------------- | --------------------------------- |
+| `--add-license-on-ingest` | If enabled, the ingestor will query and ingest clearly defined licenses.          | Warning: Increases ingestion time |
+| `--add-vuln-on-ingest`    | If enabled, the ingestor will query and ingest OSV for vulnerabilities.           | Warning: Increases ingestion time |
+| `--csub-addr string`      | Address to connect to collect-sub service.                                        | "localhost:2782"                  |
+| `--csub-tls`              | Enable TLS connection to the server.                                              |                                   |
+| `--csub-tls-skip-verify`  | Skip verifying server certificate (for self-signed certificates).                 |                                   |
+| `--gql-addr string`       | Endpoint used to connect to GraphQL server.                                       | "http://localhost:8080/query"     |
+| `--header-file string`    | A text file containing HTTP headers to send to the GQL server, in RFC 822 format. |                                   |
+| `-i, --interval string`   | If polling, set interval (e.g., m, h, s, etc.).                                   | "5m"                              |
+| `-p, --poll`              | Sets the collector or certifier to polling mode.                                  |                                   |
 
 ### Output Format
 
 #### Vulnerability Report Fields
 
-
-| Field | Description | Example |
-|-------------|------------------------------------|-------------------------------------|
-| id | OSV vulnerability identifier |  `OSV-2023-001`  |
-| package | Affected package name |  `example-library`  |
-| version | Affected version |  `1.2.3`  |
-| severity | Vulnerability severity |  `High`  |
-| remediation | Fix instructions |  `Update to version 1.2.4 or later` |
-
-
+| Field       | Description                  | Example                            |
+| ----------- | ---------------------------- | ---------------------------------- |
+| id          | OSV vulnerability identifier | `OSV-2023-001`                     |
+| package     | Affected package name        | `example-library`                  |
+| version     | Affected version             | `1.2.3`                            |
+| severity    | Vulnerability severity       | `High`                             |
+| remediation | Fix instructions             | `Update to version 1.2.4 or later` |
 
 ### Sample Output
- 
+
 ```json
 {
   "_type": "https://in-toto.io/Statement/v0.1",
@@ -166,12 +170,13 @@ guacone  certifier  osv [options]
 ```
 
 ## Limitations
+
 - Limited to vulnerabilities published in OSV
 - May have incomplete data for certain ecosystems
 - Does not detect issues in private/proprietary software
 - Requires valid SBOM input
 - Dependency on OSV API availability
-  
+
 ## Additional Resources
 
 - [GUAC Documentation](https://guac.sh)
@@ -181,6 +186,8 @@ guacone  certifier  osv [options]
 - [CVSS Documentation](https://www.first.org/cvss/specification-document)
 
 ## Support
- For issues and questions:
+
+For issues and questions:
+
 - [GUAC GitHub Issues](https://github.com/guacsec/guac/issues)
 - [GUAC Slack Channel](https://openssf.slack.com/archives/C03U677QD46)
