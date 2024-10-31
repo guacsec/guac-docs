@@ -1,15 +1,13 @@
 ---
 layout: page
-
 permalink: /osv-certifier/
-
-title: "OSV Certifier Documentation"
-
+title: "OSV certifier"
+parent: "How GUAC components work together"
 description:
   "Guide to using the OSV Certifier in GUAC for vulnerability management"
 ---
 
-# OSV Certifier Documentation
+# OSV Certifier
 
 ## Overview
 
@@ -179,7 +177,6 @@ guacone  certifier  osv [options]
 
 ## Additional Resources
 
-- [GUAC Documentation](https://guac.sh)
 - [OSV Database](https://osv.dev)
 - [OSV API Documentation](https://osv.dev/docs)
 - [PURL Specification](https://github.com/package-url/purl-spec)
