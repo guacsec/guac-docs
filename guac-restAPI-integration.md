@@ -106,18 +106,42 @@ Response:
 }
 ```
 
-### 6. Components
+### 6. GET /v0/package/{purl}/dependencies
+Retrieve the dependencies associated with a specific Package URL (purl). If a partial purl is provided, all associated purls and dependencies are included.
 
-#### PaginationSpec Parameter
+Request Example:
+```bash
+GET /api/v1/package/{purl}/dependencies
+```
 
-Controls pagination of the results.
-
+Response:
 ```json
 {
-  "PageSize": 10,
-  "Cursor": "abc123"
+  "dependencies": ["pkg:foo/bar@1.0", "pkg:foo/bar@2.0"]
 }
 ```
+
+### 7. GET /v0/artifact/{digest}/vulns
+Retrieve vulnerabilities related to a specific artifact digest.
+
+Request Example:
+```bash
+GET /api/v1/artifact/{digest}/vulns
+```
+
+Response:
+```json
+{
+  "vulnerabilities": [
+    {
+      "id": "CVE-2023-12345",
+      "description": "Sample vulnerability description.",
+      "severity": "High"
+    }
+  ]
+}
+```
+
 
 #### Vulnerability Schema
 
