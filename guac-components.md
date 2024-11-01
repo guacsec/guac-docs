@@ -3,7 +3,8 @@ layout: page
 title: How GUAC components work together
 permalink: /guac-components/
 parent: How GUAC works
-nav_order: 1
+has_children: yes
+nav_order: 2
 ---
 
 # How GUAC components work together

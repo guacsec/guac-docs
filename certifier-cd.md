@@ -2,40 +2,38 @@
 layout: page
 title: ClearlyDefined certifier
 permalink: /certifier-clearlydefined/
+parent: "How GUAC components work together"
 ---
 
-### Overview
+# ClearlyDefined certifier
+
+## Overview
 
 GUAC (Graph for Understanding Artifact Composition) integrates with
-**ClearlyDefined** (https://clearlydefined.io/?sort=releaseDate&sortDesc=true)
-to enhance supply chain transparency by retrieving accurate license data for
+[ClearlyDefined](https://clearlydefined.io/?sort=releaseDate&sortDesc=true) to
+enhance supply chain transparency by retrieving accurate license data for
 software dependencies. This functionality helps organizations make informed
 decisions about software licenses when managing their dependencies.
 
-### How GUAC Pulls from ClearlyDefined
+## How GUAC Pulls from ClearlyDefined
 
-GUAC accesses ClearlyDefined data through a **certifier process** instead of a
-collector model. This choice ensures that queries are **re-run on a scheduled
-basis** to reflect any updated license information, given that new software
+GUAC accesses ClearlyDefined data through a certifier process instead of a
+collector model. This choice ensures that queries are re-run on a scheduled
+basis to reflect any updated license information, given that new software
 releases can alter licensing data over time. The certifier’s role complements
 GUAC’s use of SBOM (Software Bill of Materials) data, allowing it to validate or
 augment license details.
 
-- **Invocation**:
+The certifier runs periodically or can be triggered during SBOM ingestion to
+pull data directly from ClearlyDefined. However, including ClearlyDefined
+queries during SBOM ingestion may slow down processing, especially for larger
+datasets. For further details see the [certifier configuration]({{ site.baseurl }}{%link guac-configuration.md %}#certifier-configuration).
 
-  - The certifier runs periodically or can be triggered during **SBOM
-    ingestion** to pull data directly from ClearlyDefined.
-  - However, including ClearlyDefined queries during SBOM ingestion may **slow
-    down processing**, especially for larger datasets.
-  - For further details visit
-    https://docs.guac.sh/guac-configuration/#certifier-configuration.
+ClearlyDefined identifies software using _coordinates_, which GUAC maps to
+_pURLs (package URLs)_. A custom mapping library facilitates this conversion to
+align the two systems.
 
-- **Mapping and Query System**:
-  - ClearlyDefined identifies software using **coordinates**, which GUAC maps to
-    **pURLs (package URLs)**. A custom mapping library facilitates this
-    conversion to align the two systems.
-
-### What is and is not Supported
+## What is and is not Supported
 
 1. **Supported Features**:
 
@@ -46,13 +44,11 @@ augment license details.
      graph observability.
 
 2. **Limitations**:
-   - **Batched queries** are not supported by ClearlyDefined’s API, which can
-     result in rate limits and slower performance for large dependency graphs.
    - The system does not automatically resolve conflicting data between SBOMs
      and ClearlyDefined; users must determine the most trustworthy source
      themselves.
 
-### Invocation Process
+## Invocation
 
 GUAC integrates with ClearlyDefined in three ways:
 
@@ -70,11 +66,8 @@ GUAC integrates with ClearlyDefined in three ways:
    - This method provides greater control, allowing users to run queries
      whenever needed.
 
----
-
-Below is a table of the supported **command-line arguments** for the
-**ClearlyDefined certifier**. These flags allow users to control input, output,
-and execution behavior.
+Below is a table of the supported command-line arguments for the ClearlyDefined
+certifier.
 
 | **Argument**           | **Description**                                 | **Example**                 |
 | ---------------------- | ----------------------------------------------- | --------------------------- |
@@ -89,14 +82,3 @@ and execution behavior.
 | `--daemon`             | Runs in daemon mode for continuous polling.     | `--daemon`                  |
 | `--config <path>`      | Loads custom configuration file.                | `--config ./config.yaml`    |
 | `--api-endpoint <url>` | Sets API endpoint for results.                  | `--api-endpoint http://...` |
-
----
-
-### Key Notes:
-
-- **Daemon mode**: When invoked with `--daemon`, the certifier continuously
-  polls the specified collector (like `gcs`) to fetch updates.
-- **Poll interval**: Default polling may be every 5 or 10 minutes, configurable
-  via the `--poll-interval` argument.
-- **Formats**: Supported output formats include `json`, `spdx`, or other
-  standards recognized by the tool.
