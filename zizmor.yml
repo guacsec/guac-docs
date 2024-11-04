@@ -1,0 +1,5 @@
+# Ignore the template-injection warning for the site URL because we believe that it's safe
+rules:
+  template-injection:
+    ignore:
+      - pages.yml:42:9
