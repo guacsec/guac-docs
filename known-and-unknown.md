@@ -49,19 +49,20 @@ GUAC, at the time of the beta release, can store various metadata about an
 artifact. In the context of query CLI that we will be using, the evidence nodes
 have the following definitions:
 
-| Evidence Nodes | Description                                                                  |
-| -------------- | ---------------------------------------------------------------------------- |
-| `hashEquals`   | When two artifacts are equal                                                 |
-| `scorecards`   | The OpenSSF scorecard associated with the source repo                        |
-| `occurrences`  | A package is associated with an artifact (digest) (or vice-versa)            |
-| `hasSrcAt`     | A package has a source repo at the following location                        |
-| `hasSBOMs`     | A package/artifact has an SBOM stored in a downloadable location             |
-| `hasSLSAs`     | The artifact has an SLSA attestation stored in a downloadable location       |
-| `certifyVulns` | The package has been scanned (currently via OSV) and the results of the scan |
-| `vexLinks`     | A VEX document associated with the Vulnerability                             |
-| `badLinks`     | List of CertifyBad associated with the package, source or artifact           |
-| `goodLinks`    | List of CertifyGood associated with the package, source or artifact          |
-| `pkgEquals`    | Two packages (with different purls) are equal                                |
+| Evidence Nodes | Description                                                                              |
+| -------------- | ---------------------------------------------------------------------------------------- |
+| `hashEquals`   | When two artifacts are equal                                                             |
+| `scorecards`   | The OpenSSF scorecard associated with the source repo                                    |
+| `occurrences`  | A package is associated with an artifact (digest) (or vice-versa)                        |
+| `hasSrcAt`     | A package has a source repo at the following location                                    |
+| `hasSBOMs`     | A package/artifact has an SBOM stored in a downloadable location                         |
+| `hasSLSAs`     | The artifact has an SLSA attestation stored in a downloadable location                   |
+| `certifyVulns` | The package has been scanned (currently via OSV) and the results of the scan             |
+| `certifyLegal` | The package or source's declared and discovered licenses, and any legal attribution info |
+| `vexLinks`     | A VEX document associated with the Vulnerability                                         |
+| `badLinks`     | List of CertifyBad associated with the package, source or artifact                       |
+| `goodLinks`    | List of CertifyGood associated with the package, source or artifact                      |
+| `pkgEquals`    | Two packages (with different purls) are equal                                            |
 
 For more information on these, refer to the [GraphQL documentation]({{
 site.baseurl }}{%link graphql.md %}) and [ontology definitions]({{ site.baseurl
@@ -465,7 +466,35 @@ and a artifact (algorithm:digest).
    prometheus/client_golang package we queried for above but also we see that
    there is an OpenSSF scorecard associated.
 
-6. Finally, let’s query for another source repo:
+6. Run the query for the Alpine package:
+
+   ```bash
+   guacone query known package "pkg:alpine/alpine-keys@2.4-r0?arch=x86_64&upstream=alpine-keys&distro=alpine-3.14.8"
+   +------------------------------------------------+
+   | Package Name Nodes                             |
+   +-----------+-----------+------------------------+
+   | NODE TYPE | NODE ID # | ADDITIONAL INFORMATION |
+   +-----------+-----------+------------------------+
+   +-----------+-----------+------------------------+
+   Visualizer url: http://localhost:3000/?path=1145,258,257
+   +-----------------------------------------------------------------------------------------+
+   | Package Version Nodes                                                                   |
+   +--------------+-----------+--------------------------------------------------------------+
+   | NODE TYPE    | NODE ID # | ADDITIONAL INFORMATION                                       |
+   +--------------+-----------+--------------------------------------------------------------+
+   | certifyLegal | 7600      | Declared License: MIT,                                       |
+   |              |           | Discovered License: MIT,                                     |
+   |              |           | Origin: file:///../guac-data/top-dh-sboms/vault.json         |
+   +--------------+-----------+--------------------------------------------------------------+
+   Visualizer url: http://localhost:3000/?path=1146,1145,258,257,7600
+   ```
+
+   Here we see that the `alpine-keys` package has a `certifyLegal` node. The
+   `certifyLegal` node shows us that the package was declared to have the MIT
+   license and this was confirmed by the discovered license. The origin of this
+   information is from the SBOM that was ingested.
+
+7. Finally, let’s query for another source repo:
 
    ```bash
    guacone query known source "git+https://github.com/googleapis/google-cloud-go"
