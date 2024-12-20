@@ -4,7 +4,7 @@ title: Querying vulnerabilities via CLI
 permalink: /querying-via-cli/
 parent: GUAC demos
 grand_parent: Getting started with GUAC
-nav_order: 3
+nav_order: 4
 ---
 
 # Query Vulnerability via CLI Demo
