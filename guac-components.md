@@ -77,8 +77,8 @@ the OSV vulnerability.
 
 #### Ingestor
 
-Ingestors take in documents and parse them into the [GUAC
-data model/ontology]({{ site.baseurl }}{%link guac-ontology.md %}). This process
+Ingestors take in documents and parse them into the [GUAC data
+model/ontology]({{ site.baseurl }}{%link guac-ontology.md %}). This process
 extracts meaning from documents and translates them into a common reasoning
 model (GUAC ontology). In the process, it also finds identifiers of interest
 that it passes to the CollectSub service to request additional information for.

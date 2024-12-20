@@ -28,23 +28,24 @@ or not.
 
 To find out if you're affected by the security incident and decide what you need
 to patch, utilize the [Guac Visualizer]({{ site.baseurl }}{%link
-guac-visualizer.md %}). The GUAC visualizer provides a utility to do some basic analysis
-and exploration of the software supply chain. This is a great way to get a sense
-of the size of the problem and helps when developing prototype utilities and queries
-with GUAC (very much like the [vulnerability CLI]({{
+guac-visualizer.md %}). The GUAC visualizer provides a utility to do some basic
+analysis and exploration of the software supply chain. This is a great way to
+get a sense of the size of the problem and helps when developing prototype
+utilities and queries with GUAC (very much like the [vulnerability CLI]({{
 site.baseurl }}{%link querying-via-cli.md %})).
 
 For this demo, we will simulate ingesting an organization's software catalog.
-The [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %}) you ingested into
-GUAC at the beginning includes a collection of SBOMs and SLSA attestations.
+The [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %}) you ingested
+into GUAC at the beginning includes a collection of SBOMs and SLSA attestations.
 
 ## Requirements
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
-  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
-  and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %}) extracted to
-  `guac-data-main`.
-- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and running.
+  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your
+  path and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %})
+  extracted to `guac-data-main`.
+- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and
+  running.
 
 ## Mark packages as bad when a security incident occurs
 
@@ -187,4 +188,5 @@ packages, specifically:
 
 With this data, we can investigate further and determine which packages are
 dependent on these compromised packages and remediate them quickly. The next
-step in the demo covers [creating a patch plan]({{ site.baseurl}}{%link patch-cli.md %})
+step in the demo covers [creating a patch
+plan]({{ site.baseurl}}{%link patch-cli.md %})

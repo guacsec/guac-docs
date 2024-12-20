@@ -16,9 +16,11 @@ Note that these helm charts are still experimental and are hosted in a
 third-party repo and may not be synchronized with the GUAC repo.
 
 This tutorial will walk you through how to deploy a demo-level GUAC, using
-Docker Compose, so that you get just enough components to complete all the [GUAC demos]({{ site.baseurl }}{% link guac-use-cases.md %}).
+Docker Compose, so that you get just enough components to complete all the [GUAC
+demos]({{ site.baseurl }}{% link guac-use-cases.md %}).
 
-To get started, [install and start GUAC]({{ site.baseurl }}{% link setup-install.md %}).
+To get started, [install and start
+GUAC]({{ site.baseurl }}{% link setup-install.md %}).
 
 ## Setup video
 

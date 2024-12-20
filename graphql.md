@@ -17,7 +17,8 @@ of API changes. To get started, consult
 [the official documentation](https://graphql.org/learn/).
 
 This documents provides some insight into how the GraphQL API matches the [GUAC
-ontology]({{ site.baseurl }}{%link guac-ontology.md %}) and its [definition]({{ site.baseurl }}{%link guac-ontology-definition.md %}).
+ontology]({{ site.baseurl }}{%link guac-ontology.md %}) and its
+[definition]({{ site.baseurl }}{%link guac-ontology-definition.md %}).
 
 Note: the GraphQL definitions are not yet stable, they might change in future
 code changes. To get an up to date view of the definitions, you can use one of
@@ -28,8 +29,9 @@ the following:
 - Look at the generated Go documentation using `godoc` and analyzing the
   `guacsec/guac/pkg/assembler/graphql/model` package.
 - Open the playground by passing `--gql-debug` to [`guacgql`
-  component]({{ site.baseurl }}{%link setup.md %}), then consult the documentation
-  tab of the [Graphiql editor](https://github.com/graphql/graphiql).
+  component]({{ site.baseurl }}{%link setup.md %}), then consult the
+  documentation tab of the
+  [Graphiql editor](https://github.com/graphql/graphiql).
 - Use [GraphQL Voyager](https://ivangoncharov.github.io/graphql-voyager/). You
   can load the schema by using the introspection query on the `guacgql` server
   or by concatenating all the source of truth documents.
@@ -644,9 +646,10 @@ definition for these as of now.
 
 Each GraphQL type defined so far has a semantic meaning, tied to the [GUAC
 ontology]({{ site.baseurl }}{%link guac-ontology.md %}). However, in some cases,
-users might want to see what GraphQL types are linked to a specific type, or they
-might want to find a link between two different nodes. For these cases, we currently
-provide an experimental interface to get topological information about the GUAC graph.
+users might want to see what GraphQL types are linked to a specific type, or
+they might want to find a link between two different nodes. For these cases, we
+currently provide an experimental interface to get topological information about
+the GUAC graph.
 
 Note: These definitions are subject to change and might be removed in future
 versions of GUAC. Treat this interface as experimental.

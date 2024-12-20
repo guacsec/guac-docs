@@ -23,10 +23,11 @@ vulnerability.
 ## Requirements
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
-  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
-  and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %}) extracted to
-  `guac-data-main`.
-- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and running.
+  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your
+  path and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %})
+  extracted to `guac-data-main`.
+- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and
+  running.
 
 ## Ingest a vulnerability SPDX SBOM
 
@@ -250,4 +251,5 @@ We also learned that this is just one of many utilizations of GUAC’s GraphQL A
 to create more tools such as these quickly and easily!
 
 Now that you've indentified a vulnerability, how do you react to it? The next
-step in the demo covers [reacting to a supply chain incident]({{ site.baseurl}}{%link supply-chain.md %}).
+step in the demo covers [reacting to a supply chain
+incident]({{ site.baseurl}}{%link supply-chain.md %}).

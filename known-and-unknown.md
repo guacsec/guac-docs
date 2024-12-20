@@ -37,11 +37,11 @@ to determine what we know and don't know about the artifacts.
 ## Requirements
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
-  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
-  and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %}) extracted to
-  `guac-data-main`.
-- Completion of the [Expanding your view of the software supply
-  chain demo]({{ site.baseurl }}{%link expanding-your-view.md %})
+  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your
+  path and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %})
+  extracted to `guac-data-main`.
+- Completion of the [Expanding your view of the software supply chain
+  demo]({{ site.baseurl }}{%link expanding-your-view.md %})
 
 ## Understanding the data
 
@@ -341,8 +341,8 @@ and a artifact (algorithm:digest).
 
    **NOTE**: This is just the vulnerability associated with this specific
    package (not taking into account dependencies). For a full in-depth
-   vulnerability search please follow the [Query
-   Vulnerability demo]({{ site.baseurl }}{%link querying-via-cli.md %}).
+   vulnerability search please follow the [Query Vulnerability
+   demo]({{ site.baseurl }}{%link querying-via-cli.md %}).
 
    We also see that in this case, we did not get a `hasSBOM` associated with it.
    Meaning that we do not have any SBOM information related to this package. We
