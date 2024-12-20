@@ -16,8 +16,8 @@ nav_order: 1
 
 ## Optional - Verify images and binaries
 
-- Follow [Verification of the GUAC images
-  and binaries]({{ site.baseurl }}{%link verification.md %})
+- Follow [Verification of the GUAC images and
+  binaries]({{ site.baseurl }}{%link verification.md %})
 
 ## Download GUAC
 
@@ -78,4 +78,5 @@ nav_order: 1
 | 8080        | GraphQL server       | To see the GraphQL playground, visit [http://localhost:8080](http://localhost:8080)                                                                            |
 | 2782        | Collector Subscriber | This service is notified whenever you run a collector, such as `guacone collect files` below. Then subscribers can collect more data on any packages ingested. |
 
-Now that you've installed GUAC, it's time to [ingest data]({{ site.baseurl }}{% link setup-ingest-data.md %}).
+Now that you've installed GUAC, it's time to [ingest
+data]({{ site.baseurl }}{% link setup-ingest-data.md %}).

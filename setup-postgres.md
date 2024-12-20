@@ -26,8 +26,8 @@ deployment with a PostgreSQL database backend using Docker Compose.
 
 ## Optional - Verify images and binaries
 
-- Follow [Verification of the GUAC images
-  and binaries]({{ site.baseurl }}{%link verification.md %})
+- Follow [Verification of the GUAC images and
+  binaries]({{ site.baseurl }}{%link verification.md %})
 
 ## Step 1: Download GUAC
 

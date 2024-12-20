@@ -37,8 +37,9 @@ within the ingested SBOM.
 ## Requirements
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
-  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
-  and [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
+  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your
+  path and
+  [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
   extracted to `guac-data-main`.
 
 ## Ingest Vault’s SBOM
@@ -585,7 +586,8 @@ integrate GUAC services into an IDE to provide information on whether or not a
 package should be used due to a low OpenSSF Scorecard score or critical
 vulnerability.
 
-Next, let's see [what is known and unknown about your software supply chain]({{ site.baseurl}}{%link known-and-unknown.md %}).
+Next, let's see [what is known and unknown about your software supply
+chain]({{ site.baseurl}}{%link known-and-unknown.md %}).
 
 ## Checking the logs
 

@@ -29,10 +29,11 @@ resolve a security incident.
 ## Requirements
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
-  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your path
-  and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %}) extracted to
-  `guac-data-main`.
-- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and running.
+  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your
+  path and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %})
+  extracted to `guac-data-main`.
+- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and
+  running.
 
 ## Run the Query Patch CLI
 

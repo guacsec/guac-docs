@@ -15,8 +15,8 @@ the [GraphQL documentation]({{ site.baseurl }}{%link graphql.md %}).
 
 ## Overview
 
-The [GUAC Onlotogy]({{ site.baseurl }}{%link guac-ontology.md %}) document defines
-the 3 structures as the software tree, evidence tree, and actor tree.
+The [GUAC Onlotogy]({{ site.baseurl }}{%link guac-ontology.md %}) document
+defines the 3 structures as the software tree, evidence tree, and actor tree.
 
 - **Software Tree:** A factual structure that describes software entities. They
   communicate both physical (e.g. artifact and hashes) and logical (e.g. pURL)
@@ -129,7 +129,8 @@ An example of a predicate is:
   - source ( string )
   - collector ( string )
 
-For a list of all predicates, please refer to the [GraphQL documentation]({{ site.baseurl }}{%link graphql.md %}).
+For a list of all predicates, please refer to the [GraphQL
+documentation]({{ site.baseurl }}{%link graphql.md %}).
 
 ## GUAC Actor Tree (Not in v0.1 BETA)
 
