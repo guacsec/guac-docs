@@ -14,16 +14,16 @@ The End of Life (EOL) certifier queries the
 GUAC graph that are no longer supported. When a package has an entry in the EOL
 data, this certifier creates a `HasMetadata` node with:
 
-| Key         | Description                                         | Example                        |
-| ----------- | --------------------------------------------------- | ------------------------------ |
-| Product     | Product as listed in endolife.date                  | log4j                          |
-| Cycle       | Release cycle                                       | 2                              |
-| Version     | Version in GUAC                                     | TODO is this correct? Example? |
-| IsEOL       | If the product has reached EOL                      | false                          |
-| EOLDate     | Date the release reaches EOL                        | 2021-12-29                     |
-| LTS         | If the release cycle is a long-term support version | false                          |
-| Latest      | Latest release in the cycle                         | 2.24.3                         |
-| ReleaseDate | Date of latest release in the cycle                 | 2024-12-10                     |
+| Key         | Description                                         | Example    |
+| ----------- | --------------------------------------------------- | ---------- |
+| Product     | Product as listed in endolife.date                  | log4j      |
+| Cycle       | Release cycle                                       | 2          |
+| Version     | Version in GUAC                                     | v2.24.3    |
+| IsEOL       | If the product has reached EOL                      | false      |
+| EOLDate     | Date the release reaches EOL                        | 2021-12-29 |
+| LTS         | If the release cycle is a long-term support version | false      |
+| Latest      | Latest release in the cycle                         | 2.24.3     |
+| ReleaseDate | Date of latest release in the cycle                 | 2024-12-10 |
 
 ## Available Options
 
