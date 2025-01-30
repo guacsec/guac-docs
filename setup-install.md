@@ -73,10 +73,10 @@ nav_order: 1
 
 ### GUAC Ports
 
-| Port Number | GUAC Component       | Note                                                                                                                                                           |
-| ----------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 8080        | GraphQL server       | To see the GraphQL playground, visit [http://localhost:8080](http://localhost:8080)                                                                            |
-| 2782        | Collector Subscriber | This service is notified whenever you run a collector, such as `guacone collect files` below. Then subscribers can collect more data on any packages ingested. |
+| Port Number | GUAC Component       | Note                                                                                                                                                     |
+| ----------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 8080        | GraphQL server       | To see the GraphQL playground, visit [http://localhost:8080](http://localhost:8080)                                                                      |
+| 2782        | Collector Subscriber | This service is notified whenever you run a collector, such as `guacone collect files`. Then subscribers can collect more data on any packages ingested. |
 
 Now that you've installed GUAC, it's time to [ingest
 data]({{ site.baseurl }}{% link setup-ingest-data.md %}).

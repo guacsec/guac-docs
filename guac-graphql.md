@@ -94,10 +94,18 @@ utility that can take a collection of files and ingest them into the GUAC graph.
 In your original window, run:
 
 ```bash
-bin/guacone collect files ../guac-data/docs/
+bin/guacone collect --add-vuln-on-ingest --add-eol-on-ingest --add-license-on-ingest files ../guac-data/docs/
 ```
 
-This can take a minute or two.
+This can take up to several minutes.
+
+{: .note }
+
+The `--add*` flags above will cause GUAC to query external services for
+additional data while ingesting the files. Due to service rate limits and
+processing, this will slow down the ingestion time. Alternatively, you can leave
+off those flags and run each certifier individually (e.g.
+`guacone certifier osv` to get vulnerability data) as desired.
 
 This dataset consists of a set of document types:
 

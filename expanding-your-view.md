@@ -50,7 +50,7 @@ of the `guacone collect files` command.
 1. Run the following command:
 
    ```bash
-   guacone collect files guac-data-main/top-dh-sboms/vault.json
+   guacone collect --add-vuln-on-ingest --add-eol-on-ingest --add-license-on-ingest files guac-data-main/top-dh-sboms/vault.json
    ```
 
 2. The output of the file collector should be:
@@ -60,6 +60,14 @@ of the `guacone collect files` command.
    {"level":"info","ts":1684774157.098937,"caller":"cmd/files.go:174","msg":"collector ended gracefully"}
    {"level":"info","ts":1684774157.09894,"caller":"cmd/files.go:187","msg":"completed ingesting 1 documents of 1"}
    ```
+
+{: .note }
+
+The `--add*` flags above will cause GUAC to query external services for
+additional data while ingesting the files. Due to service rate limits and
+processing, this will slow down the ingestion time. Alternatively, you can leave
+off those flags an run each certifier individually (e.g. `guacone certifier osv`
+to get vulnerability data) as desired.
 
 As the ingestion process occurs, the collector subscriber service of GUAC
 collects pURLs, OCI strings, and others to determine if there is more

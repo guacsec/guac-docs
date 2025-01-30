@@ -13,8 +13,16 @@ GUAC deployment. For example we can ingest the sample `guac-data` data. However,
 you may ingest what you wish to here instead.
 
 ```bash
-guacone collect files guac-data-main/docs
+guacone collect --add-vuln-on-ingest --add-eol-on-ingest --add-license-on-ingest files guac-data-main/docs
 ```
+
+{: .note }
+
+The `--add*` flags above will cause GUAC to query external services for
+additional data while ingesting the files. This will slow down the ingestion
+time. Alternatively, you can leave off those flags and run each certifier
+individually (e.g. `guacone certifier osv` to get vulnerability data) as
+desired.
 
 Switch back to the compose window and you will soon see that the OSV certifier
 recognized the new packages and is looking up vulnerability information for

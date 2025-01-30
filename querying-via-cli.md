@@ -39,11 +39,18 @@ GUAC graph.
 In your terminal window, run:
 
 ```bash
-guacone collect files guac-data-main/docs/spdx/spdx_vuln.json
+guacone collect --add-vuln-on-ingest files guac-data-main/docs/spdx/spdx_vuln.json
 ```
 
 This will ingest the vulnerable SPDX SBOM into GUAC so that various insights can
 be easily queried.
+
+{: .note }
+
+The `--add-vuln-on-ingest` flag above will cause GUAC to query OSV for
+vulnerability data while ingesting the files. Due to service rate limits and
+processing, this will slow down the ingestion time. Alternatively, you can leave
+off those flags and run the certifier manually with `guacone certifier osv`.
 
 Once ingested you will see the following message:
 
@@ -58,14 +65,15 @@ Once ingested you will see the following message:
 One of the benefits of GUAC is that it’s not a static database; it is constantly
 evolving and trying to find more information on the artifacts ingested. To
 demonstrate this, we will utilize one of the components of GUAC known as a
-“certifier”. The role of the certifier is to continuously run and query for
-additional information from various sources (such as osv.dev and scorecard to
-start with) and keep the information specified up-to-date within GUAC.
+“certifier”. The role of the certifier is to regularly run and query for
+additional information from various sources and keep the information specified
+up-to-date within GUAC.
 
 The certifier can be run in two modes:
 
 - **Polling:** For continuous updates on the information
-- **Non-polling:** Run once and collect the data
+- **Non-polling:** Run once and collect the data, either at ingestion time with
+  the `--add-vuln-on-ingest` flag or by running `guacone certifier osv`.
 
 For this demo, the polling version of the OSV certifier is already running as
 part of the Docker Compose.
