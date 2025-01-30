@@ -13,9 +13,11 @@ GUAC can ingest files from blob storage using
 from the storage, all items from a folder, a whole bucket or listen to storage
 events using sqs/kafka (poll) and download the files as they are uploaded.
 
-{: .note } The [GUAC Helm Charts](https://github.com/kusaridev/helm-charts)
-maintained by Kusari includes [MinIO](https://charts.min.io/), an S3-compatible
-blob store server.
+{: .note }
+
+The [GUAC Helm Charts](https://github.com/kusaridev/helm-charts) maintained by
+Kusari includes [MinIO](https://charts.min.io/), an S3-compatible blob store
+server.
 
 ## Amazon S3 and compatible
 
