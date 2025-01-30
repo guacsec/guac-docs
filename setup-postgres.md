@@ -81,12 +81,12 @@ deployment with a PostgreSQL database backend using Docker Compose.
 
 ### GUAC Ports
 
-| Port Number | GUAC Component       | Note                                                                                                                                                           |
-| ----------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 8080        | GraphQL server       | To see the GraphQL playground, visit [http://localhost:8080](http://localhost:8080).                                                                           |
-| 2782        | Collector Subscriber | This service is notified whenever you run a collector, such as `guacone collect files` below. Then subscribers can collect more data on any packages ingested. |
-| 4222        | Nats                 | Ingestion pubsub endpoint                                                                                                                                      |
-| 8081        | REST server          | GUAC endpoint for simplified REST queries.                                                                                                                     |
+| Port Number | GUAC Component       | Note                                                                                                                                                     |
+| ----------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 8080        | GraphQL server       | To see the GraphQL playground, visit [http://localhost:8080](http://localhost:8080).                                                                     |
+| 2782        | Collector Subscriber | This service is notified whenever you run a collector, such as `guacone collect files`. Then subscribers can collect more data on any packages ingested. |
+| 4222        | Nats                 | Ingestion pubsub endpoint                                                                                                                                |
+| 8081        | REST server          | GUAC endpoint for simplified REST queries.                                                                                                               |
 
 ### GUAC Volume Mounts
 
