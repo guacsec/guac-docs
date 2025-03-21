@@ -9,8 +9,14 @@ nav_order: 2
 # Ingest data
 
 You can run the `guacone collect files` ingestion command to load data into your
-GUAC deployment. For example we can ingest the sample `guac-data` data. However,
+GUAC deployment. For example we can ingest the sample guac-data data. However,
 you may ingest what you wish to here instead.
+
+To use the sample date, download the
+[guac-data repo contents](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip).
+Unzip the file and you will have a directory named `guac-data-main`. The
+remaining examples assume you are in the directory that contains
+`guac-data-main`.
 
 ```bash
 guacone collect --add-vuln-on-ingest --add-eol-on-ingest --add-license-on-ingest files guac-data-main/docs
