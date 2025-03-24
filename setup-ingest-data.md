@@ -12,7 +12,7 @@ You can run the `guacone collect files` ingestion command to load data into your
 GUAC deployment. For example we can ingest the sample guac-data data. However,
 you may ingest what you wish to here instead.
 
-To use the sample date, download the
+To use the sample data, download the
 [guac-data repo contents](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip).
 Unzip the file and you will have a directory named `guac-data-main`. The
 remaining examples assume you are in the directory that contains
