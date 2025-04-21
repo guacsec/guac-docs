@@ -38,8 +38,8 @@ deployment with a PostgreSQL database backend using Docker Compose.
 
    - Linux x86_64 :
      [`guaccollect-linux-amd64`](https://github.com/guacsec/guac/releases/latest/download/guaccollect-linux-amd64)
-   - MacOS x86_64 :
-     [`guaccollect-darwin-amd64`](https://github.com/guacsec/guac/releases/latest/download/guaccollect-darwin-amd64)
+   - MacOS ARM64 :
+     [`guaccollect-darwin-arm64`](https://github.com/guacsec/guac/releases/latest/download/guaccollect-darwin-arm64)
    - Windows x86_64 :
      [`guaccollect-windows-amd64.exe`](https://github.com/guacsec/guac/releases/latest/download/guaccollect-windows-amd64.exe)
 
