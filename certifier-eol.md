@@ -7,6 +7,10 @@ parent: "How GUAC components work together"
 
 # EOL certifier
 
+{: .note }
+
+The EOL certifier is experimental. The behavior may change in future versions.
+
 ## Overview
 
 The End of Life (EOL) certifier queries the
