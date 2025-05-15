@@ -33,9 +33,8 @@ work in concert. Read on to learn more of what goes on behind the hood!
 
 The GraphQL server serves the GUAC defined nodes through GraphQL queries. It is
 an abstraction layer for GUAC integrations and other GUAC components. Our setup
-docs use the built-in, in-memory backend for the server. Currently the server
-also supports a Neo4j backend. Any future backend database support added to GUAC
-will not affect the GraphQL interface that the server provides.
+docs use the built-in, in-memory backend for the server. For persistent storage,
+the server supports a Postgresql backend using [ent](https://entgo.io/).
 
 ### Ingestion Pipeline
 
@@ -60,7 +59,13 @@ This is a way to get an idea of what data sources the instance of GUAC is
 looking at, at a glance.
 
 Collectors and certifiers then take the documents and pass them onto the
-ingestor via [Nats](https://nats.io/).
+ingestor via [NATS](https://nats.io/).
+
+The following collectors are considered stable:
+
+- filesystem
+
+Other collectors are considered experimental and subject to behavior changes.
 
 ##### Certifiers
 
@@ -86,6 +91,33 @@ that it passes to the CollectSub service to request additional information for.
 Today, GUAC can understand multiple data formats like SPDX, CycloneDX, and SLSA.
 The ingestor listens for documents to parse via [NATS](https://nats.io/), and
 talks to the assembler via a GraphQL API.
+
+The ingestion of the following documents is considered stable:
+
+- [Common Security Advisory Framework](https://www.csaf.io/) (CSAF)
+- [OpenVEX](https://github.com/openvex)
+- [CycloneDX](https://cyclonedx.org/specification/overview/)
+- [Dead Simple Signing Envelope](https://github.com/secure-systems-lab/dsse)
+  (DSSE)
+- [in-toto ITE6](https://github.com/in-toto/ITE/blob/master/ITE/6/README.adoc)
+- [SPDX](https://spdx.dev/use/specifications/)
+- [OpenSSF Scorecard](https://scorecard.dev/)
+
+Document ingestion from the following sources is considered stable:
+
+- pubsub based on gocloud.dev SDK or NATS
+- Supported blobstores based on gocloud.dev SDK
+  - azure
+  - Google Cloud Storage
+  - Amazon S3
+  - Memblob
+  - Regular file system blobs
+
+Graph enrichment from the following sources is considered stable:
+
+- OSV for vulnerabilities
+- ClearlyDefined for license information
+- Deps.dev for dependency information
 
 #### Assembler
 
