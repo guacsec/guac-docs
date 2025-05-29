@@ -10,10 +10,8 @@ nav_order: 1
 
 {: .note }
 
-If you’d prefer, you can set up GUAC with Kubernetes with the experimental
-[Helm charts provided by Kusari](https://github.com/kusaridev/helm-charts/tree/main/charts/guac).
-Note that these helm charts are still experimental and are hosted in a
-third-party repo and may not be synchronized with the GUAC repo.
+If you’d prefer, you can set up GUAC with Kubernetes with the
+[Helm charts](https://github.com/guacsec/helm-charts/tree/main/charts/guac).
 
 This tutorial will walk you through how to deploy a demo-level GUAC, using
 Docker Compose, so that you get just enough components to complete all the [GUAC
