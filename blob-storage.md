@@ -15,9 +15,8 @@ events using sqs/kafka (poll) and download the files as they are uploaded.
 
 {: .note }
 
-The [GUAC Helm Charts](https://github.com/kusaridev/helm-charts) maintained by
-Kusari includes [MinIO](https://charts.min.io/), an S3-compatible blob store
-server.
+The [GUAC Helm charts](https://github.com/guacsec/helm-charts) include
+[MinIO](https://charts.min.io/), an S3-compatible blob store server.
 
 ## Amazon S3 and compatible
 

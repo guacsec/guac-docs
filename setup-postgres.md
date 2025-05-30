@@ -10,12 +10,10 @@ nav_order: 4
 
 {: .note }
 
-If you’d prefer, you can set up GUAC with Kubernetes with the experimental
-[Helm charts provided by Kusari](https://github.com/kusaridev/helm-charts/tree/main/charts/guac).
-Note that these helm charts are still experimental and are hosted in a
-third-party repo and may not be synchronized with the GUAC repo.
+If you’d prefer, you can set up GUAC with Kubernetes with the
+[Helm charts](https://github.com/guacsec/helm-charts/tree/main/charts/guac).
 
-This tutorial will walk you through how to deploy a full persistant GUAC
+This tutorial will walk you through how to deploy a full persistent GUAC
 deployment with a PostgreSQL database backend using Docker Compose.
 
 ## Prerequisites
