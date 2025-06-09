@@ -1,4 +1,10 @@
-# GUAC REST API Documentation
+---
+layout: page
+title: GUAC REST API Documentation
+parent: "How GUAC works"
+permalink: /rest-api/
+nav_order: 5
+---
 
 ## Overview
 
