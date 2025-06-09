@@ -2,7 +2,10 @@
 
 ## Overview
 
-The GUAC REST API provides an alternative to the GUAC GraphQL API, offering simplified access to advanced queries. It is ideal for users or developers who prefer REST endpoints over GraphQL queries and need to integrate GUAC services into their own tools and scripts.
+The GUAC REST API provides an alternative to the GUAC GraphQL API, offering
+simplified access to advanced queries. It is ideal for users or developers who
+prefer REST endpoints over GraphQL queries and need to integrate GUAC services
+into their own tools and scripts.
 
 ## Base URL
 
@@ -67,7 +70,8 @@ Response:
 
 ### 4. /v0/package/{purl}/vulns
 
-Description: Get vulnerabilities associated with the given `purl` and its dependencies.
+Description: Get vulnerabilities associated with the given `purl` and its
+dependencies.
 
 Method: `GET`  
 Path Parameter:
@@ -76,7 +80,8 @@ Path Parameter:
 
 Query Parameter:
 
-- includeDependencies (optional, default: `false`): Include vulnerabilities of dependencies.
+- includeDependencies (optional, default: `false`): Include vulnerabilities of
+  dependencies.
 
 Response:
 
@@ -107,14 +112,18 @@ Response:
 ```
 
 ### 6. GET /v0/package/{purl}/dependencies
-Retrieve the dependencies associated with a specific Package URL (purl). If a partial purl is provided, all associated purls and dependencies are included.
+
+Retrieve the dependencies associated with a specific Package URL (purl). If a
+partial purl is provided, all associated purls and dependencies are included.
 
 Request Example:
+
 ```bash
 GET /api/v1/package/{purl}/dependencies
 ```
 
 Response:
+
 ```json
 {
   "dependencies": ["pkg:foo/bar@1.0", "pkg:foo/bar@2.0"]
@@ -122,14 +131,17 @@ Response:
 ```
 
 ### 7. GET /v0/artifact/{digest}/vulns
+
 Retrieve vulnerabilities related to a specific artifact digest.
 
 Request Example:
+
 ```bash
 GET /api/v1/artifact/{digest}/vulns
 ```
 
 Response:
+
 ```json
 {
   "vulnerabilities": [
@@ -141,7 +153,6 @@ Response:
   ]
 }
 ```
-
 
 #### Vulnerability Schema
 
@@ -169,7 +180,8 @@ Response:
 ## Design Considerations
 
 - Design of the REST API: https://github.com/guacsec/guac/issues/1544
-- Infrastructure: Runs as a new binary under `cmd/rest` in the GUAC project, built using the existing Makefile setup
+- Infrastructure: Runs as a new binary under `cmd/rest` in the GUAC project,
+  built using the existing Makefile setup
 
 ## Development & Contribution
 
@@ -178,4 +190,5 @@ The REST API is open for improvements. Developers can contribute by:
 - Reporting issues via https://github.com/guacsec/guac/issues.
 - Reviewing or expanding the API design through pull requests.
 
-Check https://github.com/guacsec/guac/tree/main/cmd/guacrest for further details on Information on the Experimental guacrest API
+Check https://github.com/guacsec/guac/tree/main/cmd/guacrest for further details
+on Information on the Experimental guacrest API
