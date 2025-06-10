@@ -117,10 +117,15 @@ Response:
 }
 ```
 
-### 6. GET /v0/package/{purl}/dependencies
+### 6. /v0/package/{purl}/dependencies
 
 Retrieve the dependencies associated with a specific Package URL (purl). If a
 partial purl is provided, all associated purls and dependencies are included.
+
+Method: `GET`  
+Path Parameter:
+
+- purl (required): A URL-encoded Package URL.
 
 Request Example:
 
@@ -136,9 +141,14 @@ Response:
 }
 ```
 
-### 7. GET /v0/artifact/{digest}/vulns
+### 7. /v0/artifact/{digest}/vulns
 
 Retrieve vulnerabilities related to a specific artifact digest.
+
+Method: `GET`  
+Path Parameter:
+
+- purl (required): A URL-encoded Package URL.
 
 Request Example:
 
