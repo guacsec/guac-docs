@@ -37,7 +37,6 @@ align the two systems.
 ## What is and is not Supported
 
 1. **Supported Features**:
-
    - GUAC retrieves detailed license data from ClearlyDefined.
    - Both SBOM-derived and ClearlyDefined license data are preserved, allowing
      users to make manual decisions in case of conflicts.
@@ -54,12 +53,10 @@ align the two systems.
 GUAC integrates with ClearlyDefined in three ways:
 
 1. **Scheduled Certifier Execution**
-
    - Automatically runs at specified intervals to keep the dependency data up to
      date.
 
 2. **On-Demand during SBOM Ingestion**
-
    - Queries ClearlyDefined in real time during the ingestion of SBOMs, which
      may slow down the processing.
 

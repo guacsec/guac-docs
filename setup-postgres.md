@@ -33,7 +33,6 @@ deployment with a PostgreSQL database backend using Docker Compose.
    architecture from the
    [latest GUAC release](https://github.com/guacsec/guac/releases/latest) if you
    have not already done so. For example:
-
    - Linux x86_64 :
      [`guaccollect-linux-amd64`](https://github.com/guacsec/guac/releases/latest/download/guaccollect-linux-amd64)
    - MacOS ARM64 :

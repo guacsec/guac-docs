@@ -25,7 +25,6 @@ nav_order: 1
    from the
    [latest GUAC release](https://github.com/guacsec/guac/releases/latest) if you
    have not already done so. For example:
-
    - Linux x86_64 :
      [`guacone-linux-amd64`](https://github.com/guacsec/guac/releases/latest/download/guacone-linux-amd64)
    - MacOS ARM64 :

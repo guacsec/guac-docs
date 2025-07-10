@@ -125,7 +125,6 @@ In this first example, we will query if our image has any vulnerabilities
 This can be done in two ways.
 
 1. Using the URI from the SBOM
-
    - For CycloneDX this would be the `serialNumber`. For more details refer to
      the CycloneDX documentation found here:
      https://cyclonedx.org/docs/1.5/json/#serialNumber
