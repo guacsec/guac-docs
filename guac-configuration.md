@@ -17,13 +17,11 @@ scenarios where you might want to change it.
 ### Ent config
 
 - **db-driver**: `postgres`
-
   - **Description**: The driver used for the database connection.
   - **When to Change**: Modify if you need to switch to a different database
     driver.
 
 - **db-address**: `postgres://guac:guac@postgres:5432/guac?sslmode=disable`
-
   - **Description**: The address for connecting to the PostgreSQL database.
   - **When to Change**: Update if your database address changes or if you need
     to enable/disable SSL.
@@ -87,7 +85,6 @@ scenarios where you might want to change it.
 ## Pub/Sub Configuration
 
 - **pubsub-addr**: `nats://localhost:4222`
-
   - **Description**: The address of the NATS server for pub/sub messaging.
   - **When to Change**: Update if your NATS server is hosted elsewhere or uses a
     different port.
@@ -107,31 +104,26 @@ scenarios where you might want to change it.
 ## Certifier Configuration
 
 - **interval**: `20m`
-
   - **Description**: The interval at which the certifier runs.
   - **When to Change**: Adjust based on how frequently you need certification
     checks.
 
 - **last-scan**: `4`
-
   - **Description**: The number of hours since the last scan was run. A value of
     `0` means the scan will run on all packages/sources.
   - **When to Change**: Set to `0` for a full scan or adjust based on your
     scanning frequency needs.
 
 - **certifier-batch-size**: `60000`
-
   - **Description**: The batch size for the package pagination query.
   - **When to Change**: Modify to optimize performance based on your system's
     capabilities.
 
 - **certifier-latency**: `""`
-
   - **Description**: Artificial latency to throttle the certifier.
   - **When to Change**: Use to introduce delays if needed to manage load.
 
 - #### Deps.dev Configuration
-
   - **deps-dev-latency**: `""`
   - **Description**: Artificial latency to throttle deps.dev.
   - **When to Change**: Adjust if you need to manage load on deps.dev queries.
@@ -139,7 +131,6 @@ scenarios where you might want to change it.
 ## Ingestion Configuration
 
 - **add-vuln-on-ingest**: `false`
-
   - **Description**: Whether to query vulnerabilities during ingestion.
   - **When to Change**: Set to `true` if you want to automatically check for
     vulnerabilities during data ingestion.
@@ -152,7 +143,6 @@ scenarios where you might want to change it.
 ## Collector-Subscriber Configuration
 
 - **csub-addr**: `localhost:2782`
-
   - **Description**: The address for the Collector-Subscriber service.
   - **When to Change**: Update if your Collector-Subscriber service is hosted on
     a different address.
@@ -165,17 +155,14 @@ scenarios where you might want to change it.
 ## GraphQL Configuration
 
 - **gql-backend**: `keyvalue`
-
   - **Description**: The backend used for the GraphQL server.
   - **When to Change**: Modify if using a different backend for GraphQL.
 
 - **gql-listen-port**: `8080`
-
   - **Description**: The port on which the GraphQL server listens.
   - **When to Change**: Change if your GraphQL server uses a different port.
 
 - **gql-debug**: `true`
-
   - **Description**: Whether to enable debug mode for the GraphQL server.
   - **When to Change**: Set to `false` in production environments for security.
 
@@ -192,7 +179,6 @@ scenarios where you might want to change it.
 ## Collector Configuration
 
 - **service-poll**: `true`
-
   - **Description**: Whether the collector should poll services.
   - **When to Change**: Set to `false` if polling is not required.
 
