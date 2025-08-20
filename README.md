@@ -13,7 +13,7 @@ be available on http://127.0.0.1:4000/guac-docs
 
 The deployment pipeline runs [Prettier](https://prettier.io/) on the Markdown
 files to check formatting. Before committing changes, you should verify your
-formatting with `npx --yes prettier --write --prose-wrap always *.md`
+formatting with `npx --yes prettier --write --prose-wrap always ./**/*.md`
 
 ## Contributing
 

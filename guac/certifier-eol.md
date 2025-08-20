@@ -1,7 +1,8 @@
 ---
 layout: page
 title: End of Life certifier
-permalink: /certifier-eol/
+permalink: /guac/certifier-eol/
+redirect_from: /certifier-eol/
 parent: "How GUAC components work together"
 ---
 

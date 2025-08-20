@@ -39,4 +39,4 @@ jobs:
         with:
           persist-credentials: false
       - name: Check markdown format
-        run: npx --yes prettier --check --prose-wrap always *.md
+        run: npx --yes prettier --check --prose-wrap always ./**/*.md

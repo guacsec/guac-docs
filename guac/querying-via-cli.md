@@ -1,7 +1,8 @@
 ---
 layout: page
 title: Querying vulnerabilities via CLI
-permalink: /querying-via-cli/
+permalink: /guac/querying-via-cli/
+redirect_from: /querying-via-cli/
 parent: GUAC demos
 grand_parent: Getting started with GUAC
 nav_order: 4
@@ -23,11 +24,12 @@ vulnerability.
 ## Requirements
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
-  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your
-  path and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %})
-  extracted to `guac-data-main`.
-- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and
-  running.
+  site.baseurl }}{%link guac/setup.md %}). Including the `guacone` binary in
+  your path and [demo
+  data]({{ site.baseurl}}{%link guac/setup-ingest-data.md %}) extracted to
+  `guac-data-main`.
+- The [GUAC visualizer]({{ site.baseurl }}{%link guac/guac-visualizer.md %}) up
+  and running.
 
 ## Ingest a vulnerability SPDX SBOM
 
@@ -188,7 +190,7 @@ use elsewhere to make policy decisions or to visualize the issue. We can use the
 GUAC visualizer to explore the vulnerabilities quickly. Copying the provided URL
 and pasting it into a browser will show the following:
 
-![Image from visualizer](assets/images/cliimage.png)
+![Image from visualizer](../assets/images/cliimage.png)
 
 From the visualizer, we can determine that the image we are working with is
 vulnerable to both log4j and text4shell vulnerabilities. These packages need to
@@ -245,7 +247,7 @@ Based on the output we see that there is a path to the vulnerability and we can
 use the GUAC visualizer to inspect in more detail. Copying the provided URL and
 pasting it into a browser will show the following:
 
-![Image from visualizer](assets/images/cliimage2.png)
+![Image from visualizer](../assets/images/cliimage2.png)
 
 From this, we can see that the Apache logging library, log4j, is the culprit and
 needs to be remediated immediately!
@@ -259,4 +261,4 @@ to create more tools such as these quickly and easily!
 
 Now that you've indentified a vulnerability, how do you react to it? The next
 step in the demo covers [reacting to a supply chain
-incident]({{ site.baseurl}}{%link supply-chain.md %}).
+incident]({{ site.baseurl}}{%link guac/supply-chain.md %}).

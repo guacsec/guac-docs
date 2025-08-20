@@ -2,7 +2,8 @@
 layout: page
 title: GUAC REST API Documentation
 parent: "How GUAC works"
-permalink: /rest-api/
+permalink: /guac/rest-api/
+redirect_from: /rest-api/
 nav_order: 5
 ---
 

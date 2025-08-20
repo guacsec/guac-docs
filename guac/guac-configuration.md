@@ -1,7 +1,8 @@
 ---
 layout: page
 title: GUAC Configuration Guide
-permalink: /guac-configuration/
+permalink: /guac/guac-configuration/
+redirect_from: /guac-configuration/
 parent: Getting started with GUAC
 nav_order: 7
 ---

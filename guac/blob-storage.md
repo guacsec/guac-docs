@@ -2,7 +2,8 @@
 layout: page
 title: Using blob storage with GUAC
 parent: "Ingesting SBOMs into GUAC"
-permalink: /ingesting-blob/
+permalink: /guac/ingesting-blob/
+redirect_from: /ingesting-blob/
 nav_order: 1
 ---
 

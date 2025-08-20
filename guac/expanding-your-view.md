@@ -1,7 +1,8 @@
 ---
 layout: page
 title: Expanding your view of the software supply chain
-permalink: /expanding-your-view/
+permalink: /guac/expanding-your-view/
+redirect_from: /expanding-your-view/
 parent: GUAC demos
 grand_parent: Getting started with GUAC
 nav_order: 1
@@ -29,7 +30,7 @@ supply chain environment.
 In this demo, we will go through the process of ingesting an SBOM and letting
 GUAC expand our horizons on what we know about our environment autonomously!
 
-![Diagram of how GUAC works](assets/images/expandviewdiagram.png)
+![Diagram of how GUAC works](../assets/images/expandviewdiagram.png)
 
 We will demonstrate the various integrations of GUAC and how they work together
 within the ingested SBOM.
@@ -37,8 +38,8 @@ within the ingested SBOM.
 ## Requirements
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
-  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your
-  path and
+  site.baseurl }}{%link guac/setup.md %}). Including the `guacone` binary in
+  your path and
   [GUAC Data](https://github.com/guacsec/guac-data/archive/refs/heads/main.zip)
   extracted to `guac-data-main`.
 
@@ -105,7 +106,7 @@ From GraphQL Playground, we can use the provided
 Copy and paste the entire file into the left column of the playground. The below
 queries can be selected by name by using the "play" button in the center.
 
-![Diagram of how GUAC works](assets/images/graphql_ui.png)
+![Diagram of how GUAC works](../assets/images/graphql_ui.png)
 
 ### IsDependency
 
@@ -579,11 +580,11 @@ This information came from the OSV certifier service that is constantly running
 within GUAC. From this, we can see that two versions of
 `github.com/prometheus/client_golang` contain the same `ghsa-cg3q-j54f-5p7p`. In
 the [vulnerability CLI demo]({{ site.baseurl }}{%link
-querying-via-cli.md %}), we can use this information to determine if there is a
-path between this and the version of Vault we are using. Here is a quick look at
-what the visualization would look like for that:
+guac/querying-via-cli.md %}), we can use this information to determine if there
+is a path between this and the version of Vault we are using. Here is a quick
+look at what the visualization would look like for that:
 
-![Visualization of data](assets/images/expandviewvisualization.png)
+![Visualization of data](../assets/images/expandviewvisualization.png)
 
 ## Expanding your view of the software supply chain
 
@@ -595,7 +596,7 @@ package should be used due to a low OpenSSF Scorecard score or critical
 vulnerability.
 
 Next, let's see [what is known and unknown about your software supply
-chain]({{ site.baseurl}}{%link known-and-unknown.md %}).
+chain]({{ site.baseurl}}{%link guac/known-and-unknown.md %}).
 
 ## Checking the logs
 

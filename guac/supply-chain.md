@@ -1,7 +1,8 @@
 ---
 layout: page
 title: Reacting to a supply chain incident
-permalink: /supply-chain/
+permalink: /guac/supply-chain/
+redirect_from: /supply-chain/
 parent: GUAC demos
 grand_parent: Getting started with GUAC
 nav_order: 5
@@ -28,24 +29,26 @@ or not.
 
 To find out if you're affected by the security incident and decide what you need
 to patch, utilize the [Guac Visualizer]({{ site.baseurl }}{%link
-guac-visualizer.md %}). The GUAC visualizer provides a utility to do some basic
-analysis and exploration of the software supply chain. This is a great way to
-get a sense of the size of the problem and helps when developing prototype
+guac/guac-visualizer.md %}). The GUAC visualizer provides a utility to do some
+basic analysis and exploration of the software supply chain. This is a great way
+to get a sense of the size of the problem and helps when developing prototype
 utilities and queries with GUAC (very much like the [vulnerability CLI]({{
-site.baseurl }}{%link querying-via-cli.md %})).
+site.baseurl }}{guac/querying-via-cli.md %})).
 
 For this demo, we will simulate ingesting an organization's software catalog.
-The [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %}) you ingested
-into GUAC at the beginning includes a collection of SBOMs and SLSA attestations.
+The [demo data]({{ site.baseurl}}{% link guac/setup-ingest-data.md %}) you
+ingested into GUAC at the beginning includes a collection of SBOMs and SLSA
+attestations.
 
 ## Requirements
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
-  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your
-  path and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %})
-  extracted to `guac-data-main`.
-- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and
-  running.
+  site.baseurl }}{%link guac/setup.md %}). Including the `guacone` binary in
+  your path and [demo
+  data]({{ site.baseurl}}{% link guac/setup-ingest-data.md %}) extracted to
+  `guac-data-main`.
+- The [GUAC visualizer]({{ site.baseurl }}{%link guac/guac-visualizer.md %}) up
+  and running.
 
 ## Mark packages as bad when a security incident occurs
 
@@ -111,7 +114,7 @@ If we successfully added "CertifyBad", the output will show:
 3. Navigate to the URL to visualize the output. This will show an expanded graph
    of dependencies.
 
-   ![An image of the visualizer output graph](assets/images/supplychain_dependencies_graph.png)
+   ![An image of the visualizer output graph](../assets/images/supplychain_dependencies_graph.png)
 
    We can tell from this example (arranging the graph a little) the bad debian
    package (used for timezone information) is commonly used throughout a bunch
@@ -165,7 +168,7 @@ Visualizer url: http://localhost:3000/?path=136009,849,848,94,136010,135888,4586
 
 We can now follow the url to see the following graph:
 
-![An image of the visualizer output graph](assets/images/supplychain_dependencies_large_graph.png)
+![An image of the visualizer output graph](../assets/images/supplychain_dependencies_large_graph.png)
 
 From this view, we can see that this particular repo is being used by a bunch of
 packages, specifically:
@@ -189,4 +192,4 @@ packages, specifically:
 With this data, we can investigate further and determine which packages are
 dependent on these compromised packages and remediate them quickly. The next
 step in the demo covers [creating a patch
-plan]({{ site.baseurl}}{%link patch-cli.md %})
+plan]({{ site.baseurl}}{%link guac/patch-cli.md %})

@@ -1,7 +1,8 @@
 ---
 layout: page
 title: Using GUAC's GraphQL interface
-permalink: /guac-graphql/
+permalink: /guac/guac-graphql/
+redirect_from: /guac-graphql/
 parent: Developing tools on top of GUAC
 nav_order: 1
 ---

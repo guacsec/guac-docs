@@ -1,7 +1,8 @@
 ---
 layout: page
 title: Set up the GUAC Visualizer
-permalink: /guac-visualizer/
+permalink: /guac/guac-visualizer/
+redirect_from: /guac-visualizer/
 parent: Getting started with GUAC
 nav_order: 5
 ---
@@ -30,7 +31,7 @@ well as a means to explore the supply chain and prototype policies.
 - [node](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
   version >= 18
 - [GUAC services up and running]({{
-  site.baseurl }}{%link setup.md %})
+  site.baseurl }}{%link guac/setup.md %})
 
 ## Installation
 

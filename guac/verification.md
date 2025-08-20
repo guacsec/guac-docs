@@ -1,7 +1,8 @@
 ---
 layout: page
 title: Verify and validate via cosign and slsa-verifier
-permalink: /verification/
+permalink: /guac/verification/
+redirect_from: /verification/
 parent: Getting started with GUAC
 nav_order: 3
 ---

@@ -1,7 +1,8 @@
 ---
 layout: page
 title: guaccollect
-permalink: /cli-guaccollect/
+permalink: /guac/cli-guaccollect/
+redirect_from: /cli-guaccollect/
 parent: How GUAC components work together
 nav_order: 1
 ---
@@ -33,20 +34,20 @@ images.
 
 `guaccollect` supports the following commands:
 
-| Command    | Description                                                                       |
-| ---------- | --------------------------------------------------------------------------------- |
-| cd         | Runs the [Clearly Defined certifier]({{ site.baseurl }}{%link certifier-cd.md %}) |
-| completion | Generate the autocompletion script for the specified shell                        |
-| deps_dev   | Queries pURLS against deps.dev to find additional metadata to add to GUAC graph   |
-| files      | Ingest a folder of files                                                          |
-| gcs        | Ingest SBOMs and attestations from a Google Cloud Storage bucket                  |
-| github     | Download metadata documents stored in GithHub releases                            |
-| help       | Help about any command                                                            |
-| image      | Ingests SBOMs and attestations stored in an OCI image                             |
-| osv        | Runs the [OSV certifier]({{ site.baseurl }}{%link certifier-osv.md %})            |
-| registry   | Ingests SBOMs and attestations store in an OCI registry                           |
-| s3         | Ingests SBOMs and attestations from S3 compatible bucket                          |
-| scorecard  | Runs the OpenSSF Scorecard certifier                                              |
+| Command    | Description                                                                            |
+| ---------- | -------------------------------------------------------------------------------------- |
+| cd         | Runs the [Clearly Defined certifier]({{ site.baseurl }}{%link guac/certifier-cd.md %}) |
+| completion | Generate the autocompletion script for the specified shell                             |
+| deps_dev   | Queries pURLS against deps.dev to find additional metadata to add to GUAC graph        |
+| files      | Ingest a folder of files                                                               |
+| gcs        | Ingest SBOMs and attestations from a Google Cloud Storage bucket                       |
+| github     | Download metadata documents stored in GithHub releases                                 |
+| help       | Help about any command                                                                 |
+| image      | Ingests SBOMs and attestations stored in an OCI image                                  |
+| osv        | Runs the [OSV certifier]({{ site.baseurl }}{%link guac/certifier-osv.md %})            |
+| registry   | Ingests SBOMs and attestations store in an OCI registry                                |
+| s3         | Ingests SBOMs and attestations from S3 compatible bucket                               |
+| scorecard  | Runs the OpenSSF Scorecard certifier                                                   |
 
 ### Flags
 
@@ -73,7 +74,7 @@ flags.
 `guaccollect` offers a modular design with separate commands for each data
 source.
 
-![guaccollect graph](assets/images/guaccollectGraph.png)
+![guaccollect graph](../assets/images/guaccollectGraph.png)
 
 ### GitHub
 

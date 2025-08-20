@@ -1,7 +1,8 @@
 ---
 layout: page
 title: GraphQL
-permalink: /graphql/
+permalink: /guac/graphql/
+redirect_from: /graphql/
 parent: Developing tools on top of GUAC
 nav_order: 2
 ---
@@ -17,8 +18,8 @@ of API changes. To get started, consult
 [the official documentation](https://graphql.org/learn/).
 
 This documents provides some insight into how the GraphQL API matches the [GUAC
-ontology]({{ site.baseurl }}{%link guac-ontology.md %}) and its
-[definition]({{ site.baseurl }}{%link guac-ontology-definition.md %}).
+ontology]({{ site.baseurl }}{%link guac/guac-ontology.md %}) and its
+[definition]({{ site.baseurl }}{%link guac/guac-ontology-definition.md %}).
 
 Note: the GraphQL definitions are not yet stable, they might change in future
 code changes. To get an up to date view of the definitions, you can use one of
@@ -29,7 +30,7 @@ the following:
 - Look at the generated Go documentation using `godoc` and analyzing the
   `guacsec/guac/pkg/assembler/graphql/model` package.
 - Open the playground by passing `--gql-debug` to [`guacgql`
-  component]({{ site.baseurl }}{%link setup.md %}), then consult the
+  component]({{ site.baseurl }}{%link guac/setup.md %}), then consult the
   documentation tab of the
   [Graphiql editor](https://github.com/graphql/graphiql).
 - Use [GraphQL Voyager](https://ivangoncharov.github.io/graphql-voyager/). You
@@ -135,7 +136,7 @@ type PackageQualifier {
 }
 ```
 
-![graphical representation of the package trie](assets/images/gqlpackage.png)
+![graphical representation of the package trie](../assets/images/gqlpackage.png)
 
 Optional strings on internal nodes (e.g., `PackageNamespace`) are stored as
 empty. When ingesting, these would have an empty default value. Optional lists
@@ -187,7 +188,7 @@ type SourceName {
 }
 ```
 
-![graphical representation of the source trie](assets/images/gqlsource.png)
+![graphical representation of the source trie](../assets/images/gqlsource.png)
 
 The tag and commit fields are optional, but it is an error to specify both.
 
@@ -645,11 +646,11 @@ definition for these as of now.
 ## Topological Definitions
 
 Each GraphQL type defined so far has a semantic meaning, tied to the [GUAC
-ontology]({{ site.baseurl }}{%link guac-ontology.md %}). However, in some cases,
-users might want to see what GraphQL types are linked to a specific type, or
-they might want to find a link between two different nodes. For these cases, we
-currently provide an experimental interface to get topological information about
-the GUAC graph.
+ontology]({{ site.baseurl }}{%link guac/guac-ontology.md %}). However, in some
+cases, users might want to see what GraphQL types are linked to a specific type,
+or they might want to find a link between two different nodes. For these cases,
+we currently provide an experimental interface to get topological information
+about the GUAC graph.
 
 Note: These definitions are subject to change and might be removed in future
 versions of GUAC. Treat this interface as experimental.

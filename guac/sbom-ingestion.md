@@ -2,7 +2,8 @@
 layout: page
 title: Ingesting SBOMs into GUAC
 parent: "How GUAC works"
-permalink: /ingesting-sboms/
+permalink: /guac/ingesting-sboms/
+redirect_from: /ingesting-sboms/
 nav_order: 1
 ---
 

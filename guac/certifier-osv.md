@@ -1,6 +1,7 @@
 ---
 layout: page
-permalink: /osv-certifier/
+permalink: /guac/osv-certifier/
+redirect_from: /osv-certifier/
 title: "OSV certifier"
 parent: "How GUAC components work together"
 description:

@@ -1,7 +1,8 @@
 ---
 layout: page
 title: ClearlyDefined certifier
-permalink: /certifier-clearlydefined/
+permalink: /guac/certifier-clearlydefined/
+redirect_from: /certifier-clearlydefined/
 parent: "How GUAC components work together"
 ---
 
@@ -28,7 +29,7 @@ The certifier runs periodically or can be triggered during SBOM ingestion to
 pull data directly from ClearlyDefined. However, including ClearlyDefined
 queries during SBOM ingestion may slow down processing, especially for larger
 datasets. For further details see the [certifier
-configuration]({{ site.baseurl }}{%link guac-configuration.md %}#certifier-configuration).
+configuration]({{ site.baseurl }}{%link guac/guac-configuration.md %}#certifier-configuration).
 
 ClearlyDefined identifies software using _coordinates_, which GUAC maps to
 _pURLs (package URLs)_. A custom mapping library facilitates this conversion to

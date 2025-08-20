@@ -1,7 +1,8 @@
 ---
 layout: page
 title: Querying for a patch plan via CLI
-permalink: /patch-plan/
+permalink: /guac/patch-plan/
+redirect_from: /patch-plan/
 parent: GUAC demos
 grand_parent: Getting started with GUAC
 nav_order: 6
@@ -29,11 +30,12 @@ resolve a security incident.
 ## Requirements
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
-  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your
-  path and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %})
-  extracted to `guac-data-main`.
-- The [GUAC visualizer]({{ site.baseurl }}{%link guac-visualizer.md %}) up and
-  running.
+  site.baseurl }}{%link guac/setup.md %}). Including the `guacone` binary in
+  your path and [demo
+  data]({{ site.baseurl}}{% link guac/setup-ingest-data.md %}) extracted to
+  `guac-data-main`.
+- The [GUAC visualizer]({{ site.baseurl }}{%link guac/guac-visualizer.md %}) up
+  and running.
 
 ## Run the Query Patch CLI
 
@@ -100,7 +102,7 @@ Note that the node IDs can change.
 The visualizer looks like the following (once you adjust the position of the
 antlr node)
 
-![Image from visualizer](assets/images/patch-cli-demo1.png)
+![Image from visualizer](../assets/images/patch-cli-demo1.png)
 
 You can match up the outputs of the frontiers to the nodes in the subgraph in
 order to figure a viable plan of action to remediate an issue.
@@ -151,7 +153,7 @@ http://localhost:3000/?path=26193,16667,36245,18570,18572,18571,16669,16668,2510
 The visualizer looks like the following (you may neeed to move the visualizer to
 over see the graph):
 
-![Image from visualizer](assets/images/patch-cli-demo2.png)
+![Image from visualizer](../assets/images/patch-cli-demo2.png)
 
 Notice that the output still contains the dependent package of the package name
 attached to the version we inputted. This is because if a specific package

@@ -1,7 +1,8 @@
 ---
 layout: page
 title: GUAC ontology definition
-permalink: /guac-ontology-definition/
+permalink: /guac/guac-ontology-definition/
+redirect_from: /guac-ontology-definition/
 parent: How GUAC works
 nav_order: 3
 ---
@@ -11,11 +12,11 @@ nav_order: 3
 This document provides some insights into how the GUAC ontology was defined.
 
 For a comprehensive and up-to-date listing of the GUAC ontology, please refer to
-the [GraphQL documentation]({{ site.baseurl }}{%link graphql.md %}).
+the [GraphQL documentation]({{ site.baseurl }}{%link guac/graphql.md %}).
 
 ## Overview
 
-The [GUAC Onlotogy]({{ site.baseurl }}{%link guac-ontology.md %}) document
+The [GUAC Onlotogy]({{ site.baseurl }}{%link guac/guac-ontology.md %}) document
 defines the 3 structures as the software tree, evidence tree, and actor tree.
 
 - **Software Tree:** A factual structure that describes software entities. They
@@ -36,7 +37,7 @@ We first have to define the software tree and components. This can be broken
 into: pURL, source, artifact, builder, OSV, GHSA, and CVE.
 
 For a comprehensive and up-to-date listing of the GUAC ontology, please refer to
-the [GraphQL documentation]({{ site.baseurl }}{%link graphql.md %}).
+the [GraphQL documentation]({{ site.baseurl }}{%link guac/graphql.md %}).
 
 ### Package (Pkg)
 
@@ -100,7 +101,7 @@ CVE contains a CVE ID.
 
 A visualization of some of the above software trees would look like:
 
-![Visualization of software trees](assets/images/softwaretreevis.png)
+![Visualization of software trees](../assets/images/softwaretreevis.png)
 
 ## GUAC Evidence Tree
 
@@ -130,7 +131,7 @@ An example of a predicate is:
   - collector ( string )
 
 For a list of all predicates, please refer to the [GraphQL
-documentation]({{ site.baseurl }}{%link graphql.md %}).
+documentation]({{ site.baseurl }}{%link guac/graphql.md %}).
 
 ## GUAC Actor Tree (Not in v0.1 BETA)
 
@@ -165,4 +166,4 @@ This would look like the following from a topological perspective. However,
 since they are singleton nodes, they can be stored as URIs in each evidence node
 and can be de-normalized if there is a need to optimize queries.
 
-![Actor tree diagram](assets/images/3trees.png)
+![Actor tree diagram](../assets/images/3trees.png)

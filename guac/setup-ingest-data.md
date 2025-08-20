@@ -1,7 +1,8 @@
 ---
 layout: page
 title: Ingest Data
-permalink: /setup-ingest-data/
+permalink: /guac/setup-ingest-data/
+redirect_from: /setup-ingest-data/
 parent: Start a demo GUAC with Docker Compose
 nav_order: 2
 ---
@@ -75,7 +76,7 @@ the `docker-compose.yaml` we can see what is actually running:
 
 Now it's time to start exploring the GUAC demos. Start by [expanding your view
 of the software supply chain]({{
-site.baseurl }}{%link expanding-your-view.md %}).
+site.baseurl }}{%link guac/expanding-your-view.md %}).
 
 This compose configuration is suitable to leave running in an environment that
 is accessible to your environment for the GUAC demos and further GUAC ingestion,
@@ -85,4 +86,4 @@ not persistent. Explore the types of collectors available under the
 SBOM workflow. These collectors can be run as another service that watches a
 location for new documents to ingest. If you’re curious about the various GUAC
 components and what they do, see [How GUAC components work together]({{
-site.baseurl }}{%link guac-components.md %}).
+site.baseurl }}{%link guac/guac-components.md %}).

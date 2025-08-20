@@ -1,7 +1,8 @@
 ---
 layout: page
 title: What is Known and Unknown about your software supply chain?
-permalink: /known-and-unknown/
+permalink: /guac/known-and-unknown/
+redirect_from: /known-and-unknown/
 parent: GUAC demos
 grand_parent: Getting started with GUAC
 nav_order: 3
@@ -9,7 +10,7 @@ nav_order: 3
 
 # What is Known and Unknown about your Software Supply Chain
 
-![Dinosaur Meme](assets/images/knownunknownmeme.jpeg)
+![Dinosaur Meme](../assets/images/knownunknownmeme.jpeg)
 
 The software supply chain is like a rabbit hole that can be very deep and hold
 many twists and turns. It's hard to track where the different tunnels may lead.
@@ -29,19 +30,21 @@ picture of your software supply chain. With GUAC you can easily determine your:
 - unknown, unknowns
 
 In the ["Expanding your view of the software supply chain" demo]({{
-site.baseurl }}{%link expanding-your-view.md %}), we went through the process of
-ingesting an SBOM and letting GUAC expand our horizons on what we know about our
-environment autonomously. In this demo, we'll take that information and use it
-to determine what we know and don't know about the artifacts.
+site.baseurl }}{%link guac/expanding-your-view.md %}), we went through the
+process of ingesting an SBOM and letting GUAC expand our horizons on what we
+know about our environment autonomously. In this demo, we'll take that
+information and use it to determine what we know and don't know about the
+artifacts.
 
 ## Requirements
 
 - A fresh copy of the [GUAC service infrastructure through Docker Compose]({{
-  site.baseurl }}{%link setup.md %}). Including the `guacone` binary in your
-  path and [demo data]({{ site.baseurl}}{% link setup-ingest-data.md %})
-  extracted to `guac-data-main`.
+  site.baseurl }}{%link guac/setup.md %}). Including the `guacone` binary in
+  your path and [demo
+  data]({{ site.baseurl}}{% link guac/setup-ingest-data.md %}) extracted to
+  `guac-data-main`.
 - Completion of the [Expanding your view of the software supply chain
-  demo]({{ site.baseurl }}{%link expanding-your-view.md %})
+  demo]({{ site.baseurl }}{%link guac/expanding-your-view.md %})
 
 ## Understanding the data
 
@@ -65,8 +68,9 @@ have the following definitions:
 | `pkgEquals`    | Two packages (with different purls) are equal                                            |
 
 For more information on these, refer to the [GraphQL documentation]({{
-site.baseurl }}{%link graphql.md %}) and [ontology definitions]({{ site.baseurl
-}}{%link guac-ontology-definition.md %}).
+site.baseurl }}{%link guac/graphql.md %}) and [ontology
+definitions]({{ site.baseurl
+}}{%link guac/guac-ontology-definition.md %}).
 
 ## Run the query to find the knowns and unknowns
 
@@ -161,8 +165,9 @@ and a artifact (algorithm:digest).
 
    For more information on the SLSA attestation, we can look up the SLSA
    attestation via the Node ID in the [GraphQL
-   playground]({{ site.baseurl }}{%link guac-graphql.md %}) that is shown in the
-   output. Be sure to replace the ID with the one you received from the output.
+   playground]({{ site.baseurl }}{%link guac/guac-graphql.md %}) that is shown
+   in the output. Be sure to replace the ID with the one you received from the
+   output.
 
    ```graphql
    query SLSAQ3 {
@@ -342,7 +347,7 @@ and a artifact (algorithm:digest).
    **NOTE**: This is just the vulnerability associated with this specific
    package (not taking into account dependencies). For a full in-depth
    vulnerability search please follow the [Query Vulnerability
-   demo]({{ site.baseurl }}{%link querying-via-cli.md %}).
+   demo]({{ site.baseurl }}{%link guac/querying-via-cli.md %}).
 
    We also see that in this case, we did not get a `hasSBOM` associated with it.
    Meaning that we do not have any SBOM information related to this package. We
@@ -542,4 +547,4 @@ Based on the information gathered above:
 
 Now that you know something about your software supply chain, let's look at what
 you probably want to know about right away:
-[vulnerabilties]({{ site.baseurl}}{% link querying-via-cli.md %}).
+[vulnerabilties]({{ site.baseurl}}{% link guac/querying-via-cli.md %}).

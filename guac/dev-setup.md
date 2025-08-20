@@ -1,7 +1,8 @@
 ---
 layout: page
 title: Setting up your development environment for GUAC
-permalink: /dev-setup/
+permalink: /guac/dev-setup/
+redirect_from: /dev-setup/
 parent: Getting started with GUAC
 nav_order: 6
 ---

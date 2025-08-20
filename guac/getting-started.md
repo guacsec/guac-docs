@@ -1,7 +1,9 @@
 ---
 layout: page
 title: Getting started with GUAC
-permalink: /getting-started/
+permalink: /guac/getting-started/
+redirect_from: /getting-started/
+parent: GUAC Docs
 has_children: true
 nav_order: 2
 ---

@@ -1,7 +1,8 @@
 ---
 layout: page
 title: Start GUAC with PostgreSQL using Docker Compose
-permalink: /setup-postgres/
+permalink: /guac/setup-postgres/
+redirect_from: /setup-postgres/
 parent: Getting started with GUAC
 nav_order: 4
 ---
@@ -25,7 +26,7 @@ deployment with a PostgreSQL database backend using Docker Compose.
 ## Optional - Verify images and binaries
 
 - Follow [Verification of the GUAC images and
-  binaries]({{ site.baseurl }}{%link verification.md %})
+  binaries]({{ site.baseurl }}{%link guac/verification.md %})
 
 ## Step 1: Download GUAC
 
@@ -185,7 +186,7 @@ analysis, and evaluation. Explore the types of collectors available under the
 and SBOM workflow. These collectors can be run as another service that watches a
 location for new documents to ingest. If you’re curious about the various GUAC
 components and what they do, see [How GUAC components work together]({{
-site.baseurl }}{%link guac-components.md %}).
+site.baseurl }}{%link guac/guac-components.md %}).
 
 You may wish to alter the volume configuration to change the blobstore and
 postgres-data locations. The blobstore needs to be accessable to any

@@ -1,7 +1,8 @@
 ---
 layout: page
 title: How GUAC components work together
-permalink: /guac-components/
+permalink: /guac/guac-components/
+redirect_from: /guac-components/
 parent: How GUAC works
 has_children: yes
 nav_order: 2
@@ -22,12 +23,12 @@ nav_order: 2
 
 The full GUAC component deployment is a set of asynchronous services that
 combine to form a robust and scalable pipeline. In some of our [demos]({{
-site.baseurl }}{%link guac-use-cases.md %}), you may have seen these components
+site.baseurl }}{guac/guac-use-cases.md %}), you may have seen these components
 work in concert. Read on to learn more of what goes on behind the hood!
 
 ## GUAC Components
 
-![Guac Diagram](assets/images/GUACcomponentsdiagram.svg)
+![Guac Diagram](../assets/images/GUACcomponentsdiagram.svg)
 
 ### GraphQL Server
 
@@ -83,7 +84,7 @@ the OSV vulnerability.
 #### Ingestor
 
 Ingestors take in documents and parse them into the [GUAC data
-model/ontology]({{ site.baseurl }}{%link guac-ontology.md %}). This process
+model/ontology]({{ site.baseurl }}{%link guac/guac-ontology.md %}). This process
 extracts meaning from documents and translates them into a common reasoning
 model (GUAC ontology). In the process, it also finds identifiers of interest
 that it passes to the CollectSub service to request additional information for.

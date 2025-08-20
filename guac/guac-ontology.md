@@ -1,7 +1,8 @@
 ---
 layout: page
 title: GUAC ontology
-permalink: /guac-ontology/
+permalink: /guac/guac-ontology/
+redirect_from: /guac-ontology/
 parent: How GUAC works
 nav_order: 2
 ---
@@ -67,7 +68,7 @@ collected we are able to build a tree of the following elements by following the
 - **Predicate layer:** Creates an edge between a collection of software
   instances and an action (e.g., a series of packages and environmental tools)
 
-![Evidence tree diagram](assets/images/evidencetree.png)
+![Evidence tree diagram](../assets/images/evidencetree.png)
 
 These trees can be broken down to further separate actions and evidence. For
 example, an SBOM using SPDX can be broken down into a series of evidentiary
@@ -106,7 +107,7 @@ used to model software relationships with the following properties:
 - A software name (django)
 - A version (1.11.1)
 
-![Software tree diagram](assets/images/softwaretree.png)
+![Software tree diagram](../assets/images/softwaretree.png)
 
 ### Combining trees for more expressive search queries
 
@@ -115,7 +116,7 @@ The three trees combine as following:
 - The hash in the software tree is the artifact in the evidence tree
 - The identity in the evidence tree is the signature in the actor tree
 
-![Diagram of combined trees](assets/images/combinedtrees.png)
+![Diagram of combined trees](../assets/images/combinedtrees.png)
 
 With this in mind, GUAC queries can be defined as:
 
@@ -139,7 +140,7 @@ then get the connected component of each evidence. The result subgraph is the
 connected component starting artifact C  
 **_Result_:**
 
-![Connected components diagram](assets/images/connectedcomponentsdiagram.png)
+![Connected components diagram](../assets/images/connectedcomponentsdiagram.png)
 
 ### Reachability
 
@@ -162,7 +163,7 @@ NVD#2,NVD#3.
 Walk the path (artifact C -> SLSA evidence -> Artifact A -> CVE#2 evidence->
 identity NVD#3)
 
-![Reachability diagram](assets/images/reachabilitydiagram.png)
+![Reachability diagram](../assets/images/reachabilitydiagram.png)
 
 This does not cover a case in which two different reports describe the same
 artifact and do **not** agree on the security posture of an artifact.
@@ -185,7 +186,7 @@ about the CVEs affecting artifact C.
 
 Conflicting information should be flagged as something to be analyzed further.
 
-![Counterfactual diagram](assets/images/counterfactualdiagram.png)
+![Counterfactual diagram](../assets/images/counterfactualdiagram.png)
 
 ## Hypergraph semantics (not part of v0.1 BETA)
 
@@ -203,4 +204,4 @@ ways:
 
 **Agreement over same CVE evidence**
 
-![Hypergraph semantics diagram](assets/images/semanticsdiagram.png)
+![Hypergraph semantics diagram](../assets/images/semanticsdiagram.png)
