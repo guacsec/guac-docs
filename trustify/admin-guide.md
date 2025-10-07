@@ -29,7 +29,7 @@ You have several deployment options to choose from for running Trustify.
 
 Running Trustify on bare-metal servers requires you to download the `trustd`
 binary from source found on the
-[Trustify releases](https://github.com/trustification/trustify/releases) page.
+[Trustify releases](https://github.com/guacsec/trustify/releases) page.
 
 There currently exist two variants of this binary, `trustd` and `trustd-pm`. The
 `-pm` version includes a few embedded services, such as PostgreSQL and an OIDC
@@ -39,7 +39,7 @@ great for trying it out and demoing it without too much trouble.
 
 ### Container image
 
-Trustify services are available in an image, `ghcr.io/trustification/trustd`.
+Trustify services are available in an image, `ghcr.io/guacsec/trustd`.
 
 ### Kubernetes
 
@@ -47,10 +47,9 @@ Since Kubernetes runs containers, running Trustify on Kubernetes is easy! We do
 not provide any out-of-the-box charts or an installation script, since many of
 the configuration options are specific to the running environment.
 
-We keep a Helm chart in the
-https://github.com/trustification/trustify-helm-charts to deploy a Trustify
-instance. You can use this Helm chart as a starting point for your specific
-environment.
+We keep a Helm chart in the https://github.com/guacsec/trustify-helm-charts to
+deploy a Trustify instance. You can use this Helm chart as a starting point for
+your specific environment.
 
 The [Kubernetes section]({%link trustify/kubernetes.md %}) has more details.
 

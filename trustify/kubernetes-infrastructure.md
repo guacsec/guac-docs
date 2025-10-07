@@ -36,14 +36,14 @@ container, and a persistent volume claim for the filesystem storage.
 To set this up, it is possible to just use existing Helm charts for Keycloak and
 PostgreSQL. We do provide an opinionated infrastructure Helm chart for this case
 at:
-https://github.com/trustification/trustify-helm-charts/tree/main/charts/trustify-infrastructure
+https://github.com/guacsec/trustify-helm-charts/tree/main/charts/trustify-infrastructure
 
 You can install this using:
 
 ```
 NAMESPACE=trustify
 APP_DOMAIN=public.cluster.domain
-helm upgrade --install -n $NAMESPACE --repo https://trustification.io/trustify-helm-charts/ infrastructure trustify-infrastructure --values <values-file> --set-string keycloak.ingress.hostname=sso$APP_DOMAIN --set-string appDomain=$APP_DOMAIN
+helm upgrade --install -n $NAMESPACE --repo https://guacsec.github.io/trustify-helm-charts/ infrastructure trustify-infrastructure --values <values-file> --set-string keycloak.ingress.hostname=sso$APP_DOMAIN --set-string appDomain=$APP_DOMAIN
 ```
 
 For this, you will need to provide a Helm "values" file. Which is a YAML file,
@@ -282,7 +282,7 @@ oidc:
 
 You can now run the Helm chart using the following command:
 
-`helm upgrade --install --repo https://trustification.io/trustify-helm-charts/ --devel -n $NAMESPACE trustify charts/trustify --values values-ocp-aws.yaml --set-string appDomain=$APP_DOMAIN`
+`helm upgrade --install --repo https://guacsec.github.io/trustify-helm-charts/ --devel -n $NAMESPACE trustify charts/trustify --values values-ocp-aws.yaml --set-string appDomain=$APP_DOMAIN`
 
 The `--devel` flag is currently necessary as the Helm chart has a pre-release
 version.
