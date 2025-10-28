@@ -29,7 +29,7 @@ nav_order: 1
    - Linux x86_64 :
      [`guacone-linux-amd64`](https://github.com/guacsec/guac/releases/latest/download/guacone-linux-amd64)
    - MacOS ARM64 :
-     [`guacone-darwin-amd64`](https://github.com/guacsec/guac/releases/latest/download/guacone-darwin-amd64)
+     [`guacone-darwin-amd64`](https://github.com/guacsec/guac/releases/latest/download/guacone-darwin-arm64)
    - Windows x86_64 :
      [`guacone-windows-amd64.exe`](https://github.com/guacsec/guac/releases/latest/download/guacone-windows-amd64.exe)
 
