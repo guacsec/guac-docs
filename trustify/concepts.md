@@ -2,7 +2,7 @@
 title: Trustify Concepts
 layout: page
 permalink: /trustify/concepts/
-nav_order: 1
+nav_order: 2
 parent: Trustify Docs
 has_children: true
 ---
