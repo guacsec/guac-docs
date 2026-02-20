@@ -16,6 +16,7 @@ GEM
     colorator (1.1.0)
     commonmarker (0.23.10)
     concurrent-ruby (1.2.2)
+    csv (3.3.5)
     dnsruby (1.70.0)
       simpleidn (~> 0.2.1)
     em-websocket (0.5.3)
@@ -264,6 +265,9 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  base64 (~> 0.3.0)
+  bigdecimal (4.0.1)
+  csv (~> 3.3)
   github-pages (~> 228)
   http_parser.rb (~> 0.6.0)
   jekyll-feed (~> 0.12)
