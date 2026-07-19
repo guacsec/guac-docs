@@ -41,22 +41,13 @@ actionable security insights.
    - Validates repository metadata and accessibility
 
 2. **Scorecard Evaluation**:
-   - Runs security checks against target repositories
-   - Query mode: Fetches pre-computed results from OpenSSF Scorecard API
-   - Compute mode: Executes scorecard checks using the scorecard library and
-     computes the result
+   - Fetches pre-computed results from the OpenSSF Scorecard API
+   - Falls back to computing the scorecard with the scorecard library when the
+     API request fails
 
 3. **Data Ingestion**:
    - Converts scorecard results to structured JSON format
    - Publishes results through GUAC's event stream for ingestion
-
-## Operation Modes
-
-The scorecard certifier supports two modes: **Query mode** (default) fetches
-pre-computed results from the OpenSSF Scorecard API. It's fast, requires no authentication,
-but only covers repositories already analyzed by OpenSSF. **Compute mode** runs
-scorecard checks using the scorecard library, and computes the score. It provides complete
-coverage of any GitHub repository, but requires a GitHub token and uses more resources.
 
 ## Available Options
 
@@ -78,13 +69,6 @@ guaccollect scorecard [options]
 | `--interval string`          | Polling interval (e.g., m, h, s, etc.)                         | 5m                  |
 | `--service-poll`             | Enable polling mode                                            | false               |
 
-### Scorecard-Specific Flags
-
-| Flag                        | Description                                                     | Default |
-| --------------------------- | --------------------------------------------------------------- | ------- |
-| `--scorecard-mode`          | Scorecard modes: 'query' (default) or 'compute'               | `query` |
-| `--scorecard-http-timeout`  | HTTP timeout for API requests when using 'query' mode         | `30s`   |
-
 ### Global Flags
 
 | Flag                   | Description                                                                      | Default                                 |
@@ -97,46 +81,30 @@ guaccollect scorecard [options]
 
 ## Usage Examples
 
-### Query Mode (Default)
+### Basic Usage
 
 ```bash
-# Use query mode with default settings
-guaccollect scorecard
-```
-
-```bash
-# Use query mode with custom HTTP timeout
-guaccollect scorecard \
-  --scorecard-mode=query \
-  --scorecard-http-timeout=60s
-```
-
-### Compute Mode
-
-```bash
-# Set GitHub token (required for compute mode)
+# Set GitHub token (used by the local computation fallback)
 export GITHUB_AUTH_TOKEN=your_github_token
 ```
 
 ```bash
-# Use compute mode (scorecard library)
-guaccollect scorecard \
-  --scorecard-mode=compute
+# Run the scorecard certifier
+guaccollect scorecard
 ```
 
 ### Polling Mode
 
 ```bash
-# Enable polling with custom interval
+# Enable polling with a custom interval
 guaccollect scorecard \
   --service-poll \
-  --interval=10m \
-  --scorecard-mode=query
+  --interval=10m
 ```
 
 ## Prerequisites
 
-### GitHub Token Setup (Compute Mode Only)
+### GitHub Token Setup
 
 1. Create a GitHub Personal Access Token
 
@@ -147,28 +115,18 @@ guaccollect scorecard \
 
 ## Limitations
 
-### Query Mode Limitations
-
-- Limited to repositories already analyzed by OpenSSF Scorecard
-- No control over check configuration
-
-### Compute Mode Limitations
-
-- Requires GitHub authentication token
-- Slower execution for large repositories
-- May hit GitHub API rate limits with high volume
-
-### General Limitations
-
 - Currently supports GitHub repositories only
 - Requires valid commit SHA or tag reference
 - Results depend on repository accessibility and structure
+- The local computation fallback requires a GitHub authentication token, is
+  slower for large repositories, and may hit GitHub API rate limits at high
+  volume
 
 ## Error Handling
 
 Common error scenarios and solutions:
 
-### Authentication Errors (Compute Mode)
+### Authentication Errors
 
 ```
 Error: GITHUB_AUTH_TOKEN is not set
@@ -176,15 +134,6 @@ Error: GITHUB_AUTH_TOKEN is not set
 
 **Solution**: Set the `GITHUB_AUTH_TOKEN` environment variable with a valid
 GitHub token.
-
-### Repository Not Found (Query Mode)
-
-```
-Error: repository not found in scorecard database
-```
-
-**Solution**: Repository may not be analyzed by OpenSSF Scorecard yet. Consider
-using compute mode or wait for API coverage.
 
 ### Rate Limiting
 
