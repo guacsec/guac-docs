@@ -44,7 +44,7 @@ actionable security insights.
    - Fetches pre-computed results from the OpenSSF Scorecard API
    - Falls back to computing the scorecard with the scorecard library when the
      API request fails
-   - With `--compute`, skips the API entirely and only computes locally
+   - With `--compute`, computes by skips the API entirely 
 
 3. **Data Ingestion**:
    - Converts scorecard results to structured JSON format
@@ -66,7 +66,7 @@ guaccollect scorecard [options]
 | ---------------------------- | -------------------------------------------------------------- | ------------------- |
 | `--certifier-batch-size int` | Sets the batch size for pagination query for the certifier     | 60000               |
 | `--certifier-latency string` | Sets artificial latency on the certifier (e.g., m, h, s, etc.) | Not enabled (empty) |
-| `--compute`                  | Compute scores locally only, skipping the Scorecard API         | false               |
+| `--compute`                  | Compute scores by skipping the Scorecard API         | false               |
 | `-h, --help`                 | Help for scorecard                                             |                     |
 | `--interval string`          | Polling interval (e.g., m, h, s, etc.)                         | 5m                  |
 | `--service-poll`             | Enable polling mode                                            | false               |
@@ -86,7 +86,7 @@ guaccollect scorecard [options]
 ### Basic Usage
 
 ```bash
-# Set GitHub token (used by the local computation fallback)
+# Set GitHub token (used by the computation fallback)
 export GITHUB_AUTH_TOKEN=your_github_token
 ```
 
@@ -95,10 +95,10 @@ export GITHUB_AUTH_TOKEN=your_github_token
 guaccollect scorecard
 ```
 
-### Local Computation Only
+### Computation by skipping API
 
 ```bash
-# Skip the Scorecard API and compute every score locally.
+# Skip the Scorecard API and compute every score .
 # Requires GITHUB_AUTH_TOKEN; the certifier exits at startup if it is unset.
 guaccollect scorecard --compute
 ```
@@ -130,7 +130,7 @@ guaccollect scorecard \
 - Currently supports GitHub repositories only
 - Requires valid commit SHA or tag reference
 - Results depend on repository accessibility and structure
-- The local computation fallback requires a GitHub authentication token, is
+- The computation fallback requires a GitHub authentication token, is
   slower for large repositories, and may hit GitHub API rate limits at high
   volume
 
