@@ -44,7 +44,7 @@ actionable security insights.
    - Fetches pre-computed results from the OpenSSF Scorecard API
    - Falls back to computing the scorecard with the scorecard library when the
      API request fails
-   - With `--compute`, computes by skips the API entirely 
+   - With `--compute`, computes the scores using the scorecard package
 
 3. **Data Ingestion**:
    - Converts scorecard results to structured JSON format
@@ -66,7 +66,7 @@ guaccollect scorecard [options]
 | ---------------------------- | -------------------------------------------------------------- | ------------------- |
 | `--certifier-batch-size int` | Sets the batch size for pagination query for the certifier     | 60000               |
 | `--certifier-latency string` | Sets artificial latency on the certifier (e.g., m, h, s, etc.) | Not enabled (empty) |
-| `--compute`                  | Compute scores by skipping the Scorecard API                   | false               |
+| `--compute`                  | computes the scores using the scorecard package.               | false               |
 | `-h, --help`                 | Help for scorecard                                             |                     |
 | `--interval string`          | Polling interval (e.g., m, h, s, etc.)                         | 5m                  |
 | `--service-poll`             | Enable polling mode                                            | false               |
@@ -98,7 +98,7 @@ guaccollect scorecard
 ### Computation by skipping API
 
 ```bash
-# Skip the Scorecard API and compute every score .
+# computes the scores using the scorecard package
 # Requires GITHUB_AUTH_TOKEN; the certifier exits at startup if it is unset.
 guaccollect scorecard --compute
 ```
