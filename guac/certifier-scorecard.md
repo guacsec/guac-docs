@@ -66,7 +66,7 @@ guaccollect scorecard [options]
 | ---------------------------- | -------------------------------------------------------------- | ------------------- |
 | `--certifier-batch-size int` | Sets the batch size for pagination query for the certifier     | 60000               |
 | `--certifier-latency string` | Sets artificial latency on the certifier (e.g., m, h, s, etc.) | Not enabled (empty) |
-| `--compute`                  | Compute scores by skipping the Scorecard API         | false               |
+| `--compute`                  | Compute scores by skipping the Scorecard API                   | false               |
 | `-h, --help`                 | Help for scorecard                                             |                     |
 | `--interval string`          | Polling interval (e.g., m, h, s, etc.)                         | 5m                  |
 | `--service-poll`             | Enable polling mode                                            | false               |
