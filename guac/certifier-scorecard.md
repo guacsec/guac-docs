@@ -130,9 +130,8 @@ guaccollect scorecard \
 - Currently supports GitHub repositories only
 - Requires valid commit SHA or tag reference
 - Results depend on repository accessibility and structure
-- The computation fallback requires a GitHub authentication token, is
-  slower for large repositories, and may hit GitHub API rate limits at high
-  volume
+- The computation fallback requires a GitHub authentication token, is slower for
+  large repositories, and may hit GitHub API rate limits at high volume
 
 ## Error Handling
 
