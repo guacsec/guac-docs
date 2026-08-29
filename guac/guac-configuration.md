@@ -124,6 +124,12 @@ scenarios where you might want to change it.
   - **Description**: Artificial latency to throttle the certifier.
   - **When to Change**: Use to introduce delays if needed to manage load.
 
+- **add-vuln-metadata**: `false`
+  - **Description**: Whether the OSV certifier adds severity and other metadata
+    to the vulnerabilities it ingests.
+  - **When to Change**: Set to `true` if you want vulnerability metadata
+    alongside the vulnerabilities themselves.
+
 - #### Deps.dev Configuration
   - **deps-dev-latency**: `""`
   - **Description**: Artificial latency to throttle deps.dev.
@@ -140,6 +146,18 @@ scenarios where you might want to change it.
   - **Description**: Whether to query licenses during ingestion.
   - **When to Change**: Set to `true` if you want to automatically check for
     licenses during data ingestion.
+
+- **add-eol-on-ingest**: `false`
+  - **Description**: Whether to query endoflife.date for end-of-life data during
+    ingestion.
+  - **When to Change**: Set to `true` if you want to automatically check for EOL
+    data during data ingestion.
+
+- **add-depsdev-on-ingest**: `false`
+  - **Description**: Whether to query deps.dev for scorecards and source
+    association data during ingestion.
+  - **When to Change**: Set to `true` if you want to automatically collect
+    deps.dev metadata during data ingestion.
 
 ## Collector-Subscriber Configuration
 
