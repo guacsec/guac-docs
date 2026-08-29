@@ -58,9 +58,9 @@ flags.
 | ------------------------ | -------------------------------------------------------------------------------------- | --------------------------------------- |
 | `--blob-addr string`     | [gocloud](https://gocloud.dev/howto/blob/) connection string for blob store configured | "file:///tmp/blobstore?no_tmp_dir=true" |
 | `--csub-addr string`     | Address to connect to collect-sub service                                              | "localhost:2782"                        |
-| `--csub-tls`             | Enable tls connection to the server                                                    |
-| `--csub-tls-skip-verify` | Skip verifying server certificate (e.g. for self-signed certificates)                  |
-| `--enable-prometheus`    | Enable prometheus metrics                                                              | true                                    |
+| `--csub-tls`             | Enable tls connection to the server                                                    | false                                   |
+| `--csub-tls-skip-verify` | Skip verifying server certificate (e.g. for self-signed certificates)                  | false                                   |
+| `--enable-prometheus`    | Enable prometheus metrics                                                              | false                                   |
 | `--gql-addr string`      | GraphQL server endpoint                                                                | "http://localhost:8080/query"           |
 | `-h, --help`             | Help for guaccollect                                                                   |
 | `--publish-to-queue`     | Enable/disable message publish to queue                                                | true                                    |
