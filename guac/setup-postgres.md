@@ -181,9 +181,9 @@ the `docker-compose.yaml` we can see what is actually running:
 
 This compose configuration is suitable to leave running in an environment that
 is accessible to your environment for further GUAC ingestion, discovery,
-analysis, and evaluation. Explore the types of collectors available under the
-`guaccollect collect` command and see what will work for your build, ingestion,
-and SBOM workflow. These collectors can be run as another service that watches a
+analysis, and evaluation. Explore the types of collectors available as
+`guaccollect` subcommands and see what will work for your build, ingestion, and
+SBOM workflow. These collectors can be run as another service that watches a
 location for new documents to ingest. If you’re curious about the various GUAC
 components and what they do, see [How GUAC components work together]({{
 site.baseurl }}{%link guac/guac-components.md %}).
