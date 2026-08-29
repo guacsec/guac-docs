@@ -56,5 +56,13 @@ files from a GCS bucket named "my-bucket" with credentials stored in the local
 file `/secret/sa.json`:
 
 ```bash
-guacone collect gcs my-bucket --gcs-credentials-path /secret/sa.json
+guaccollect gcs my-bucket --gcp-credentials-path /secret/sa.json
+```
+
+Alternatively, set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to
+the path of the credentials file and omit the flag:
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=/secret/sa.json
+guaccollect gcs my-bucket
 ```

@@ -92,7 +92,7 @@ source.
 ### Google Cloud Storage (GCS)
 
 ```bash
-./guaccollect gcs <bucket_name> --gcs-credentials-path /path/to/credentials.json
+./guaccollect gcs <bucket_name> --gcp-credentials-path /path/to/credentials.json
 ```
 
 ### OCI Images
