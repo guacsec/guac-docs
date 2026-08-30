@@ -13,12 +13,19 @@ nav_order: 6
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [Docker Buildx](https://docs.docker.com/build/concepts/overview/#buildx)
 - [Git](https://git-scm.com/downloads)
-- [Go](https://go.dev/doc/install) (v1.21+)
+- [Go](https://go.dev/doc/install) (v1.26+)
 - [GoReleaser](https://goreleaser.com/)
 - [Make](https://www.gnu.org/software/make/)
 - [jq](https://stedolan.github.io/jq/download/)
 - [protoc](https://grpc.io/docs/protoc-installation/)
+- [golangci-lint](https://golangci-lint.run/welcome/install/)
+- [mockgen](https://github.com/uber-go/mock)
+- [atlas](https://atlasgo.io/getting-started#installation)
+
+Once you have cloned the repository, `make check-tools` verifies that the
+required tools are present and tells you which are missing.
 
 # Setting up your git repositories
 
