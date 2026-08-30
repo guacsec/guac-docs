@@ -45,7 +45,7 @@ images.
 | help       | Help about any command                                                                 |
 | image      | Ingests SBOMs and attestations stored in an OCI image                                  |
 | osv        | Runs the [OSV certifier]({{ site.baseurl }}{%link guac/certifier-osv.md %})            |
-| registry   | Ingests SBOMs and attestations store in an OCI registry                                |
+| registry   | Ingests SBOMs and attestations stored in an OCI registry                               |
 | s3         | Ingests SBOMs and attestations from S3 compatible bucket                               |
 | scorecard  | Runs the OpenSSF Scorecard certifier                                                   |
 
@@ -97,10 +97,25 @@ source.
 ./guaccollect gcs <bucket_name> --gcp-credentials-path /path/to/credentials.json
 ```
 
-### OCI Images
+### OCI Images and Registries
+
+The OCI collector retrieves SBOMs and attestations attached to OCI container images or hosted inside OCI registries.
+
+- **OCI Image (`image`)**: Collects attached metadata (such as Cosign attestations or embedded SBOM layers) from specific container image references.
+- **OCI Registry (`registry`)**: Ingests SBOMs and attestations directly from an OCI registry.
 
 ```bash
-./guaccollect image <image_path1> <image_path2>
+# Collect from OCI image(s) using guaccollect
+./guaccollect image <image_ref1> <image_ref2>
+
+# Collect from OCI registry using guaccollect
+./guaccollect registry <registry_ref>
+
+# Collect from OCI image using guacone CLI
+guacone collect image <image_ref>
+
+# Collect from OCI registry using guacone CLI
+guacone collect registry <registry_ref>
 ```
 
 ### Files
