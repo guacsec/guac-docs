@@ -80,12 +80,15 @@ source.
 
 ### GitHub
 
-The GitHub collector fetches metadata documents, SBOMs, and attestations from GitHub releases or GitHub Action workflow runs.
+The GitHub collector fetches metadata documents, SBOMs, and attestations from
+GitHub releases or GitHub Action workflow runs.
 
 It supports two modes:
 
-- **Release mode (`--github-mode release`)**: Downloads release assets and attestations from specified GitHub release URLs.
-- **Workflow mode (`--github-mode workflow`)**: Ingests workflow run artifacts containing metadata for a specified repository.
+- **Release mode (`--github-mode release`)**: Downloads release assets and
+  attestations from specified GitHub release URLs.
+- **Workflow mode (`--github-mode workflow`)**: Ingests workflow run artifacts
+  containing metadata for a specified repository.
 
 ```bash
 # Ingest from GitHub Releases
@@ -95,13 +98,14 @@ It supports two modes:
 ./guaccollect github --github-mode workflow owner/repo
 ```
 
-To authenticate against private repositories or avoid GitHub API rate limits, provide a GitHub Personal Access Token via `GITHUB_TOKEN` environment variable or `--github-token` flag:
+To authenticate against private repositories or avoid GitHub API rate limits,
+provide a GitHub Personal Access Token via `GITHUB_TOKEN` environment variable
+or `--github-token` flag:
 
 ```bash
 export GITHUB_TOKEN=your_github_token
 ./guaccollect github --github-mode release https://github.com/owner/repo/releases/tag/v1.0.0
 ```
-
 
 ### S3 Compatible Storage
 
