@@ -193,3 +193,34 @@ scenarios where you might want to change it.
   - **Description**: The logging level for the application.
   - **When to Change**: Adjust to `Debug` for more detailed logs during
     development or troubleshooting.
+
+## Metrics and Observability Configuration
+
+For detailed documentation, see [Metrics and
+Observability]({{ site.baseurl }}{% link guac/metrics.md %}).
+
+- **enable-prometheus**: `false`
+  - **Description**: Whether to enable the Prometheus metrics endpoint
+    (`/metrics`).
+  - **When to Change**: Set to `true` to enable scraping metrics by Prometheus
+    or compatible collectors.
+
+- **prometheus-port**: `9091`
+  - **Description**: The port on which the Prometheus metrics server listens for
+    standalone collectors and ingestors.
+  - **When to Change**: Change if port `9091` conflicts with another service in
+    your environment.
+
+- **enable-otel**: `false`
+  - **Description**: Whether to enable OpenTelemetry metrics and distributed
+    tracing.
+  - **When to Change**: Set to `true` to export traces and metrics to an
+    OpenTelemetry collector.
+
+- **OpenTelemetry Environment Variables**:
+  - `OTEL_EXPORTER_OTLP_ENDPOINT`: Address of the OTel collector endpoint (e.g.
+    `http://localhost:4317`).
+  - `OTEL_EXPORTER_OTLP_INSECURE`: Set to `true` to allow insecure (non-TLS)
+    gRPC connections.
+  - `OTEL_SERVICE_NAME`: Service name identifier attached to exported traces and
+    metrics.

@@ -60,14 +60,16 @@ flags.
 | `--csub-addr string`     | Address to connect to collect-sub service                                              | "localhost:2782"                        |
 | `--csub-tls`             | Enable tls connection to the server                                                    | false                                   |
 | `--csub-tls-skip-verify` | Skip verifying server certificate (e.g. for self-signed certificates)                  | false                                   |
-| `--enable-prometheus`    | Enable prometheus metrics                                                              | false                                   |
+| `--enable-otel`          | Enable OpenTelemetry metrics and distributed tracing                                   | false                                   |
+| `--enable-prometheus`    | Enable Prometheus metrics HTTP handler                                                 | false                                   |
 | `--gql-addr string`      | GraphQL server endpoint                                                                | "http://localhost:8080/query"           |
-| `-h, --help`             | Help for guaccollect                                                                   |
+| `-h, --help`             | Help for guaccollect                                                                   |                                         |
+| `--prometheus-port int`  | Port to listen on for Prometheus metrics server                                        | 9091                                    |
 | `--publish-to-queue`     | Enable/disable message publish to queue                                                | true                                    |
 | `--pubsub-addr string`   | [gocloud](https://gocloud.dev/howto/blob/) connection string for pubsub configured     | "nats://127.0.0.1:4222"                 |
 | `--service-poll`         | Sets the collector or certifier to polling mode                                        | true                                    |
 | `--use-csub`             | Use collectsub server for datasource                                                   | true                                    |
-| `-v, --version`          | Version for guaccollect                                                                |
+| `-v, --version`          | Version for guaccollect                                                                |                                         |
 
 ## Examples
 
