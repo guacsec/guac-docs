@@ -29,6 +29,32 @@ The keys that currently differ:
 | `gql-debug`   | `true`                  | `false`                                                  |
 | `db-address`  | not set                 | `postgres://guac:guac@0.0.0.0:5432/guac?sslmode=disable` |
 
+## Setting configuration values
+
+Every key on this page can be set three ways. In order of precedence, highest
+first:
+
+1. **A command-line flag**, named after the key with a `--` prefix — for example
+   `--db-address`.
+2. **An environment variable**, named `GUAC_` followed by the key uppercased
+   with dashes replaced by underscores — for example `GUAC_DB_ADDRESS`. This is
+   usually the most convenient way to configure GUAC in containers.
+3. **The `guac.yaml` file**, using the key as written on this page.
+
+So the `db-address` key, the `--db-address` flag and the `GUAC_DB_ADDRESS`
+environment variable all set the same value, and a flag passed on the command
+line overrides both of the others:
+
+```bash
+# these three are equivalent
+guacgql --db-address "postgres://guac:guac@localhost:5432/guac?sslmode=disable"
+
+GUAC_DB_ADDRESS="postgres://guac:guac@localhost:5432/guac?sslmode=disable" guacgql
+
+# or in guac.yaml:
+#   db-address: postgres://guac:guac@localhost:5432/guac?sslmode=disable
+```
+
 ## Database Configuration
 
 ### Ent config
