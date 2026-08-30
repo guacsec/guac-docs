@@ -13,6 +13,48 @@ This document provides an overview of the `guac.yaml` configuration file used in
 GUAC deployments. It describes each configuration option, its default value, and
 scenarios where you might want to change it.
 
+{: .note }
+
+The values below are the ones shipped in `guac.yaml`, which is tuned for the
+demo compose setup. Several of them differ from the defaults compiled into the
+binaries, which apply when you run a GUAC binary without a config file. Where
+the two differ, the binary default is called out alongside the entry.
+
+The keys that currently differ:
+
+| Key           | `guac.yaml`             | Binary default                                           |
+| ------------- | ----------------------- | -------------------------------------------------------- |
+| `pubsub-addr` | `nats://localhost:4222` | `nats://127.0.0.1:4222`                                  |
+| `interval`    | `20m`                   | `5m`                                                     |
+| `gql-debug`   | `true`                  | `false`                                                  |
+| `db-address`  | not set                 | `postgres://guac:guac@0.0.0.0:5432/guac?sslmode=disable` |
+
+## Setting configuration values
+
+Every key on this page can be set three ways. In order of precedence, highest
+first:
+
+1. **A command-line flag**, named after the key with a `--` prefix — for example
+   `--db-address`.
+2. **An environment variable**, named `GUAC_` followed by the key uppercased
+   with dashes replaced by underscores — for example `GUAC_DB_ADDRESS`. This is
+   usually the most convenient way to configure GUAC in containers.
+3. **The `guac.yaml` file**, using the key as written on this page.
+
+So the `db-address` key, the `--db-address` flag and the `GUAC_DB_ADDRESS`
+environment variable all set the same value, and a flag passed on the command
+line overrides both of the others:
+
+```bash
+# these three are equivalent
+guacgql --db-address "postgres://guac:guac@localhost:5432/guac?sslmode=disable"
+
+GUAC_DB_ADDRESS="postgres://guac:guac@localhost:5432/guac?sslmode=disable" guacgql
+
+# or in guac.yaml:
+#   db-address: postgres://guac:guac@localhost:5432/guac?sslmode=disable
+```
+
 ## Database Configuration
 
 ### Ent config
@@ -23,7 +65,10 @@ scenarios where you might want to change it.
     driver.
 
 - **db-address**: `postgres://guac:guac@postgres:5432/guac?sslmode=disable`
-  - **Description**: The address for connecting to the PostgreSQL database.
+  - **Description**: The address for connecting to the PostgreSQL database. This
+    key is not present in `guac.yaml`; the value shown is the one used by the
+    compose setup. The binary default is
+    `postgres://guac:guac@0.0.0.0:5432/guac?sslmode=disable`.
   - **When to Change**: Update if your database address changes or if you need
     to enable/disable SSL.
 
@@ -85,7 +130,8 @@ scenarios where you might want to change it.
 
 ## Pub/Sub Configuration
 
-- **pubsub-addr**: `nats://localhost:4222`
+- **pubsub-addr**: `nats://localhost:4222` (binary default:
+  `nats://127.0.0.1:4222`)
   - **Description**: The address of the NATS server for pub/sub messaging.
   - **When to Change**: Update if your NATS server is hosted elsewhere or uses a
     different port.
@@ -104,7 +150,7 @@ scenarios where you might want to change it.
 
 ## Certifier Configuration
 
-- **interval**: `20m`
+- **interval**: `20m` (binary default: `5m`)
   - **Description**: The interval at which the certifier runs.
   - **When to Change**: Adjust based on how frequently you need certification
     checks.
@@ -163,7 +209,7 @@ scenarios where you might want to change it.
   - **Description**: The port on which the GraphQL server listens.
   - **When to Change**: Change if your GraphQL server uses a different port.
 
-- **gql-debug**: `true`
+- **gql-debug**: `true` (binary default: `false`)
   - **Description**: Whether to enable debug mode for the GraphQL server.
   - **When to Change**: Set to `false` in production environments for security.
 
