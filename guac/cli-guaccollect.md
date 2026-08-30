@@ -99,10 +99,14 @@ source.
 
 ### OCI Images and Registries
 
-The OCI collector retrieves SBOMs and attestations attached to OCI container images or hosted inside OCI registries.
+The OCI collector retrieves SBOMs and attestations attached to OCI container
+images or hosted inside OCI registries.
 
-- **OCI Image (`image`)**: Collects attached metadata (such as Cosign attestations or embedded SBOM layers) from specific container image references.
-- **OCI Registry (`registry`)**: Ingests SBOMs and attestations directly from an OCI registry.
+- **OCI Image (`image`)**: Collects attached metadata (such as Cosign
+  attestations or embedded SBOM layers) from specific container image
+  references.
+- **OCI Registry (`registry`)**: Ingests SBOMs and attestations directly from an
+  OCI registry.
 
 ```bash
 # Collect from OCI image(s) using guaccollect
