@@ -51,11 +51,13 @@ guaccollect s3 --s3-url https://play.min.io --s3-bucket guac-test --s3-item alpi
 
 ## Google Cloud Storage
 
-GUAC supports Google Cloud Storage (GCS) blob store via both `guacone` and `guaccollect` CLI commands.
+GUAC supports Google Cloud Storage (GCS) blob store via both `guacone` and
+`guaccollect` CLI commands.
 
 ### Using `guacone` CLI
 
-To collect files from a GCS bucket named "my-bucket" with credentials stored in `/secret/sa.json`:
+To collect files from a GCS bucket named "my-bucket" with credentials stored in
+`/secret/sa.json`:
 
 ```bash
 guacone collect gcs my-bucket --gcp-credentials-path /secret/sa.json
