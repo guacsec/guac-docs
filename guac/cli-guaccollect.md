@@ -41,7 +41,7 @@ images.
 | deps_dev   | Queries pURLS against deps.dev to find additional metadata to add to GUAC graph        |
 | files      | Ingest a folder of files                                                               |
 | gcs        | Ingest SBOMs and attestations from a Google Cloud Storage bucket                       |
-| github     | Download metadata documents stored in GithHub releases                                 |
+| github     | Download metadata documents stored in GitHub releases or workflows                     |
 | help       | Help about any command                                                                 |
 | image      | Ingests SBOMs and attestations stored in an OCI image                                  |
 | osv        | Runs the [OSV certifier]({{ site.baseurl }}{%link guac/certifier-osv.md %})            |
@@ -80,9 +80,31 @@ source.
 
 ### GitHub
 
+The GitHub collector fetches metadata documents, SBOMs, and attestations from
+GitHub releases or GitHub Action workflow runs.
+
+It supports two modes:
+
+- **Release mode (`--github-mode release`)**: Downloads release assets and
+  attestations from specified GitHub release URLs.
+- **Workflow mode (`--github-mode workflow`)**: Ingests workflow run artifacts
+  containing metadata for a specified repository.
+
 ```bash
-./guaccollect github --github-mode release <release_url1> <release_url2>
-./guaccollect github --github-mode workflow <owner>/<repo>
+# Ingest from GitHub Releases
+./guaccollect github --github-mode release https://github.com/owner/repo/releases/tag/v1.0.0
+
+# Ingest from GitHub Workflows
+./guaccollect github --github-mode workflow owner/repo
+```
+
+To authenticate against private repositories or avoid GitHub API rate limits,
+provide a GitHub Personal Access Token via `GITHUB_TOKEN` environment variable
+or `--github-token` flag:
+
+```bash
+export GITHUB_TOKEN=your_github_token
+./guaccollect github --github-mode release https://github.com/owner/repo/releases/tag/v1.0.0
 ```
 
 ### S3 Compatible Storage
