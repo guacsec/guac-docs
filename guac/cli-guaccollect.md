@@ -94,7 +94,11 @@ source.
 ### Google Cloud Storage (GCS)
 
 ```bash
+# Ingest from GCS using guaccollect
 ./guaccollect gcs <bucket_name> --gcp-credentials-path /path/to/credentials.json
+
+# Ingest from GCS using guacone CLI
+guacone collect gcs <bucket_name> --gcp-credentials-path /path/to/credentials.json
 ```
 
 ### OCI Images
