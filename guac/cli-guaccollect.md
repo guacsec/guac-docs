@@ -38,7 +38,7 @@ images.
 | ---------- | -------------------------------------------------------------------------------------- |
 | cd         | Runs the [Clearly Defined certifier]({{ site.baseurl }}{%link guac/certifier-cd.md %}) |
 | completion | Generate the autocompletion script for the specified shell                             |
-| deps_dev   | Queries pURLS against deps.dev to find additional metadata to add to GUAC graph        |
+| deps_dev   | Runs the [deps.dev certifier]({{ site.baseurl }}{%link guac/certifier-deps-dev.md %})  |
 | files      | Ingest a folder of files                                                               |
 | gcs        | Ingest SBOMs and attestations from a Google Cloud Storage bucket                       |
 | github     | Download metadata documents stored in GitHub releases or workflows                     |
