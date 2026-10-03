@@ -59,6 +59,31 @@ Each GraphQL type contains an `id` field, of type `ID`. This should be treated
 as an opaque identifier and not shared across different instances of GUAC, as it
 is backend specific.
 
+## Filtering query results
+
+GUAC provides an experimental `@filter` directive for filtering the list
+returned by a query. The directive compares a field selected by `keyName`
+against `value`. Comparisons are case-insensitive and support two operations:
+
+- `CONTAINS` keeps results whose field contains the supplied value.
+- `STARTSWITH` keeps results whose field begins with the supplied value.
+
+For example, this query returns artifacts whose digest starts with `322`:
+
+```graphql
+query ArtifactsByDigestPrefix {
+  artifacts(artifactSpec: {})
+    @filter(keyName: "digest", operation: STARTSWITH, value: "322") {
+    algorithm
+    digest
+  }
+}
+```
+
+The directive defaults to `keyName: "id"`, `operation: CONTAINS`, and an empty
+`value`. A nested field can be selected with dot notation. Add `[]` to a list
+field while traversing it, for example `names[].name`.
+
 ## The GUAC Software Trees
 
 The software trees can be thought as "nouns" in the GUAC ontology. These
