@@ -22,12 +22,17 @@ the two differ, the binary default is called out alongside the entry.
 
 The keys that currently differ:
 
-| Key           | `guac.yaml`             | Binary default                                           |
-| ------------- | ----------------------- | -------------------------------------------------------- |
-| `pubsub-addr` | `nats://localhost:4222` | `nats://127.0.0.1:4222`                                  |
-| `interval`    | `20m`                   | `5m`                                                     |
-| `gql-debug`   | `true`                  | `false`                                                  |
-| `db-address`  | not set                 | `postgres://guac:guac@0.0.0.0:5432/guac?sslmode=disable` |
+| Key            | `guac.yaml`             | Binary default                                           |
+| -------------- | ----------------------- | -------------------------------------------------------- |
+| `pubsub-addr`  | `nats://localhost:4222` | `nats://127.0.0.1:4222`                                  |
+| `interval`     | `20m`                   | `5m`                                                     |
+| `gql-debug`    | `true`                  | `false`                                                  |
+| `db-address`   | not set                 | `postgres://guac:guac@0.0.0.0:5432/guac?sslmode=disable` |
+| `arango-user`  | `root`                  | empty                                                    |
+| `arango-pass`  | `test123`               | empty                                                    |
+| `neo4j-user`   | `neo4j`                 | empty                                                    |
+| `neo4j-pass`   | `s3cr3t`                | empty                                                    |
+| `neptune-user` | `username`              | empty                                                    |
 
 ## Setting configuration values
 
@@ -57,6 +62,49 @@ GUAC_DB_ADDRESS="postgres://guac:guac@localhost:5432/guac?sslmode=disable" guacg
 
 ## Database Configuration
 
+The GraphQL server selects its graph backend with `gql-backend`. The binary
+default is `keyvalue`, and the registered backend names are `keyvalue`,
+`arango`, `ent`, `neo4j`, and `neptune`.
+
+Backend-specific options are registered alongside the common `guacgql` flags, so
+they can use the same command-line, environment-variable, or `guac.yaml`
+configuration forms described above.
+
+### Key-value backend
+
+The `keyvalue` backend supports three stores: `memmap`, Redis, and TiKV.
+
+- **kv-store**: `memmap`
+  - **Description**: Selects the key-value store. Supported values are `memmap`,
+    `redis`, and `tikv`.
+  - **When to Change**: Use `redis` or `tikv` when the graph must persist
+    outside the `guacgql` process.
+
+{: .warning }
+
+The default `memmap` store keeps graph data in an in-memory Go map. Data stored
+there is lost when the `guacgql` process stops or restarts.
+
+- **kv-redis**: `redis://user@localhost:6379/0`
+  - **Description**: Experimental Redis connection string used when `kv-store`
+    is `redis`.
+  - **When to Change**: Point this at the Redis instance that should persist the
+    key-value graph.
+
+- **kv-tikv**: `127.0.0.1:2379`
+  - **Description**: Experimental TiKV placement-driver address used when
+    `kv-store` is `tikv`.
+  - **When to Change**: Point this at the TiKV placement driver for your
+    deployment.
+
+For example, to use Redis:
+
+```yaml
+gql-backend: keyvalue
+kv-store: redis
+kv-redis: redis://user@redis:6379/0
+```
+
 ### Ent config
 
 - **db-driver**: `postgres`
@@ -77,56 +125,74 @@ GUAC_DB_ADDRESS="postgres://guac:guac@localhost:5432/guac?sslmode=disable" guacg
   - **When to Change**: Set to `false` if you do not want automatic database
     migration.
 
-<!-- ### ArangoDB
-- **arango-user**: `root`
-  - **Description**: The username for connecting to the ArangoDB instance.
-  - **When to Change**: Change this if you have a different user set up for security reasons or if using a managed ArangoDB service.
+### ArangoDB
 
-- **arango-pass**: `test123`
-  - **Description**: The password for the ArangoDB user.
-  - **When to Change**: Always change the default password to a secure one in production environments.
+Select this backend with `gql-backend: arango`.
 
 - **arango-addr**: `http://localhost:8529`
-  - **Description**: The address of the ArangoDB server.
-  - **When to Change**: Modify this if your ArangoDB server is hosted on a different machine or if hosted on the cloud.
+  - **Description**: Address of the ArangoDB server.
+  - **When to Change**: Update this when ArangoDB is hosted at another address.
+
+- **arango-user**: `root` (binary default: empty)
+  - **Description**: Username used to authenticate to ArangoDB.
+  - **When to Change**: Set this to the user configured for your ArangoDB
+    deployment.
+
+- **arango-pass**: `test123` (binary default: empty)
+  - **Description**: Password used to authenticate to ArangoDB.
+  - **When to Change**: Replace the demo configuration value with the credential
+    for your deployment.
 
 ### Neo4j
-- **neo4j-user**: `neo4j`
-  - **Description**: The username for connecting to the Neo4j database.
-  - **When to Change**: Use a different user for enhanced security or if your database setup requires it.
 
-- **neo4j-pass**: `s3cr3t`
-  - **Description**: The password for the Neo4j user.
-  - **When to Change**: Change to a secure password for production use.
+Select this backend with `gql-backend: neo4j`.
 
 - **neo4j-addr**: `neo4j://localhost:7687`
-  - **Description**: The address of the Neo4j server.
-  - **When to Change**: Update this if your Neo4j instance is not running locally or is hosted in the cloud.
+  - **Description**: Address of the Neo4j server.
+  - **When to Change**: Update this when Neo4j is hosted at another address.
+
+- **neo4j-user**: `neo4j` (binary default: empty)
+  - **Description**: Username used to authenticate to Neo4j.
+  - **When to Change**: Set this to the user configured for your Neo4j
+    deployment.
+
+- **neo4j-pass**: `s3cr3t` (binary default: empty)
+  - **Description**: Password used to authenticate to Neo4j.
+  - **When to Change**: Replace the demo configuration value with the credential
+    for your deployment.
 
 - **neo4j-realm**: `neo4j`
-  - **Description**: The realm for the Neo4j database, typically used for multi-tenancy.
-  - **When to Change**: Adjust if your setup uses a different realm for authentication.
+  - **Description**: Authentication realm passed to the Neo4j driver.
+  - **When to Change**: Change this only when your Neo4j authentication setup
+    uses another realm.
 
 ### Neptune
-- **neptune-user**: `username`
-  - **Description**: The username for connecting to the Neptune database.
-  - **When to Change**: Change this to match your Neptune database credentials.
+
+Select this backend with `gql-backend: neptune`.
 
 - **neptune-endpoint**: `localhost`
-  - **Description**: The endpoint for the Neptune database.
-  - **When to Change**: Update this to the actual endpoint if using AWS Neptune.
+  - **Description**: Hostname of the Amazon Neptune database endpoint.
+  - **When to Change**: Set this to the endpoint of your Neptune cluster.
 
 - **neptune-port**: `8182`
-  - **Description**: The port for the Neptune database.
-  - **When to Change**: Change if your Neptune instance uses a non-default port.
+  - **Description**: Port used for the Neptune connection.
+  - **When to Change**: Change this if the cluster uses a different port.
 
 - **neptune-region**: `us-east-1`
-  - **Description**: The AWS region where the Neptune database is hosted.
-  - **When to Change**: Modify to match the region of your AWS Neptune instance.
+  - **Description**: AWS region used when signing requests to Neptune.
+  - **When to Change**: Set this to the region that contains your Neptune
+    cluster.
+
+- **neptune-user**: `username` (binary default: empty)
+  - **Description**: Username passed through to the Neo4j-compatible connection
+    used by the Neptune backend.
+  - **When to Change**: Set this if your deployment requires a specific user.
 
 - **neptune-realm**: `neptune`
-  - **Description**: The realm for the Neptune database.
-  - **When to Change**: Adjust if your setup uses a different realm. -->
+  - **Description**: Authentication realm used for the Neo4j-compatible
+    connection to Neptune.
+  - **When to Change**: Change this only when your authentication setup requires
+    another realm.
 
 ## Pub/Sub Configuration
 
@@ -220,8 +286,11 @@ GUAC_DB_ADDRESS="postgres://guac:guac@localhost:5432/guac?sslmode=disable" guacg
 ## GraphQL Configuration
 
 - **gql-backend**: `keyvalue`
-  - **Description**: The backend used for the GraphQL server.
-  - **When to Change**: Modify if using a different backend for GraphQL.
+  - **Description**: The graph backend used by the GraphQL server. Registered
+    values are `keyvalue`, `arango`, `ent`, `neo4j`, and `neptune`.
+  - **When to Change**: Select the backend that matches your database
+    deployment, then configure its backend-specific options in the Database
+    Configuration section above.
 
 - **gql-listen-port**: `8080`
   - **Description**: The port on which the GraphQL server listens.
