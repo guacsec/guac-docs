@@ -45,6 +45,15 @@ provided out-of-the box. Consult the
 [GUAC client-side operations](https://github.com/guacsec/guac/tree/main/pkg/assembler/clients/operations)
 for the document queries.
 
+## `guacgql` server endpoints
+
+The `guacgql` server exposes a few HTTP endpoints on the same host and port:
+
+- `/query` serves the GraphQL API.
+- `/healthz` returns HTTP 200 with `Server is healthy`. Use this endpoint for
+  Kubernetes liveness probes instead of probing `/query`.
+- `/version` returns HTTP 200 with the running GUAC version as `text/plain`.
+
 In the remainder of this document, we will go over the existing GraphQL types.
 
 For each GraphQL type we also define 2 input types: one is used to filter the
