@@ -87,15 +87,28 @@ It supports two modes:
 
 - **Release mode (`--github-mode release`)**: Downloads release assets and
   attestations from specified GitHub release URLs.
-- **Workflow mode (`--github-mode workflow`)**: Ingests workflow run artifacts
-  containing metadata for a specified repository.
+- **Workflow mode (`--github-mode workflow`)**: Ingests artifacts from the
+  latest GitHub Actions workflow runs for a specified repository.
+
+Workflow mode supports two additional filters:
+
+| Flag                            | Description                                                                                                                                                        | Default |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `--github-workflow-file string` | Selects a workflow by its actual file name, such as `ci.yaml`, not by the workflow display name. If omitted, the collector checks all workflows in the repository. | empty   |
+| `--github-sbom string`          | Selects a GitHub Actions artifact by its artifact name. If omitted, the collector downloads all artifacts from the latest run of each selected workflow.           | empty   |
 
 ```bash
 # Ingest from GitHub Releases
 ./guaccollect github --github-mode release https://github.com/owner/repo/releases/tag/v1.0.0
 
-# Ingest from GitHub Workflows
+# Ingest artifacts from the latest run of every workflow in the repository
 ./guaccollect github --github-mode workflow owner/repo
+
+# Ingest artifacts only from the workflow defined in .github/workflows/ci.yaml
+./guaccollect github --github-mode workflow --github-workflow-file ci.yaml owner/repo
+
+# Ingest only the artifact named sbom from that workflow's latest run
+./guaccollect github --github-mode workflow --github-workflow-file ci.yaml --github-sbom sbom owner/repo
 ```
 
 To authenticate against private repositories or avoid GitHub API rate limits,
