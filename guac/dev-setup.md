@@ -22,16 +22,15 @@ Choose either of these environments:
 - **GitHub Codespaces:** Open the
   [GUAC repository](https://github.com/guacsec/guac), select **Code**,
   **Codespaces**, then **Create codespace on main**.
-- **VS Code locally:** Install
-  [Docker](https://docs.docker.com/get-docker/) and the
+- **VS Code locally:** Install [Docker](https://docs.docker.com/get-docker/) and
+  the
   [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
   Clone `https://github.com/guacsec/guac.git`, open the repository in VS Code,
   and select **Dev Containers: Reopen in Container** from the Command Palette.
 
 The first startup pulls the GUAC release image. On each container start, its
-`postStartCommand` launches the in-memory backend using
-`docker-compose.yml` and `container_files/mem.yaml`. Wait for the terminal
-message `GUAC is ready.`
+`postStartCommand` launches the in-memory backend using `docker-compose.yml` and
+`container_files/mem.yaml`. Wait for the terminal message `GUAC is ready.`
 
 Open the forwarded **8080** port to access the GraphQL playground. The REST API
 is exposed on port **8081**, and you can check its health at
@@ -53,9 +52,9 @@ docker compose -f docker-compose.yml -f container_files/mem.yaml down
 
 The default backend is in memory, so it is intended for experimentation, not
 durable storage. For a PostgreSQL-backed setup, replace
-`container_files/mem.yaml` with `container_files/ent.yaml` in the
-devcontainer's `postStartCommand` before reopening the container. See the
-[GraphQL guide]({{ site.baseurl }}{% link guac/guac-graphql.md %}) for query and
+`container_files/mem.yaml` with `container_files/ent.yaml` in the devcontainer's
+`postStartCommand` before reopening the container. See the [GraphQL
+guide]({{ site.baseurl }}{% link guac/guac-graphql.md %}) for query and
 ingestion examples.
 
 ## Install tools for manual development
