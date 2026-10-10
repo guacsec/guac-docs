@@ -8,9 +8,9 @@ nav_order: 2
 
 # Annotating metadata with guacone
 
-The `guacone annotate-metadata` command adds a `HasMetadata` key-value entry
-for a package, source, or artifact in the GUAC graph. It sends the annotation
-to a running GUAC GraphQL service; it does not collect documents.
+The `guacone annotate-metadata` command adds a `HasMetadata` key-value entry for
+a package, source, or artifact in the GUAC graph. It sends the annotation to a
+running GUAC GraphQL service; it does not collect documents.
 
 ## Command syntax
 
@@ -24,8 +24,7 @@ The four positional arguments identify what to annotate:
 - `subject` identifies the item, using the format appropriate to its type:
   - **Package:** A package URL (PURL), such as
     `pkg:golang/github.com/guacsec/guac@v0.0.0`.
-  - **Source:** A VCS identifier, such as
-    `git+https://github.com/guacsec/guac`.
+  - **Source:** A VCS identifier, such as `git+https://github.com/guacsec/guac`.
   - **Artifact:** An `algorithm:digest` pair, such as a SHA-256 digest.
 - `key` is the metadata field name.
 - `value` is the value to store for that field.
@@ -47,6 +46,6 @@ guacone annotate-metadata --justification "Reviewed by security team" \
 - `--package-name` matches all versions of a package instead of only the
   specified version; it applies when the subject type is `package`.
 
-The command requires a reachable GUAC GraphQL service. For metadata labels
-added as documents are collected, see the separate `guaccollect --label`
-option; `annotate-metadata` adds metadata manually through `guacone`.
+The command requires a reachable GUAC GraphQL service. For metadata labels added
+as documents are collected, see the separate `guaccollect --label` option;
+`annotate-metadata` adds metadata manually through `guacone`.
