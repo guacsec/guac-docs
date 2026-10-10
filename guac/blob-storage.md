@@ -87,9 +87,9 @@ guaccollect gcs my-bucket
 
 ## Cloud-agnostic blob collector
 
-In addition to the provider-specific commands above, `guaccollect blob`
-collects documents from any supported [Go Cloud blob](https://gocloud.dev/howto/blob/)
-store. It takes one storage URL as a positional argument:
+The `guaccollect blob` command accepts a single Go Cloud storage URL and
+collects documents from S3, GCS, Azure Blob Storage, or a local filesystem.
+It is a cloud-agnostic alternative to the provider-specific commands above:
 
 ```bash
 guaccollect blob "s3://my-bucket?region=us-east-1"
