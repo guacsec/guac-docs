@@ -84,3 +84,47 @@ Alternatively, set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable:
 export GOOGLE_APPLICATION_CREDENTIALS=/secret/sa.json
 guaccollect gcs my-bucket
 ```
+
+## Cloud-agnostic blob collector
+
+In addition to the provider-specific commands above, `guaccollect blob`
+collects documents from any supported [Go Cloud blob](https://gocloud.dev/howto/blob/)
+store. It takes one storage URL as a positional argument:
+
+```bash
+guaccollect blob "s3://my-bucket?region=us-east-1"
+guaccollect blob "gs://my-bucket"
+guaccollect blob "azblob://my-container"
+guaccollect blob "file:///path/to/sboms"
+```
+
+Use the cloud provider's supported environment-based authentication to
+access the store. See the [Go Cloud blob guide](https://gocloud.dev/howto/blob/)
+for provider-specific URL and credential configuration.
+
+### Scope collection and cap object size
+
+By default, the blob collector reads every object in the selected store.
+It does not select files by document type: every in-scope object is passed
+on for ingestion. Use a bucket or prefix that contains documents GUAC can
+ingest.
+
+- `--blob-prefix` limits collection to keys beginning with the supplied
+  prefix, such as `sboms/`.
+- `--blob-max-object-size` sets the maximum object size to read, in bytes.
+  Larger objects are logged and skipped. A value of `0` uses the collector's
+  built-in size limit; it does not disable the limit.
+
+To collect only objects under `sboms/` with a 50 MiB per-object cap:
+
+```bash
+guaccollect blob --blob-prefix sboms/ --blob-max-object-size 52428800 \
+  "s3://my-bucket?region=us-east-1"
+```
+
+To periodically poll the store, use `--service-poll` and an interval:
+
+```bash
+guaccollect blob --service-poll --interval 5m \
+  "s3://my-bucket?region=us-east-1"
+```
