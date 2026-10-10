@@ -88,8 +88,8 @@ guaccollect gcs my-bucket
 ## Cloud-agnostic blob collector
 
 The `guaccollect blob` command accepts a single Go Cloud storage URL and
-collects documents from S3, GCS, Azure Blob Storage, or a local filesystem.
-It is a cloud-agnostic alternative to the provider-specific commands above:
+collects documents from S3, GCS, Azure Blob Storage, or a local filesystem. It
+is a cloud-agnostic alternative to the provider-specific commands above:
 
 ```bash
 guaccollect blob "s3://my-bucket?region=us-east-1"
@@ -98,19 +98,18 @@ guaccollect blob "azblob://my-container"
 guaccollect blob "file:///path/to/sboms"
 ```
 
-Use the cloud provider's supported environment-based authentication to
-access the store. See the [Go Cloud blob guide](https://gocloud.dev/howto/blob/)
-for provider-specific URL and credential configuration.
+Use the cloud provider's supported environment-based authentication to access
+the store. See the [Go Cloud blob guide](https://gocloud.dev/howto/blob/) for
+provider-specific URL and credential configuration.
 
 ### Scope collection and cap object size
 
-By default, the blob collector reads every object in the selected store.
-It does not select files by document type: every in-scope object is passed
-on for ingestion. Use a bucket or prefix that contains documents GUAC can
-ingest.
+By default, the blob collector reads every object in the selected store. It does
+not select files by document type: every in-scope object is passed on for
+ingestion. Use a bucket or prefix that contains documents GUAC can ingest.
 
-- `--blob-prefix` limits collection to keys beginning with the supplied
-  prefix, such as `sboms/`.
+- `--blob-prefix` limits collection to keys beginning with the supplied prefix,
+  such as `sboms/`.
 - `--blob-max-object-size` sets the maximum object size to read, in bytes.
   Larger objects are logged and skipped. A value of `0` uses the collector's
   built-in size limit; it does not disable the limit.
