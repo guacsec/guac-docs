@@ -142,3 +142,35 @@ more information about the pURL (or other identifier/datasource) if they know
 how to handle it. For example, the deps.dev collector knows how to handle pURLs
 and retrieves more information about the pURL entries created from the ingestor
 parsing the SBOM.
+
+##### Inspecting and adding CollectSub entries
+
+Use `guacone csub-client` to inspect or seed a running CollectSub service. By
+default, the client connects to `localhost:2782`; use `--csub-addr` to connect
+to a different address.
+
+List entries using the client's default collection of data-type filters:
+
+```bash
+guacone csub-client get-collect-entries
+```
+
+To add an entry, pass a JSON array of `type` and `value` objects on standard
+input. For example, to request collection from a Git repository:
+
+```bash
+printf '%s\n' '[{"type":"DATATYPE_GIT","value":"git+https://github.com/guacsec/guac"}]' |
+  guacone csub-client add-collect-entries
+```
+
+To query only Git entries, pass a JSON array of filters and use the `stdin`
+argument. The filter's `value` is a glob pattern:
+
+```bash
+printf '%s\n' '[{"type":"DATATYPE_GIT","value":"*"}]' |
+  guacone csub-client get-collect-entries stdin
+```
+
+These commands communicate with the CollectSub service; they do not start it.
+The query command prints the matching entries, one per line. The `type` values
+must match GUAC's `CollectDataType` names (for example, `DATATYPE_GIT`).
