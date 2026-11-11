@@ -17,6 +17,10 @@ that data. This empowers clients to be in control and more resilient in the face
 of API changes. To get started, consult
 [the official documentation](https://graphql.org/learn/).
 
+New to GraphQL? Start with these resources before exploring GUAC's schema:
+
+- [Learning GraphQL]({{ site.baseurl }}{%link guac/learning-graphql.md %})
+
 This documents provides some insight into how the GraphQL API matches the [GUAC
 ontology]({{ site.baseurl }}{%link guac/guac-ontology.md %}) and its
 [definition]({{ site.baseurl }}{%link guac/guac-ontology-definition.md %}).
