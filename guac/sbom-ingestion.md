@@ -14,13 +14,52 @@ nav_order: 1
 Software Bill of Materials (SBOM) ingestion is essential in GUAC to help track
 and analyze dependencies, vulnerabilities, and software supply chain metadata.
 
-## Supported SBOM Formats
+## Supported document types
 
-GUAC supports a variety of SBOM formats, making it compatible with several tools
-and standards:
+GUAC's ingestion pipeline handles SBOMs as well as other software supply chain
+documents. The table below lists document types with registered ingestion
+parsers. Some types are produced by GUAC collectors or certifiers and arrive
+with their type already set rather than being detected from a user-supplied
+file.
 
-- **SPDX**: A widely used open standard for software package metadata.
-- **CycloneDX**: An SBOM specification built for security use cases.
+| Document type       | Description                                                               |
+| ------------------- | ------------------------------------------------------------------------- |
+| `SPDX`              | SPDX software bills of materials.                                         |
+| `CycloneDX`         | CycloneDX software bills of materials.                                    |
+| `DSSE`              | DSSE envelopes; embedded payloads are unpacked and processed recursively. |
+| `SLSA`              | SLSA provenance statements carried in in-toto statements.                 |
+| `ITE6VUL`           | GUAC vulnerability certification statements.                              |
+| `ITE6EOL`           | GUAC end-of-life certification statements.                                |
+| `ITE6REF`           | GUAC reference certification statements.                                  |
+| `ITE6MALWARE`       | GUAC malware certification statements.                                    |
+| `ITE6CD`            | ClearlyDefined legal and license certification statements.                |
+| `SCORECARD`         | OpenSSF Scorecard documents.                                              |
+| `DEPS_DEV`          | deps.dev documents used by GUAC.                                          |
+| `CSAF`              | Common Security Advisory Framework documents.                             |
+| `OPEN_VEX`          | OpenVEX documents.                                                        |
+| `OPAQUE`            | Internal container type used while unpacking JSON Lines input.            |
+| `INGEST_PREDICATES` | Direct GUAC graph predicates for tightly controlled environments.         |
+
+{: .warning }
+
+`INGEST_PREDICATES` bypasses the backing-attestation validation used by normal
+ingestion. It is disabled by default and is registered by `guacone collect` only
+when the `GUAC_DANGER` environment variable is set.
+
+### JSON Lines
+
+GUAC recognizes JSON Lines input. A JSON Lines document is treated as an
+`OPAQUE` container, unpacked line by line, and each line is processed again as
+an independent JSON document. Each line must therefore be valid JSON containing
+a document type that GUAC can process.
+
+### Compressed input
+
+GUAC can decompress BZIP2 and Zstandard input before detecting the document
+format and type. Files ending in `.bz2` and `.zst` are recognized by extension;
+GUAC can also detect these encodings from their file signatures. After
+decompression, the document continues through the normal format and type
+detection pipeline.
 
 ## Ingestion Methods
 
