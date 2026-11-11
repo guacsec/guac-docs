@@ -36,6 +36,21 @@ guacone collect files my-sbom.spdx.json
 This method is ideal when working with specific files or testing new SBOMs
 locally. File ingestion also works for directories using standard shell globs.
 
+### Label collected SBOM data
+
+Use `guaccollect files` with a repeatable `--label key=value` flag to identify
+which team, environment, or source a collected SBOM belongs to:
+
+```bash
+guaccollect files --label team=platform --label env=production my-sbom.spdx.json
+```
+
+During ingestion, GUAC records these labels as `HasMetadata` relationships on
+the packages or artifacts referenced by the collected SBOM. The key must not be
+empty; specify `--label` more than once to attach multiple key-value pairs. See
+[guaccollect flags]({{ site.baseurl }}{% link guac/cli-guaccollect.md %}) for
+more information.
+
 ### Daemon-Mode Ingestion
 
 When configured, GUAC operates in _daemon mode_, using collectors to poll for

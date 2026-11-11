@@ -64,6 +64,7 @@ flags.
 | `--enable-prometheus`    | Enable Prometheus metrics HTTP handler                                                 | false                                   |
 | `--gql-addr string`      | GraphQL server endpoint                                                                | "http://localhost:8080/query"           |
 | `-h, --help`             | Help for guaccollect                                                                   |                                         |
+| `--label key=value`      | Attach HasMetadata labels to collected documents (repeatable)                          | none                                    |
 | `--prometheus-port int`  | Port to listen on for Prometheus metrics server                                        | 9091                                    |
 | `--publish-to-queue`     | Enable/disable message publish to queue                                                | true                                    |
 | `--pubsub-addr string`   | [gocloud](https://gocloud.dev/howto/blob/) connection string for pubsub configured     | "nats://127.0.0.1:4222"                 |
