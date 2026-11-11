@@ -231,6 +231,13 @@ GUAC_DB_ADDRESS="postgres://guac:guac@localhost:5432/guac?sslmode=disable" guacg
   - **Description**: Whether to enable debug mode for the GraphQL server.
   - **When to Change**: Set to `false` in production environments for security.
 
+- **gql-trace**: `false` (binary default: `false`)
+  - **Description**: Logs GraphQL requests and responses to the server console.
+    This is separate from `gql-debug`, which enables the GraphQL playground.
+  - **When to Change**: Enable temporarily with `guacgql --gql-trace` (or
+    `GUAC_GQL_TRACE=true`) when troubleshooting GraphQL traffic. Turn it off
+    afterward to avoid logging potentially sensitive query and response data.
+
 - **gql-addr**: `http://localhost:8080/query`
   - **Description**: The address of the GraphQL server.
   - **When to Change**: Update if your GraphQL server is hosted elsewhere.
